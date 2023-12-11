@@ -26,6 +26,12 @@ Projeto final da Academia Dotnet #5: Sistema de atendimento e gerenciamento de c
 
 - `Angular`
 
+## UML
+
+<div style="display:flex">
+  <img src="https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/blob/main/Arquitetura/Escopo%20base%20-%20Hospital.jpg" title="UML escopo inicial" alt="UML do escopo inicial do projeto com tabelas simplificadas" width="30%">
+  <img src="https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/blob/main/Arquitetura/Escopo%20final%20-%20Hospital.jpg" title="UML escopo final" alt="UML do escopo final do projeto com tabelas mais robustas" width="30%">
+</div>
 ## 🔻 Clonar Repositório
 
 ```bash
