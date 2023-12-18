@@ -1,3 +1,6 @@
+using Consultorio.API.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Consultorio.API
 {
     public class Program
@@ -12,6 +15,8 @@ namespace Consultorio.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Consultorio")));
 
             var app = builder.Build();
 

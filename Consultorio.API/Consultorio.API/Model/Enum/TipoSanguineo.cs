@@ -8,7 +8,7 @@
         A_Negativo = 4,
         B_Positivo = 5,
         B_negativo = 6,
-        AB_Positivo= 7,
-        AB_Negativo= 8,
+        AB_Positivo = 7,
+        AB_Negativo = 8,
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Consultorio.API.Model.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Consultorio.API.Model
 {
@@ -9,30 +10,30 @@ namespace Consultorio.API.Model
         [Column(TypeName = "varchar(100)")]
         public string Nome { get; set; }
 
-        [Column(TypeName = "varchar(20)")]
-        public string NomeSocial { get; set; }
+        [Column(TypeName = "varchar(30)")]
+        public string? NomeSocial { get; set; }
 
         [Column(TypeName = "char(11)")]
         public string CPF { get; set; }
 
-        public DateOnly DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
 
         [Column(TypeName = "varchar(60)")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
+
+        [Column(TypeName = "varchar(11)")]
+        public TipoSanguineo? TipoSanguineo { get; set; }
 
         [Column(TypeName = "varchar(20)")]
-        public string TipoSanguineo { get; set; }
+        public Genero Genero { get; set; }
 
-        [Column(TypeName = "varchar(20)")]
-        public string Genero { get; set; }
-
-        [Column(TypeName = "char(20)")]
+        [Column(TypeName = "char(8)")]
         public string CEP { get; set; }
 
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(30)")]
         public string Bairro { get; set; }
 
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(60)")]
         public string Endereco { get; set; }
 
         [Column(TypeName = "varchar(11)")]
