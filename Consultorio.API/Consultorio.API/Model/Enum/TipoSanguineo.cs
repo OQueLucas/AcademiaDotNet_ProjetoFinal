@@ -2,6 +2,7 @@
 {
     public enum TipoSanguineo
     {
+        Nao_Informado = 0,
         O_Positivo = 1,
         O_Negativo = 2,
         A_Positivo = 3,

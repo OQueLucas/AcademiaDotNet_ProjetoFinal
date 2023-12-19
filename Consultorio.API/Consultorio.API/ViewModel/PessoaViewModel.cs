@@ -1,12 +1,11 @@
 ﻿using Consultorio.API.Model.Enum;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Consultorio.API.Model
+namespace Consultorio.API.ViewModel
 {
-    public class Pessoa
+    public class PessoaViewModel
     {
-        public Pessoa() { }
-        public Pessoa(string nome, string? nomeSocial, string cPF, DateTime dataNascimento, string? email, TipoSanguineo? tipoSanguineo, Genero genero, string cEP, string bairro, string endereco, string telefone)
+        public PessoaViewModel() { }
+        public PessoaViewModel(string nome, string? nomeSocial, string cPF, DateTime dataNascimento, string? email, TipoSanguineo? tipoSanguineo, Genero genero, string cEP, string bairro, string endereco, string telefone)
         {
             Nome = nome;
             NomeSocial = nomeSocial;
@@ -22,37 +21,16 @@ namespace Consultorio.API.Model
         }
 
         public int? ID { get; set; }
-
-        [Column(TypeName = "varchar(100)")]
         public string Nome { get; set; }
-
-        [Column(TypeName = "varchar(30)")]
         public string? NomeSocial { get; set; }
-
-        [Column(TypeName = "char(11)")]
         public string CPF { get; set; }
-
         public DateTime DataNascimento { get; set; }
-
-        [Column(TypeName = "varchar(60)")]
         public string? Email { get; set; }
-
-        [Column(TypeName = "varchar(11)")]
         public TipoSanguineo? TipoSanguineo { get; set; }
-
-        [Column(TypeName = "varchar(20)")]
         public Genero Genero { get; set; }
-
-        [Column(TypeName = "char(8)")]
         public string CEP { get; set; }
-
-        [Column(TypeName = "varchar(30)")]
         public string Bairro { get; set; }
-
-        [Column(TypeName = "varchar(60)")]
         public string Endereco { get; set; }
-
-        [Column(TypeName = "varchar(11)")]
         public string Telefone { get; set; }
     }
 }

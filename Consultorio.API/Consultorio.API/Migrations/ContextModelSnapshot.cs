@@ -53,7 +53,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Consulta");
+                    b.ToTable("Consulta", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Medico", b =>
@@ -72,7 +72,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Medico");
+                    b.ToTable("Medico", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Paciente", b =>
@@ -94,7 +94,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Paciente");
+                    b.ToTable("Paciente", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Pessoa", b =>
@@ -150,7 +150,7 @@ namespace Consultorio.API.Migrations
                     b.HasIndex("CPF")
                         .IsUnique();
 
-                    b.ToTable("Pessoa");
+                    b.ToTable("Pessoa", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Sintoma", b =>
@@ -175,7 +175,7 @@ namespace Consultorio.API.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("Sintoma");
+                    b.ToTable("Sintoma", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Consulta", b =>

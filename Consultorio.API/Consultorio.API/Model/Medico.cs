@@ -5,9 +5,19 @@ namespace Consultorio.API.Model
 {
     public class Medico
     {
+        public Medico()
+        {
+        }
+
+        public Medico(string especializacao, string crm, Pessoa pessoa) : base()
+        {
+            Especializacao = especializacao;
+            CRM = crm;
+            Pessoa = pessoa;
+        }
+
         public string Especializacao { get; set; }
 
-        
         [Column(TypeName = "varchar(7)")]
         public string CRM { get; set; }
 
