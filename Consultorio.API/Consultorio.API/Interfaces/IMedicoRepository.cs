@@ -4,7 +4,8 @@ namespace Consultorio.API.Interfaces
 {
     public interface IMedicoRepository : IRepository<Medico>
     {
-        public Task<Medico> FindByCRM(string crm);
+        public Task<List<Medico>> GetAll();
+        public Task<Medico> GetByCRM(string crm);
         public Task<Medico> GetById(int id);
 
     }

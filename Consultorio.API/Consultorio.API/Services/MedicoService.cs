@@ -40,7 +40,7 @@ namespace Consultorio.API.Services
 
         public async Task<Medico> BuscaCRM(string crm)
         {
-            return await _medicoRepository.FindByCRM(crm);
+            return await _medicoRepository.GetByCRM(crm);
         }
 
         public async Task<ICollection<Medico>> BuscarTodos()

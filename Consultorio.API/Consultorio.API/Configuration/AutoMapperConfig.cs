@@ -6,9 +6,11 @@ namespace Consultorio.API.Configuration
 {
     public class AutoMapperConfig : Profile
     {
-        public AutoMapperConfig() {
-            CreateMap<Medico, MedicoViewModel>().ReverseMap();
+        public AutoMapperConfig()
+        {
             CreateMap<Pessoa, PessoaViewModel>().ReverseMap();
+            CreateMap<Medico, MedicoViewModel>().ReverseMap();
+            CreateMap<Paciente, PacienteViewModel>().ReverseMap();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Consultorio.API.Repository
             _data = _context.Set<Medico>();
         }
 
-        public virtual async Task<Medico> GetById(int id)
+        public async Task<Medico> GetById(int id)
         {
             return await _data.Include(medico => medico.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.Id == id);
         }
@@ -25,7 +25,7 @@ namespace Consultorio.API.Repository
             return await _data.Include(medico => medico.Pessoa).ToListAsync();
         }
 
-        public async Task<Medico> FindByCRM(string crm)
+        public async Task<Medico> GetByCRM(string crm)
         {
             return await _data.Include(medico => medico.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.CRM == crm);
         }

@@ -25,6 +25,12 @@ namespace Consultorio.API.Controllers
             try
             {
                 var medico = _mapper.Map<List<MedicoViewModel>>(await _medicoService.BuscarTodos());
+
+                if (medico == null)
+                {
+                    return NotFound();
+                }
+
                 return Ok(medico);
             }
             catch (Exception ex)
@@ -49,7 +55,7 @@ namespace Consultorio.API.Controllers
             }
         }
 
-        [HttpGet("crm/{crm:string}")]
+        [HttpGet("crm/{crm}")]
         public async Task<IActionResult> GetMedicoByCRM([FromRoute] string crm)
         {
             try
