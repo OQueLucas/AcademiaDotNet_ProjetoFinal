@@ -3,17 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Consultorio.API.Model
 {
-    public class Medico
+    public class Medico : Entity
     {
         public Medico()
         {
         }
 
-        public Medico(string especializacao, string crm, Pessoa pessoa) : base()
+        public Medico(string especializacao, string crm) : base()
         {
             Especializacao = especializacao;
             CRM = crm;
-            Pessoa = pessoa;
         }
 
         public string Especializacao { get; set; }

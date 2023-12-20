@@ -1,6 +1,6 @@
 ﻿using Consultorio.API.Data;
+using Consultorio.API.Interfaces;
 using Consultorio.API.Model;
-using Consultorio.API.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Consultorio.API.Repository
@@ -15,25 +15,19 @@ namespace Consultorio.API.Repository
             _data = _context.Set<Medico>();
         }
 
-        public virtual async Task<List<Medico>> GetAll()
+        public virtual async Task<Medico> GetById(int id)
+        {
+            return await _data.Include(medico => medico.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.Id == id);
+        }
+
+        public override async Task<List<Medico>> GetAll()
         {
             return await _data.Include(medico => medico.Pessoa).ToListAsync();
         }
 
-        public virtual async Task<Medico> FindById(int id)
+        public async Task<Medico> FindByCRM(string crm)
         {
-            return await _data.FindAsync(id);
+            return await _data.Include(medico => medico.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.CRM == crm);
         }
-
-        public virtual async Task<Medico> FindByCRM(string crm)
-        {
-            return await _data.Include(medico => medico.Pessoa).FirstOrDefaultAsync(medico => medico.CRM == crm);
-        }
-
-        //public override async Task Add(Medico medico)
-        //{
-        //    await _context.AddAsync(medico);
-        //    await _context.SaveChangesAsync();
-        //}
     }
 }

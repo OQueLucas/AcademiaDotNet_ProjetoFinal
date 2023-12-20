@@ -13,7 +13,7 @@ namespace Consultorio.API.Migrations
                 name: "Pessoa",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     NomeSocial = table.Column<string>(type: "varchar(30)", nullable: true),
@@ -22,32 +22,35 @@ namespace Consultorio.API.Migrations
                     Email = table.Column<string>(type: "varchar(60)", nullable: true),
                     TipoSanguineo = table.Column<string>(type: "varchar(11)", nullable: true),
                     Genero = table.Column<string>(type: "varchar(20)", nullable: false),
-                    CEP = table.Column<string>(type: "char(8)", nullable: false),
-                    Bairro = table.Column<string>(type: "varchar(30)", nullable: false),
-                    Endereco = table.Column<string>(type: "varchar(60)", nullable: false),
-                    Telefone = table.Column<string>(type: "varchar(11)", nullable: false)
+                    CEP = table.Column<string>(type: "char(8)", nullable: true),
+                    Bairro = table.Column<string>(type: "varchar(30)", nullable: true),
+                    Endereco = table.Column<string>(type: "varchar(60)", nullable: true),
+                    Telefone = table.Column<string>(type: "varchar(11)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoa", x => x.ID);
+                    table.PrimaryKey("PK_Pessoa", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Medico",
                 columns: table => new
                 {
-                    CRM = table.Column<string>(type: "varchar(7)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Especializacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CRM = table.Column<string>(type: "varchar(7)", nullable: false),
                     PessoaID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medico", x => x.CRM);
+                    table.PrimaryKey("PK_Medico", x => x.Id);
+                    table.UniqueConstraint("AK_Medico_CRM", x => x.CRM);
                     table.ForeignKey(
                         name: "FK_Medico_Pessoa_PessoaID",
                         column: x => x.PessoaID,
                         principalTable: "Pessoa",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -55,19 +58,19 @@ namespace Consultorio.API.Migrations
                 name: "Paciente",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PessoaID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Paciente", x => x.ID);
+                    table.PrimaryKey("PK_Paciente", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Paciente_Pessoa_PessoaID",
                         column: x => x.PessoaID,
                         principalTable: "Pessoa",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -96,7 +99,7 @@ namespace Consultorio.API.Migrations
                         name: "FK_Consulta_Paciente_PacienteId",
                         column: x => x.PacienteId,
                         principalTable: "Paciente",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -128,6 +131,12 @@ namespace Consultorio.API.Migrations
                 name: "IX_Consulta_PacienteId",
                 table: "Consulta",
                 column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medico_CRM",
+                table: "Medico",
+                column: "CRM",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medico_PessoaID",

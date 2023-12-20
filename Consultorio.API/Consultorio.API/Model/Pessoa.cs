@@ -3,25 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Consultorio.API.Model
 {
-    public class Pessoa
+    public class Pessoa : Entity
     {
         public Pessoa() { }
-        public Pessoa(string nome, string? nomeSocial, string cPF, DateTime dataNascimento, string? email, TipoSanguineo? tipoSanguineo, Genero genero, string cEP, string bairro, string endereco, string telefone)
+        public Pessoa(string nome, string? nomeSocial, string cpf, DateTime dataNascimento, string? email, TipoSanguineo? tipoSanguineo, Genero genero, string? cep, string? bairro, string? endereco, string? telefone)
         {
             Nome = nome;
             NomeSocial = nomeSocial;
-            CPF = cPF;
+            CPF = cpf;
             DataNascimento = dataNascimento;
             Email = email;
             TipoSanguineo = tipoSanguineo;
             Genero = genero;
-            CEP = cEP;
+            CEP = cep;
             Bairro = bairro;
             Endereco = endereco;
             Telefone = telefone;
         }
 
-        public int? ID { get; set; }
 
         [Column(TypeName = "varchar(100)")]
         public string Nome { get; set; }
@@ -44,15 +43,15 @@ namespace Consultorio.API.Model
         public Genero Genero { get; set; }
 
         [Column(TypeName = "char(8)")]
-        public string CEP { get; set; }
+        public string? CEP { get; set; }
 
         [Column(TypeName = "varchar(30)")]
-        public string Bairro { get; set; }
+        public string? Bairro { get; set; }
 
         [Column(TypeName = "varchar(60)")]
-        public string Endereco { get; set; }
+        public string? Endereco { get; set; }
 
         [Column(TypeName = "varchar(11)")]
-        public string Telefone { get; set; }
+        public string? Telefone { get; set; }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Consultorio.API.Data;
+using Consultorio.API.Interfaces;
+using Consultorio.API.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Consultorio.API.Repository
 {
-    public class BaseRepository<T> : IRepository<T> where T : class
+    public class BaseRepository<T> : IRepository<T> where T : Entity
     {
         private readonly Context _context;
         protected readonly DbSet<T> _data;
@@ -23,6 +25,11 @@ namespace Consultorio.API.Repository
         public virtual async Task<T> FindById(int id)
         {
             return await _data.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<T>> GetBy(Expression<Func<T, bool>> predicate)
+        {
+            return await _data.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         public virtual async Task Add(T entity)
@@ -44,9 +51,10 @@ namespace Consultorio.API.Repository
             await SaveChangesAsync();
         }
 
-        public virtual async Task Remove(T entity)
+        public virtual async Task<bool> Remove(T entity)
         {
             _context.Remove(entity);
+            return await SaveChangesAsync();
         }
 
         public virtual async Task<bool> SaveChangesAsync()

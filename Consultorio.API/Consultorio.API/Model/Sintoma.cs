@@ -1,8 +1,7 @@
 ﻿namespace Consultorio.API.Model
 {
-    public class Sintoma
+    public class Sintoma : Entity
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
     }
 }

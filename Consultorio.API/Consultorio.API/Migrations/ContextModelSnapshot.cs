@@ -24,11 +24,11 @@ namespace Consultorio.API.Migrations
 
             modelBuilder.Entity("Consultorio.API.Model.Consulta", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
@@ -53,12 +53,19 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Consulta", (string)null);
+                    b.ToTable("Consulta");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Medico", b =>
                 {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+
                     b.Property<string>("CRM")
+                        .IsRequired()
                         .HasColumnType("varchar(7)");
 
                     b.Property<string>("Especializacao")
@@ -68,49 +75,49 @@ namespace Consultorio.API.Migrations
                     b.Property<int>("PessoaID")
                         .HasColumnType("int");
 
-                    b.HasKey("CRM");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CRM")
+                        .IsUnique();
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Medico", (string)null);
+                    b.ToTable("Medico");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Paciente", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("Observacao")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PessoaID")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Paciente", (string)null);
+                    b.ToTable("Paciente");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Pessoa", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("Bairro")
-                        .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("CEP")
-                        .IsRequired()
                         .HasColumnType("char(8)");
 
                     b.Property<string>("CPF")
@@ -124,7 +131,6 @@ namespace Consultorio.API.Migrations
                         .HasColumnType("varchar(60)");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
                         .HasColumnType("varchar(60)");
 
                     b.Property<string>("Genero")
@@ -139,27 +145,26 @@ namespace Consultorio.API.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("TipoSanguineo")
                         .HasColumnType("varchar(11)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CPF")
                         .IsUnique();
 
-                    b.ToTable("Pessoa", (string)null);
+                    b.ToTable("Pessoa");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Sintoma", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<int?>("ConsultaId")
                         .HasColumnType("int");
@@ -175,7 +180,7 @@ namespace Consultorio.API.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("Sintoma", (string)null);
+                    b.ToTable("Sintoma");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Consulta", b =>
@@ -183,6 +188,7 @@ namespace Consultorio.API.Migrations
                     b.HasOne("Consultorio.API.Model.Medico", "Medico")
                         .WithMany("Consultas")
                         .HasForeignKey("MedicoCRM")
+                        .HasPrincipalKey("CRM")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

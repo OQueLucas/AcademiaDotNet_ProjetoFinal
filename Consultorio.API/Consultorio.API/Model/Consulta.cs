@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Consultorio.API.Model
 {
-    public class Consulta
+    public class Consulta : Entity
     {
-        public int Id { get; set; }
         public TipoConsulta TipoConsulta { get; set; }
         [Column(TypeName = "text")]
         public string? Descricao { get; set; }

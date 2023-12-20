@@ -29,9 +29,12 @@ namespace Consultorio.API.Data
             modelBuilder.Entity<Medico>()
                 .HasOne(medico => medico.Pessoa);
 
+            modelBuilder.Entity<Medico>()
+                .HasKey(medico => medico.Id);
 
             modelBuilder.Entity<Medico>()
-                .HasKey(medico => medico.CRM);
+                .HasIndex(medico => medico.CRM)
+                .IsUnique();
 
             modelBuilder.Entity<Paciente>()
                 .HasOne(paciente => paciente.Pessoa);
@@ -39,7 +42,6 @@ namespace Consultorio.API.Data
             modelBuilder.Entity<Sintoma>()
                 .HasIndex(sintoma => sintoma.Nome)
                 .IsUnique();
-
 
             var converter = new ValueConverter<TipoConsulta, string>(
                 value => value.ToString(),
@@ -58,6 +60,7 @@ namespace Consultorio.API.Data
                 .HasOne(consulta => consulta.Medico)
                 .WithMany(medico => medico.Consultas)
                 .HasForeignKey(consulta => consulta.MedicoCRM)
+                .HasPrincipalKey(medico => medico.CRM)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }
