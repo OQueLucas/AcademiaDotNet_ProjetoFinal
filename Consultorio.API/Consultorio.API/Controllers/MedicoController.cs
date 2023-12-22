@@ -55,7 +55,7 @@ namespace Consultorio.API.Controllers
             }
         }
 
-        [HttpGet("crm/{crm}")]
+        [HttpGet("{crm}")]
         public async Task<IActionResult> GetMedicoByCRM([FromRoute] string crm)
         {
             try

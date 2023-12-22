@@ -22,9 +22,12 @@ namespace Consultorio.API
             
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
-            builder.Services.AddScoped<IMedicoService, MedicoService>();
             builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+            builder.Services.AddScoped<ISintomaRepository, SintomaRepository>();
+
+            builder.Services.AddScoped<IMedicoService, MedicoService>();
             builder.Services.AddScoped<IPacienteService, PacienteService>();
+            builder.Services.AddScoped<ISintomaService, SintomaService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 
