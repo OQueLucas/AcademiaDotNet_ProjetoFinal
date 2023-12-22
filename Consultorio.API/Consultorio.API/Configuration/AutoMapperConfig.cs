@@ -11,6 +11,8 @@ namespace Consultorio.API.Configuration
             CreateMap<Pessoa, PessoaViewModel>().ReverseMap();
             CreateMap<Medico, MedicoViewModel>().ReverseMap();
             CreateMap<Paciente, PacienteViewModel>().ReverseMap();
+            CreateMap<Consulta, ConsultaViewModel>().ReverseMap();
+            CreateMap<SintomaConsulta, SintomaConsultaViewModel>().ReverseMap();
         }
     }
 }

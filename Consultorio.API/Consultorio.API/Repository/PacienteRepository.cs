@@ -1,5 +1,4 @@
-﻿
-using Consultorio.API.Data;
+﻿using Consultorio.API.Data;
 using Consultorio.API.Interfaces;
 using Consultorio.API.Model;
 using Microsoft.EntityFrameworkCore;

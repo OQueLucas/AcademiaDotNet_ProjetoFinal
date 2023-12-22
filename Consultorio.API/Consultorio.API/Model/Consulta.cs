@@ -13,6 +13,6 @@ namespace Consultorio.API.Model
         public Medico Medico { get; set; }
         public int PacienteId { get; set; }
         public Paciente Paciente { get; set; }
-        public ICollection<Sintoma>? Sintomas { get; set; }
+        public ICollection<SintomaConsulta>? Sintomas { get; set; }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Consultorio.API.Data;
 using Consultorio.API.Model;
 using AutoMapper;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel;
-using Consultorio.API.Services;
 
 namespace Consultorio.API.Controllers
 {

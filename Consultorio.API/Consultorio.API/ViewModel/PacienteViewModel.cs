@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Consultorio.API.ViewModel
+﻿namespace Consultorio.API.ViewModel
 {
     public class PacienteViewModel
     {
@@ -12,7 +10,6 @@ namespace Consultorio.API.ViewModel
             Observacao = observacao;
         }
 
-        [Key]
         public int? Id { get; set; }
         public string? Observacao { get; set; }
         public int PessoaID { get; set; }

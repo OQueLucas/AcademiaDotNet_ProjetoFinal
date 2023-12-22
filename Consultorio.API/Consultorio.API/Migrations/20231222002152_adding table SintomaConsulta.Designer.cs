@@ -4,6 +4,7 @@ using Consultorio.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultorio.API.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20231222002152_adding table SintomaConsulta")]
+    partial class addingtableSintomaConsulta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +55,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Consulta", (string)null);
+                    b.ToTable("Consulta");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Medico", b =>
@@ -82,7 +84,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Medico", (string)null);
+                    b.ToTable("Medico");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Paciente", b =>
@@ -103,7 +105,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("PessoaID");
 
-                    b.ToTable("Paciente", (string)null);
+                    b.ToTable("Paciente");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Pessoa", b =>
@@ -155,7 +157,7 @@ namespace Consultorio.API.Migrations
                     b.HasIndex("CPF")
                         .IsUnique();
 
-                    b.ToTable("Pessoa", (string)null);
+                    b.ToTable("Pessoa");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Sintoma", b =>
@@ -175,7 +177,7 @@ namespace Consultorio.API.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("Sintoma", (string)null);
+                    b.ToTable("Sintoma");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.SintomaConsulta", b =>
@@ -198,7 +200,7 @@ namespace Consultorio.API.Migrations
 
                     b.HasIndex("SintomaId");
 
-                    b.ToTable("SintomaConsulta", (string)null);
+                    b.ToTable("SintomaConsulta");
                 });
 
             modelBuilder.Entity("Consultorio.API.Model.Consulta", b =>

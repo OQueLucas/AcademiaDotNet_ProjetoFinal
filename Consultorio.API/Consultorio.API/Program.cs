@@ -13,21 +13,24 @@ namespace Consultorio.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                            .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Consultorio")));
-            
+
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
             builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
             builder.Services.AddScoped<ISintomaRepository, SintomaRepository>();
+            builder.Services.AddScoped<IConsultaRepository, ConsultaRepository>();
 
             builder.Services.AddScoped<IMedicoService, MedicoService>();
             builder.Services.AddScoped<IPacienteService, PacienteService>();
             builder.Services.AddScoped<ISintomaService, SintomaService>();
+            builder.Services.AddScoped<IConsultaService, ConsultaService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

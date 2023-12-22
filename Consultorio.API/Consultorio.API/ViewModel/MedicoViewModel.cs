@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Consultorio.API.ViewModel
+﻿namespace Consultorio.API.ViewModel
 {
     public class MedicoViewModel
     {
@@ -13,7 +11,6 @@ namespace Consultorio.API.ViewModel
             CRM = crm;
         }
 
-        [Key]
         public int? Id { get; set; }
         public string Especializacao { get; set; }
         public string CRM { get; set; }

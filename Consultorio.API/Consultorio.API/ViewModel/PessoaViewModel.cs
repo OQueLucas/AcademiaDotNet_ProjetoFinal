@@ -1,5 +1,4 @@
 ﻿using Consultorio.API.Model.Enum;
-using System.ComponentModel.DataAnnotations;
 
 namespace Consultorio.API.ViewModel
 {
@@ -21,7 +20,6 @@ namespace Consultorio.API.ViewModel
             Telefone = telefone;
         }
 
-        [Key]
         public int? Id { get; set; }
         public string Nome { get; set; }
         public string? NomeSocial { get; set; }

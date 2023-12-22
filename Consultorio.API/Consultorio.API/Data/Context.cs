@@ -63,6 +63,9 @@ namespace Consultorio.API.Data
                 .HasPrincipalKey(medico => medico.CRM)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Consulta>()
+                .HasMany(consulta => consulta.Sintomas)
+                .WithOne(sintoma => sintoma.Consulta);
         }
     }
 }
