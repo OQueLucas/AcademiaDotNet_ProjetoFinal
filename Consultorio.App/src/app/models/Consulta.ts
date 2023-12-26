@@ -1,6 +1,6 @@
 import { TipoConsulta } from "./enum/TipoConsulta.enum"
 
-export interface Consulta {
+export class Consulta {
   id: number;
   tipoConsulta: TipoConsulta;
   descricao: string;
@@ -15,6 +15,7 @@ export interface Consulta {
   cpf: string;
   dataNascimento: Date;
   email: string;
+  telefone: string;
   tipoSanguineo: number;
   genero: number;
   sintomas: [

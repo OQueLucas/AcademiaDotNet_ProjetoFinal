@@ -1,12 +1,42 @@
-<h1>{{title}}</h1>
-  <div class="card list-sintoma">
+<div *ngIf="sintomaSelecionado">
+  <app-titulo [titulo]="(sintomaSelecionado.id === 0 ? 'Novo Sintoma' :  'Sintoma: ' + sintomaSelecionado.id)">
+    <div class="mt-1">
+      <button class="btn btn-warning" (click)="voltar()">Fechar</button>
+    </div>
+  </app-titulo>
+
+  <form class="d-flex flex-column gap-3 mt-4" [formGroup]="sintomaForm" (submit)="sintomaSubmit()">
+
+    <fieldset nome="nome" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="nome" type="text" formControlName="nome" class="form-control" required>
+        <label for="nome" class="form-label">Nome</label>
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      <hr>
+      <button class="btn btn-success" [disabled]="!sintomaForm.valid">Salvar</button>
+    </div>
+
+  </form>
+</div>
+
+<div *ngIf="!sintomaSelecionado">
+  <app-titulo [titulo]="titulo">
+    <div class="mt-1">
+      <button class="btn btn-success" (click)="sintomaNovo()">Cadastrar Sintoma</button>
+    </div>
+  </app-titulo>
+  <div class="card mt-4">
     <h5 class="card-header">Lista de sintomas</h5>
     <div class="card-body">
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">id</th>
-            <th scope="col">nome</th>
+            <th scope="col">Id</th>
+            <th scope="col">Sintoma</th>
+            <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -14,7 +44,7 @@
             <td>{{sintoma.id}}</td>
             <td>{{sintoma.nome}}</td>
             <td>
-              <button type="button" class="btn btn-warning btn-sm" (click)="editSintoma(sintoma)">Editar</button>
+            <button type="button" class="btn btn-warning btn-sm" (click)="sintomaSelect(sintoma)">Editar</button>
             </td>
           </tr>
         </tbody>

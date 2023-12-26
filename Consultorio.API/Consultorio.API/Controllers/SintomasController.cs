@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Consultorio.API.Model;
 using Consultorio.API.Interfaces;
+using Consultorio.API.ViewModel;
+using AutoMapper;
 
 namespace Consultorio.API.Controllers
 {
@@ -9,10 +11,12 @@ namespace Consultorio.API.Controllers
     public class SintomasController : ControllerBase
     {
         private readonly ISintomaService _sintomaService;
+        private readonly IMapper _mapper;
 
-        public SintomasController(ISintomaService sintomaService)
+        public SintomasController(ISintomaService sintomaService, IMapper mapper)
         {
             _sintomaService = sintomaService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -68,13 +72,13 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Sintoma>> PostSintoma(Sintoma sintoma)
+        public async Task<ActionResult<Sintoma>> PostSintoma(SintomaViewModel sintoma)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             try
             {
-                await _sintomaService.Adicionar(sintoma);
+                await _sintomaService.Adicionar(_mapper.Map<Sintoma>(sintoma));
                 return Ok(sintoma);
             }
             catch (Exception ex)

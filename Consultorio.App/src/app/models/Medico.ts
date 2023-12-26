@@ -1,7 +1,25 @@
 import { Genero } from "./enum/Genero.enum";
 import { TipoSanguineo } from "./enum/TipoSanguineo.enum";
 
-export interface Medico {
+export class Medico {
+  constructor() {
+    this.id = 0;
+    this.pessoaId = 0;
+    this.crm = "";
+    this.especializacao = "";
+    this.nome = "";
+    this.nomeSocial = "";
+    this.cpf = "";
+    this.dataNascimento = new Date;
+    this.email = "";
+    this.tipoSanguineo = 0;
+    this.genero = 0;
+    this.cep = "";
+    this.bairro = "";
+    this.endereco = "";
+    this.telefone = "";
+  }
+
   id?: number;
   pessoaId?: number;
   crm: string;

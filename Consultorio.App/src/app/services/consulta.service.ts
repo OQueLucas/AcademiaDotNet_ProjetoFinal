@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, retry, throwError } from 'rxjs';
-import { Consulta } from '../models/consulta';
+import { Consulta } from '../models/Consulta';
 
 @Injectable({
   providedIn: 'root'
@@ -40,13 +40,13 @@ export class ConsultaService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveConsulta(consulta: Consulta): Observable<Consulta> {
+  post(consulta: Consulta): Observable<Consulta> {
     return this.httpClient
       .post<Consulta>(this.baseUrl, JSON.stringify(consulta), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  updateConsulta(consulta: Consulta): Observable<Consulta> {
+  put(consulta: Consulta): Observable<Consulta> {
     return this.httpClient
       .put<Consulta>(
         this.baseUrl + '/' + consulta.id,

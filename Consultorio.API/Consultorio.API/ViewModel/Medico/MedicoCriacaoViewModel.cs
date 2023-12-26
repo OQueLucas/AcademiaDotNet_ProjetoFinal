@@ -1,13 +1,11 @@
 ﻿using Consultorio.API.Model.Enum;
 
-namespace Consultorio.API.ViewModel
+namespace Consultorio.API.ViewModel.Medico
 {
-    public class MedicoViewModel
+    public class MedicoCriacaoViewModel
     {
-        public int? Id { get; set; }
         public string CRM { get; set; }
         public string Especializacao { get; set; }
-        public int PessoaId { get; set; }
         public string Nome { get; set; }
         public string? NomeSocial { get; set; }
         public string CPF { get; set; }

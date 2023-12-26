@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Sintoma } from '../models/sintoma';
+import { Sintoma } from '../models/Sintoma';
 import { SintomaService } from '../services/sintoma.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-sintoma',
@@ -9,11 +9,20 @@ import { NgForm } from '@angular/forms';
   styleUrl: './sintoma.component.scss'
 })
 export class SintomaComponent implements OnInit {
-  title = 'Sintomas';
-  sintoma = {} as Sintoma;
-  sintomas: Sintoma[] = [];
+  titulo = 'Sintomas';
 
-  constructor(private SintomaService: SintomaService){}
+  sintomas: Sintoma[] = [];
+  public sintomaForm: FormGroup;
+  sintomaSelecionado: Sintoma;
+
+  public modo = 'post';
+
+  constructor(
+    private fb: FormBuilder,
+    private SintomaService: SintomaService
+    ){
+      this.criarForm();
+    }
 
   ngOnInit(): void {
     this.getSintomas();
@@ -25,16 +34,20 @@ export class SintomaComponent implements OnInit {
     })
   }
 
-  saveSintoma(form: NgForm) {
-    if (this.sintoma.id !== undefined) {
-      this.SintomaService.updateSintoma(this.sintoma).subscribe(() => {
-        this.cleanForm(form);
-      });
-    } else {
-      this.SintomaService.saveSintoma(this.sintoma).subscribe(() => {
-        this.cleanForm(form);
-      });
-    }
+  criarForm() {
+    this.sintomaForm = this.fb.group({
+      id: [''],
+      nome: [''],
+    });
+  }
+
+  saveSintoma(sintoma: Sintoma) {
+    sintoma.id === 0 ? (this.modo = 'post') : (this.modo = 'put');
+
+    this.SintomaService[this.modo](sintoma).subscribe((retorno: Sintoma) => {
+      this.getSintomas();
+      this.sintomaSelecionado = retorno;
+    });
   }
 
   deleteSintoma(sintoma: Sintoma) {
@@ -43,13 +56,22 @@ export class SintomaComponent implements OnInit {
     });
   }
 
-  editSintoma(sintoma: Sintoma) {
-    this.sintoma = { ...sintoma };
+  sintomaSubmit() {
+    this.saveSintoma(this.sintomaForm.value);
   }
 
-  cleanForm(form: NgForm) {
-    this.getSintomas();
-    form.resetForm();
-    this.sintoma = {} as Sintoma;
+  sintomaSelect(sintoma: Sintoma) {
+    this.sintomaSelecionado = sintoma;
+    console.log(sintoma);
+    this.sintomaForm.patchValue(sintoma);
+  }
+
+  sintomaNovo() {
+    this.sintomaSelecionado = new Sintoma();
+    this.sintomaForm.patchValue(this.sintomaSelecionado);
+  }
+
+  voltar() {
+    this.sintomaSelecionado = null;
   }
 }

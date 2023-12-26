@@ -40,13 +40,13 @@ export class MedicoService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveMedico(medico: Medico): Observable<Medico> {
+  post(medico: Medico): Observable<Medico> {
     return this.httpClient
       .post<Medico>(this.baseUrl, JSON.stringify(medico), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  updateMedico(medico: Medico): Observable<Medico> {
+  put(medico: Medico): Observable<Medico> {
     return this.httpClient
       .put<Medico>(
         this.baseUrl + '/' + medico.id,

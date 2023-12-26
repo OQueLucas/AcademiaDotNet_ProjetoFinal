@@ -2,9 +2,6 @@ import { Genero } from "./enum/Genero.enum";
 import { TipoSanguineo } from "./enum/TipoSanguineo.enum";
 
 export class Paciente {
-  /**
-   *
-   */
   constructor() {
     this.id = 0;
     this.pessoaId = 0;

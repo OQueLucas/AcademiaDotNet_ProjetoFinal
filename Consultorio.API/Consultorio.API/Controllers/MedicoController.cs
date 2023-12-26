@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Consultorio.API.Interfaces;
 using Consultorio.API.Model;
-using Consultorio.API.ViewModel;
+using Consultorio.API.ViewModel.Medico;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Consultorio.API.Controllers
@@ -40,7 +40,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostMedico(MedicoViewModel medicoViewModel)
+        public async Task<IActionResult> PostMedico(MedicoCriacaoViewModel medicoViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -84,7 +84,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> PutMedico(int id, MedicoViewModel medicoViewModel)
+        public async Task<IActionResult> PutMedico(int id, MedicoEdicaoViewModel medicoViewModel)
         {
             if (medicoViewModel.Id != id) BadRequest("Os Ids informados não são iguais!");
              

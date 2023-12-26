@@ -17,7 +17,9 @@ namespace Consultorio.API.Repository
 
         public override async Task<List<Consulta>> GetAll()
         {
-            return await _data.Include(consulta => consulta.Paciente.Pessoa).Include(consulta => consulta.Medico.Pessoa).ToListAsync();
+            return await _data.Include(consulta => consulta.Paciente.Pessoa).Include(consulta => consulta.Medico.Pessoa)
+                .Include(consulta => consulta.Sintomas)
+                    .ThenInclude(sintomaConsulta => sintomaConsulta.Sintoma).ToListAsync();
         }
 
         public async Task<Consulta> GetById(int id)

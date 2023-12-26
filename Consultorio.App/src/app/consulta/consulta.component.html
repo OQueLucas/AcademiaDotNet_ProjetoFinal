@@ -1,21 +1,142 @@
-<h1>{{title}}</h1>
-  <div class="card list-consulta">
+<div *ngIf="consultaSelecionado">
+  <app-titulo [titulo]="(consultaSelecionado.id === 0 ? 'Novo Consulta' :  'Consulta: ' + consultaSelecionado.id)">
+    <div class="mt-1">
+      <button class="btn btn-warning" (click)="voltar()">Fechar</button>
+    </div>
+  </app-titulo>
+
+  <form class="d-flex flex-column gap-3 mt-4" [formGroup]="consultaForm" (submit)="consultaSubmit()">
+
+    <fieldset nome="consulta" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="tipoConsulta" type="text" formControlName="tipoConsulta" class="form-control">
+        <label for="tipoConsulta" class="form-label">Tipo de Consulta</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input id="data" type="datetime-local" formControlName="data" class="form-control">
+        <label for="data" class="form-label">Data da Consulta</label>
+      </div>
+    </fieldset>
+
+    <div class="form-floating">
+      <textarea id="descricao" class="form-control" style="height: 100px"></textarea>
+      <label for="descricao" class="form-label">Descrição</label>
+    </div>
+
+    <fieldset nome="medicoCRM" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="medicoCRM" type="text" mask="SS 00000" formControlName="medicoCRM" class="form-control">
+        <label for="medicoCRM" class="form-label">CRM</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input id="especializacao" type="text" formControlName="especializacao" class="form-control">
+        <label for="especializacao" class="form-label">Especialização</label>
+      </div>
+    </fieldset>
+
+    <fieldset nome="medicoNome" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="medicoNome" type="text" formControlName="medicoNome" class="form-control">
+        <label for="medicoNome" class="form-label">Nome do Médico</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input id="medicoNomeSocial" type="text" formControlName="medicoNomeSocial" class="form-control">
+        <label for="medicoNomeSocial" class="form-label">Nome Social do Médico</label>
+      </div>
+    </fieldset>
+
+    <fieldset nome="nome" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="nome" type="text" formControlName="nome" class="form-control">
+        <label for="nome" class="form-label">Nome</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input id="nomeSocial" type="text" formControlName="nomeSocial" class="form-control">
+        <label for="nomeSocial" class="form-label">Nome Social</label>
+      </div>
+    </fieldset>
+
+    <fieldset name="contato" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input id="cpf" type="text" mask="000.000.000-00" formControlName="cpf" class="form-control">
+        <label for="cpf" class="form-label">CPF</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input id="dataNascimento" type="datetime-local" formControlName="dataNascimento" class="form-control">
+        <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+      </div>
+    </fieldset>
+
+    <fieldset nome="infos-complementares" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <select id="genero" formControlName="genero" name="genero" class="form-control" value="generoSelecionado">
+          <option disabled value="null">Selecione o gênero</option>
+          <option [value]="genero" *ngFor="let genero of generos">{{ GeneroToLabelMapping[genero] }}</option>
+        </select>
+        <label for="genero" class="form-label">Genero</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <select id="tipoSanguineo" formControlName="tipoSanguineo" name="tipoSanguineo" class="form-control">
+          <option disabled value="null">Selecione o tipo sanguíneo</option>
+          <option [value]="tipo" *ngFor="let tipo of tipoSanguineo">{{ TipoSanguineoToLabelMapping[tipo] }}</option>
+        </select>
+        <label for="tipoSanguineo" class="form-label">Tipo Sanguíneo</label>
+      </div>
+    </fieldset>
+
+    <fieldset nome="contato" class="d-flex gap-3">
+      <div class="form-floating flex-fill">
+        <input  id="email" type="email" formControlName="email" class="form-control">
+        <label for="email" class="form-label">Email</label>
+      </div>
+      <div class="form-floating flex-fill">
+        <input for="telefone" type="tel" mask="(00) 0000-0000||(00) 00000-0000" formControlName="telefone" class="form-control">
+        <label id="telefone" class="form-label">Telefone</label>
+      </div>
+    </fieldset>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Sintomas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sintoma of sintomas">
+          <td>{{sintoma.nome}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-group">
+      <hr>
+      <button class="btn btn-success" [disabled]="!consultaForm.valid">Salvar</button>
+    </div>
+
+  </form>
+</div>
+
+<div *ngIf="!consultaSelecionado">
+  <app-titulo [titulo]="titulo">
+    <div class="mt-1">
+      <button class="btn btn-success" (click)="consultaNovo()">Cadastrar Consulta</button>
+    </div>
+  </app-titulo>
+  <div class="card mt-4">
     <h5 class="card-header">Lista de consulta</h5>
     <div class="card-body">
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">tipoConsulta</th>
-            <th scope="col">data</th>
-            <th scope="col">medicoCRM</th>
-            <th scope="col">medicoNome</th>
-            <th scope="col">medicoNomeSocial</th>
-            <th scope="col">especializacao</th>
-            <th scope="col">nome</th>
-            <th scope="col">nomeSocial</th>
-            <th scope="col">cpf</th>
-            <th scope="col">email</th>
-            <th scope="col">genero</th>
+            <th scope="col">Tipo de Consulta</th>
+            <th scope="col">Data</th>
+            <th scope="col">Médico</th>
+            <th scope="col">Nome Social</th>
+            <th scope="col">CRM</th>
+            <th scope="col">Especializacao</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Nome Social</th>
+            <th scope="col">Gênero</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
@@ -23,17 +144,15 @@
           <tr *ngFor="let consulta of consultas">
             <td>{{consulta.tipoConsulta}}</td>
             <td>{{consulta.data}}</td>
-            <td>{{consulta.medicoCRM}}</td>
             <td>{{consulta.medicoNome}}</td>
             <td>{{consulta.medicoNomeSocial}}</td>
+            <td>{{consulta.medicoCRM}}</td>
             <td>{{consulta.especializacao}}</td>
             <td>{{consulta.nome}}</td>
             <td>{{consulta.nomeSocial}}</td>
-            <td>{{consulta.cpf}}</td>
-            <td>{{consulta.email}}</td>
             <td>{{consulta.genero}}</td>
             <td>
-              <button type="button" class="btn btn-warning btn-sm" (click)="editConsulta(consulta)">Editar</button>
+              <button type="button" class="btn btn-warning btn-sm" (click)="consultaSelect(consulta)">Editar</button>
             </td>
           </tr>
         </tbody>

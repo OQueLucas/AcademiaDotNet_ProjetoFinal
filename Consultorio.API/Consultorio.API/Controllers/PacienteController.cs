@@ -88,7 +88,8 @@ namespace Consultorio.API.Controllers
                 return BadRequest($"Ocorreu um erro ao cadastrar o Paciente:\n{ex.Message}");
             }
 
-            return Created("", pacienteViewModel);
+            return Ok();
+            //return Created("", pacienteViewModel);
         }
 
         // DELETE: api/Paciente/5

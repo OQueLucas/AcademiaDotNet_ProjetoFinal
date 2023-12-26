@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, retry, throwError } from 'rxjs';
-import { Sintoma } from '../models/sintoma';
+import { Sintoma } from '../models/Sintoma';
 
 @Injectable({
   providedIn: 'root'
@@ -40,13 +40,13 @@ export class SintomaService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  saveSintoma(sintoma: Sintoma): Observable<Sintoma> {
+  post(sintoma: Sintoma): Observable<Sintoma> {
     return this.httpClient
       .post<Sintoma>(this.baseUrl, JSON.stringify(sintoma), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  updateSintoma(sintoma: Sintoma): Observable<Sintoma> {
+  put(sintoma: Sintoma): Observable<Sintoma> {
     return this.httpClient
       .put<Sintoma>(
         this.baseUrl + '/' + sintoma.id,

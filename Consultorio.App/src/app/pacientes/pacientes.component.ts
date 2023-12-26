@@ -14,17 +14,21 @@ import { TipoSanguineoToLabelMapping, TipoSanguineo } from '../models/enum/TipoS
 export class PacientesComponent implements OnInit {
   titulo = 'Pacientes';
 
-  public pacienteSelecionado: Paciente;
-  public pacienteForm: FormGroup;
   public pacientes: Paciente[];
+  public pacienteForm: FormGroup;
+  public pacienteSelecionado: Paciente;
+
   public modo = 'post';
+
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public generos = Object.values(Genero).filter(value => typeof value === 'number');
+
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
   public tipoSanguineo = Object.values(TipoSanguineo).filter(value => typeof value === 'number');
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   generoSelecionado = 'null';
   tipoSanguineoSelecionado = 'null';
+
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(
     private fb: FormBuilder,
@@ -38,13 +42,8 @@ export class PacientesComponent implements OnInit {
   }
 
   getPacientes() {
-    this.PacienteService.getPaciente().subscribe({
-      next: (pacientes: Paciente[]) => {
+    this.PacienteService.getPaciente().subscribe((pacientes: Paciente[]) => {
       this.pacientes = pacientes;
-      },
-      error: (error) => {
-        console.log(error);
-      },
     })
   }
 
@@ -57,8 +56,8 @@ export class PacientesComponent implements OnInit {
       cpf: ['', Validators.required],
       dataNascimento: ['', Validators.required],
       email: [this.emailFormControl],
-      tipoSanguineo: [, Validators.required],
-      genero: [, Validators.required],
+      tipoSanguineo: ['', Validators.required],
+      genero: ['', Validators.required],
       cep: [''],
       bairro: [''],
       endereco: [''],
@@ -68,17 +67,13 @@ export class PacientesComponent implements OnInit {
   }
 
   savePaciente(paciente: Paciente) {
-    (paciente.id === undefined || paciente.id === 0) ? (this.modo = 'post') : (this.modo = 'put');
+    paciente.id === 0 ? (this.modo = 'post') : (this.modo = 'put');
 
-      this.PacienteService[this.modo](paciente).subscribe({
-        next: (retorno: Paciente) => {
-          this.getPacientes();
-          this.pacienteSelecionado = null;
-        },
-        error: (error: any) => {
-          console.log(error);
-        },});
-    }
+    this.PacienteService[this.modo](paciente).subscribe((retorno: Paciente) => {
+      this.getPacientes();
+      this.pacienteSelecionado = retorno;
+    });
+  }
 
   pacienteSubmit() {
     this.savePaciente(this.pacienteForm.value);
