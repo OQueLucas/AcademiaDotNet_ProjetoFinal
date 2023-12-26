@@ -14,7 +14,7 @@ import { ConsultaComponent } from './consulta/consulta.component';
 import { TituloComponent } from './titulo/titulo.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { registerLocaleData } from '@angular/common';
-import localePT from '@angular/common/locales/pt'
+import localePT from '@angular/common/locales/pt';
 
 registerLocaleData(localePT, 'pt')
 
@@ -35,7 +35,8 @@ registerLocaleData(localePT, 'pt')
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMaskDirective, NgxMaskPipe
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
     provideClientHydration(),

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Paciente } from '../models/Paciente';
 import { PacienteService } from '../services/paciente.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
 import { TipoSanguineoToLabelMapping, TipoSanguineo } from '../models/enum/TipoSanguineo.enum';
 
@@ -10,6 +10,7 @@ import { TipoSanguineoToLabelMapping, TipoSanguineo } from '../models/enum/TipoS
   templateUrl: './pacientes.component.html',
   styleUrl: './pacientes.component.scss'
 })
+
 export class PacientesComponent implements OnInit {
   titulo = 'Pacientes';
 
@@ -21,6 +22,9 @@ export class PacientesComponent implements OnInit {
   public generos = Object.values(Genero).filter(value => typeof value === 'number');
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
   public tipoSanguineo = Object.values(TipoSanguineo).filter(value => typeof value === 'number');
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  generoSelecionado = 'null';
+  tipoSanguineoSelecionado = 'null';
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +56,7 @@ export class PacientesComponent implements OnInit {
       nomeSocial: [''],
       cpf: ['', Validators.required],
       dataNascimento: ['', Validators.required],
-      email: [''],
+      email: [this.emailFormControl],
       tipoSanguineo: [, Validators.required],
       genero: [, Validators.required],
       cep: [''],
