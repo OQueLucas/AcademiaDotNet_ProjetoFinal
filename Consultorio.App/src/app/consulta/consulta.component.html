@@ -1,0 +1,42 @@
+<h1>{{title}}</h1>
+  <div class="card list-consulta">
+    <h5 class="card-header">Lista de consulta</h5>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">tipoConsulta</th>
+            <th scope="col">data</th>
+            <th scope="col">medicoCRM</th>
+            <th scope="col">medicoNome</th>
+            <th scope="col">medicoNomeSocial</th>
+            <th scope="col">especializacao</th>
+            <th scope="col">nome</th>
+            <th scope="col">nomeSocial</th>
+            <th scope="col">cpf</th>
+            <th scope="col">email</th>
+            <th scope="col">genero</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consulta of consultas">
+            <td>{{consulta.tipoConsulta}}</td>
+            <td>{{consulta.data}}</td>
+            <td>{{consulta.medicoCRM}}</td>
+            <td>{{consulta.medicoNome}}</td>
+            <td>{{consulta.medicoNomeSocial}}</td>
+            <td>{{consulta.especializacao}}</td>
+            <td>{{consulta.nome}}</td>
+            <td>{{consulta.nomeSocial}}</td>
+            <td>{{consulta.cpf}}</td>
+            <td>{{consulta.email}}</td>
+            <td>{{consulta.genero}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" (click)="editConsulta(consulta)">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

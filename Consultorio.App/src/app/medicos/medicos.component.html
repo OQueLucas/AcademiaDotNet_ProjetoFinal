@@ -1,0 +1,36 @@
+<h1>{{title}}</h1>
+  <div class="card list-medico">
+    <h5 class="card-header">Lista de medico</h5>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">nome</th>
+            <th scope="col">nomeSocial</th>
+            <th scope="col">crm</th>
+            <th scope="col">cpf</th>
+            <th scope="col">dataNascimento</th>
+            <th scope="col">email</th>
+            <th scope="col">tipoSanguineo</th>
+            <th scope="col">genero</th>
+            <th scope="col">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let medico of medicos">
+            <td>{{medico.nome}}</td>
+            <td>{{medico.nomeSocial}}</td>
+            <td>{{medico.crm}}</td>
+            <td>{{medico.cpf}}</td>
+            <td>{{medico.dataNascimento}}</td>
+            <td>{{medico.email}}</td>
+            <td>{{medico.tipoSanguineo}}</td>
+            <td>{{medico.genero}}</td>
+            <td>
+              <button type="button" class="btn btn-warning btn-sm" (click)="editMedico(medico)">Editar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
