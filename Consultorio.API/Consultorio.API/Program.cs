@@ -12,6 +12,16 @@ namespace Consultorio.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins, policy =>
+                {
+                    policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddControllers()
                             .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -47,6 +57,7 @@ namespace Consultorio.API
 
             app.UseAuthorization();
 
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
 

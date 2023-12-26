@@ -2,7 +2,7 @@
 using Consultorio.API.Model;
 using AutoMapper;
 using Consultorio.API.Interfaces;
-using Consultorio.API.ViewModel;
+using Consultorio.API.ViewModel.Paciente;
 
 namespace Consultorio.API.Controllers
 {
@@ -21,16 +21,16 @@ namespace Consultorio.API.Controllers
 
         // GET: api/Paciente
         [HttpGet]
-        public async Task<IActionResult> GetPaciente()
+        public async Task<IActionResult> GetPacientes()
         {
-            var paciente = _mapper.Map<List<PacienteViewModel>>(await _pacienteService.BuscarTodos());
+            var pacientes = _mapper.Map<List<PacienteViewModel>>(await _pacienteService.BuscarTodos());
 
-            if (paciente == null)
+            if (pacientes == null)
             {
                 return NotFound();
             }
 
-            return Ok(paciente);
+            return Ok(pacientes);
         }
 
         // GET: api/Paciente/5
@@ -54,9 +54,11 @@ namespace Consultorio.API.Controllers
 
         // PUT: api/Paciente/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPaciente(int id, PacienteViewModel pacienteViewModel)
+        public async Task<IActionResult> PutPaciente(int id, PacienteEdicaoViewModel pacienteViewModel)
         {
             if (pacienteViewModel.Id != id) BadRequest("Os Ids informados não são iguais!");
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var paciente = await _pacienteService.BuscaId(id);
             if (paciente == null) return NotFound("Paciente não encontrado");
@@ -73,7 +75,7 @@ namespace Consultorio.API.Controllers
 
         // POST: api/Paciente
         [HttpPost]
-        public async Task<IActionResult> PostPaciente(PacienteViewModel pacienteViewModel)
+        public async Task<IActionResult> PostPaciente(PacienteInputViewModel pacienteViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -83,10 +85,10 @@ namespace Consultorio.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Erro: {ex.Message}");
+                return BadRequest($"Ocorreu um erro ao cadastrar o Paciente:\n{ex.Message}");
             }
 
-            return Ok(pacienteViewModel);
+            return Created("", pacienteViewModel);
         }
 
         // DELETE: api/Paciente/5
