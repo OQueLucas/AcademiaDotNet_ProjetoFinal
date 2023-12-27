@@ -9,18 +9,25 @@
 
     <fieldset nome="consulta" class="d-flex gap-3">
       <div class="form-floating flex-fill">
-        <input id="tipoConsulta" type="text" formControlName="tipoConsulta" class="form-control">
+        <select id="tipoConsulta" formControlName="tipoConsulta" name="tipoConsulta" class="form-control" value="tipoConsulta">
+          <option disabled value="null">Selecione o tipo da Consulta</option>
+          <option [value]="tipo" *ngFor="let tipo of tipoConsulta">{{ TipoConsultaToLabelMapping[tipo] }}</option>
+        </select>
         <label for="tipoConsulta" class="form-label">Tipo de Consulta</label>
       </div>
+
       <div class="form-floating flex-fill">
         <input id="data" type="datetime-local" formControlName="data" class="form-control">
         <label for="data" class="form-label">Data da Consulta</label>
       </div>
     </fieldset>
 
-    <div class="form-floating">
-      <textarea id="descricao" class="form-control" style="height: 100px"></textarea>
-      <label for="descricao" class="form-label">Descrição</label>
+    <div class="form-floating flex-fill col-3">
+      <select id="medicoSelect" #selectedValue (change)="selecionarMedico($event)" formControlName="medicoSelect" name="medicoSelect" class="form-control" value="medicoSelect">
+        <option disabled value="null">Selecione o(a) medico</option>
+        <option [value]="medico.id" *ngFor="let medico of medicos">{{ medico.nome }}</option>
+      </select>
+      <label for="medicoSelect" class="form-label">Medico</label>
     </div>
 
     <fieldset nome="medicoCRM" class="d-flex gap-3">
@@ -44,6 +51,14 @@
         <label for="medicoNomeSocial" class="form-label">Nome Social do Médico</label>
       </div>
     </fieldset>
+
+    <div class="form-floating flex-fill col-3">
+      <select id="pacienteSelect" #selectedValue (change)="selecionarPaciente($event)" formControlName="pacienteId" name="pacienteSelect" class="form-control" value="pacienteSelect">
+        <option disabled value="null">Selecione o(a) paciente</option>
+        <option [value]="paciente.id" *ngFor="let paciente of pacientes">{{ paciente.nome }}</option>
+      </select>
+      <label for="pacienteSelect" class="form-label">Paciente</label>
+    </div>
 
     <fieldset nome="nome" class="d-flex gap-3">
       <div class="form-floating flex-fill">
@@ -95,18 +110,36 @@
       </div>
     </fieldset>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Sintomas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let sintoma of sintomas">
-          <td>{{sintoma.nome}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="d-flex gap-3">
+      <div class="form-floating flex-fill col-3">
+        <select id="sintomasSelect" #selectedValue (change)="selecionarSintoma($event)" formControlName="sintomasSelect" name="sintomasSelect" class="form-control" value="sintomasSelect">
+          <option disabled value="null">Selecione o(s) sintoma(s)</option>
+          <option [value]="sintoma.id" *ngFor="let sintoma of sintomasForm">{{ sintoma.nome }}</option>
+        </select>
+        <label for="sintomasSelect" class="form-label">Sintoma</label>
+        <button type="button" class="btn btn-success mt-2" (click)="salvarSintoma()">Adicionar</button>
+      </div>
+
+      <table id="sintomas" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Sintomas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sintoma of sintomas">
+            <td>{{sintoma.sintomaId}}</td>
+            <td>{{sintoma.nome}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-floating">
+      <textarea id="descricao" class="form-control" style="height: 100px"></textarea>
+      <label for="descricao" class="form-label">Descrição</label>
+    </div>
 
     <div class="form-group">
       <hr>
@@ -142,15 +175,15 @@
         </thead>
         <tbody>
           <tr *ngFor="let consulta of consultas">
-            <td>{{consulta.tipoConsulta}}</td>
-            <td>{{consulta.data}}</td>
+            <td>{{TipoConsultaToLabelMapping[consulta.tipoConsulta]}}</td>
+            <td>{{consulta.data | date: 'dd/MM/yyyy HH:mm'}}</td>
             <td>{{consulta.medicoNome}}</td>
             <td>{{consulta.medicoNomeSocial}}</td>
-            <td>{{consulta.medicoCRM}}</td>
+            <td>{{consulta.medicoCRM | mask: "SS 00000"}}</td>
             <td>{{consulta.especializacao}}</td>
             <td>{{consulta.nome}}</td>
             <td>{{consulta.nomeSocial}}</td>
-            <td>{{consulta.genero}}</td>
+            <td>{{GeneroToLabelMapping[consulta.genero]}}</td>
             <td>
               <button type="button" class="btn btn-warning btn-sm" (click)="consultaSelect(consulta)">Editar</button>
             </td>

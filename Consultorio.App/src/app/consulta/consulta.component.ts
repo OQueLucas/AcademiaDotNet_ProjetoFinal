@@ -6,6 +6,12 @@ import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
 import { TipoSanguineo, TipoSanguineoToLabelMapping } from '../models/enum/TipoSanguineo.enum';
 import { TipoConsulta, TipoConsultaToLabelMapping } from '../models/enum/TipoConsulta.enum';
 import { Sintoma } from '../models/Sintoma';
+import { SintomaService } from '../services/sintoma.service';
+import { PacienteService } from '../services/paciente.service';
+import { Paciente } from '../models/Paciente';
+import { Medico } from '../models/Medico';
+import { MedicoService } from '../services/medico.service';
+import { SintomaConsulta } from '../models/SintomaConsulta';
 
 @Component({
   selector: 'app-consulta',
@@ -16,11 +22,22 @@ export class ConsultaComponent {
   titulo = 'Consultas';
 
   consultas: Consulta[] = [];
-  sintomas: Sintoma[] = [];
+  sintomas: SintomaConsulta[] = [];
+
+  pacientes: Paciente[] = [];
+  medicos: Medico[] = [];
+
+  sintomasForm: Sintoma[] = [];
+
+  pacienteForm: Paciente[] = [];
+  medicoForm: Medico[] = [];
+
   public consultaForm: FormGroup;
   public consultaSelecionado: Consulta;
 
   public modo = 'post';
+
+  sintomaSelecionado: Sintoma;
 
   generoSelecionado = 'null';
   public generos = Object.values(Genero).filter(value => typeof value === 'number');
@@ -36,12 +53,99 @@ export class ConsultaComponent {
 
   constructor(
     private fb: FormBuilder,
-    private ConsultaService: ConsultaService){
+    private ConsultaService: ConsultaService,
+    private SintomaService: SintomaService,
+    private PacienteService: PacienteService,
+    private MedicoService: MedicoService
+    ){
     this.criarForm();
   }
 
   ngOnInit(): void {
     this.getConsultas();
+    this.getSintomas();
+    this.getPacientes();
+    this.getMedicos();
+  }
+
+  getSintomas() {
+    this.SintomaService.getSintoma().subscribe((sintomas: Sintoma[]) => {
+      this.sintomasForm = sintomas;
+    })
+  }
+
+  getPacientes() {
+    this.PacienteService.getPaciente().subscribe((pacientes: Paciente[]) => {
+      this.pacientes = pacientes;
+    })
+  }
+
+  getMedicos() {
+    this.MedicoService.getMedico().subscribe((medicos: Medico[]) => {
+      this.medicos = medicos;
+    })
+  }
+
+  salvarSintoma() {
+    let anotado : boolean = false
+
+    this.sintomas.find((sintoma) => {
+      if(sintoma.sintomaId == this.sintomaSelecionado.id){
+        return anotado = true;
+      }
+      return anotado = false;
+    })
+
+    if (anotado) return;
+
+    this.sintomas.push({sintomaId: this.sintomaSelecionado.id, nome: this.sintomaSelecionado.nome});
+    this.consultaForm.patchValue({sintomas: this.sintomas})
+  }
+
+  selecionarSintoma(event) {
+    let id = Number((event.target as HTMLSelectElement).value);
+
+    const sintoma: Sintoma = this.sintomasForm.find((sintoma: Sintoma) => {
+      return sintoma?.id == id;
+    });
+
+    this.sintomaSelecionado = sintoma;
+  }
+
+  selecionarPaciente(event) {
+    let id = Number((event.target as HTMLSelectElement).value);
+
+    const paciente: Paciente = this.pacientes.find((paciente: Paciente) => {
+      return paciente?.id == id;
+    });
+
+    this.consultaForm.patchValue({
+      pacienteId: paciente.id,
+      nome: paciente.nome,
+      nomeSocial: paciente.nomeSocial,
+      cpf: paciente.cpf,
+      dataNascimento: paciente.dataNascimento,
+      genero: paciente.genero,
+      tipoSanguineo: paciente.tipoSanguineo,
+      email: paciente.email,
+      telefone: paciente.telefone,
+    });
+  }
+
+  selecionarMedico(event) {
+    let id = Number((event.target as HTMLSelectElement).value);
+
+    const medico: Medico = this.medicos.find((medico: Medico) => {
+      return medico?.id == id;
+    });
+
+    this.consultaForm.patchValue({
+      medicoId: medico.id,
+      medicoCRM: medico.crm,
+      especializacao: medico.especializacao,
+      medicoNome: medico.nome,
+      medicoNomeSocial: medico.nomeSocial,
+    });
   }
 
   getConsultas() {
@@ -52,27 +156,28 @@ export class ConsultaComponent {
 
   criarForm() {
     this.consultaForm = this.fb.group({
-      id: [''],
-      tipoConsulta: [''],
-      descricao: [''],
-      data: [''],
-      medicoCRM: [{value: '', disabled: true}],
-      especializacao: [{value: '', disabled: true}],
-      medicoNome: [{value: '', disabled: true}],
-      medicoNomeSocial: [{value: '', disabled: true}],
-      pacienteId: [{value: '', disabled: true}],
-      nome: [{value: '', disabled: true}],
-      nomeSocial: [{value: '', disabled: true}],
-      cpf: [{value: '', disabled: true}],
-      dataNascimento: [{value: '', disabled: true}],
-      email: [{value: '', disabled: true}],
-      telefone: [{value: '', disabled: true}],
-      tipoSanguineo: [{value: '', disabled: true}],
-      genero: [{value: '', disabled: true}],
-      sintomas: {
-        sintomaId: [''],
-        nome: [''],
-      }
+      id: [""],
+      tipoConsulta: [""],
+      descricao: [""],
+      data: [""],
+      medicoId: [""],
+      medicoSelect: [""],
+      medicoCRM: [""],
+      especializacao: [""],
+      medicoNome: [""],
+      medicoNomeSocial: [""],
+      pacienteId: [""],
+      pacienteSelect: [""],
+      nome: [""],
+      nomeSocial: [""],
+      cpf: [""],
+      dataNascimento: [""],
+      email: [""],
+      sintomas: this.sintomas,
+      telefone: [""],
+      tipoSanguineo: [""],
+      genero: [""],
+      sintomasSelect: [],
     });
   }
 
@@ -92,7 +197,6 @@ export class ConsultaComponent {
   consultaSelect(consulta: Consulta) {
     this.consultaSelecionado = consulta;
     this.sintomas = consulta.sintomas;
-    console.log(consulta);
     this.consultaForm.patchValue(consulta);
   }
 

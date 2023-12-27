@@ -10,8 +10,8 @@ export class Paciente {
     this.cpf = "";
     this.dataNascimento = new Date;
     this.email = "";
-    this.tipoSanguineo = 0;
-    this.genero = 0;
+    this.tipoSanguineo = null;
+    this.genero = null;
     this.cep = "";
     this.bairro = "";
     this.endereco = "";

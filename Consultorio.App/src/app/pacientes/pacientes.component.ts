@@ -85,7 +85,6 @@ export class PacientesComponent implements OnInit {
 
   pacienteSelect(paciente: Paciente) {
     this.pacienteSelecionado = paciente;
-    console.log(paciente);
     this.pacienteForm.patchValue(paciente);
   }
 

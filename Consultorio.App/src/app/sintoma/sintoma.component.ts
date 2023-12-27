@@ -62,7 +62,6 @@ export class SintomaComponent implements OnInit {
 
   sintomaSelect(sintoma: Sintoma) {
     this.sintomaSelecionado = sintoma;
-    console.log(sintoma);
     this.sintomaForm.patchValue(sintoma);
   }
 

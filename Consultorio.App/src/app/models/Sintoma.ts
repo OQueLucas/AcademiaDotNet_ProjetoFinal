@@ -5,5 +5,5 @@ export class Sintoma {
   }
 
   id?: number;
-  nome: string;
+  nome?: string;
 }

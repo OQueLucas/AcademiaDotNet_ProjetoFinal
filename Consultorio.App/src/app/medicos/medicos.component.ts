@@ -85,7 +85,6 @@ export class MedicosComponent implements OnInit {
 
   medicoSelect(medico: Medico) {
     this.medicoSelecionado = medico;
-    console.log(medico);
     this.medicoForm.patchValue(medico);
   }
 

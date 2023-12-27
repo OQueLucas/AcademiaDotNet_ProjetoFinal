@@ -2,7 +2,7 @@
 using Consultorio.API.Model;
 using AutoMapper;
 using Consultorio.API.Interfaces;
-using Consultorio.API.ViewModel;
+using Consultorio.API.ViewModel.Consulta;
 
 namespace Consultorio.API.Controllers
 {
@@ -54,7 +54,7 @@ namespace Consultorio.API.Controllers
 
         // PUT: api/Consulta/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutConsulta(int id, Consulta consulta)
+        public async Task<IActionResult> PutConsulta(int id, ConsultaEdicaoViewModel consulta)
         {
             if (consulta.Id != id) BadRequest("Os Ids informados não são iguais!");
 
@@ -62,7 +62,7 @@ namespace Consultorio.API.Controllers
             if (consultaEncontrada == null) return NotFound("Consulta não encontrado");
             try
             {
-                await _consultaService.Atualizar(consulta);
+                await _consultaService.Atualizar(_mapper.Map<Consulta>(consulta));
                 return Ok(consulta);
             }
             catch (Exception ex)
@@ -73,7 +73,7 @@ namespace Consultorio.API.Controllers
 
         // POST: api/Consulta
         [HttpPost]
-        public async Task<IActionResult> PostConsulta(ConsultaViewModel consultaViewModel)
+        public async Task<IActionResult> PostConsulta(ConsultaCriacaoViewModel consultaViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -86,7 +86,7 @@ namespace Consultorio.API.Controllers
                 return BadRequest($"Erro: {ex.Message}");
             }
 
-            return Ok(consultaViewModel);
+            return Ok();
         }
 
         // DELETE: api/Consulta/5

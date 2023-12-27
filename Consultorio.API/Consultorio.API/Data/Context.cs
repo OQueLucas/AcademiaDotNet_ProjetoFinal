@@ -59,8 +59,8 @@ namespace Consultorio.API.Data
             modelBuilder.Entity<Consulta>()
                 .HasOne(consulta => consulta.Medico)
                 .WithMany(medico => medico.Consultas)
-                .HasForeignKey(consulta => consulta.MedicoCRM)
-                .HasPrincipalKey(medico => medico.CRM)
+                .HasForeignKey(consulta => consulta.MedicoId)
+                .HasPrincipalKey(medico => medico.Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Consulta>()
