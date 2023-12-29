@@ -21,7 +21,15 @@ import { Sintoma } from '../model/sintoma';
   styleUrl: './sintoma-form.component.scss',
 })
 export class SintomaFormComponent implements OnInit {
-  titulo = '';
+  titulo: string;
+
+  setTitle() {
+    if (this.form.value.id === 0) {
+      this.titulo = 'Novo sintoma';
+    } else {
+      this.titulo = 'Editar sintoma: ' + this.form.value.id;
+    }
+  }
 
   form = this._formBuider.group({
     id: [0],
@@ -44,6 +52,7 @@ export class SintomaFormComponent implements OnInit {
     const sintoma: Sintoma = this._route.snapshot.data['sintoma'];
     // this.form.setValue(sintoma);
     this.form.setValue({ id: sintoma.id, nome: sintoma.nome });
+    this.setTitle();
   }
 
   onSubmit() {

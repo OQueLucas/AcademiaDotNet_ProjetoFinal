@@ -17,7 +17,15 @@ import {
   styleUrl: './paciente-form.component.scss',
 })
 export class PacienteFormComponent {
-  titulo = '';
+  titulo: string;
+
+  setTitle() {
+    if (this.form.value.id === 0) {
+      this.titulo = 'Novo paciente';
+    } else {
+      this.titulo = 'Editar paciente: ' + this.form.value.id;
+    }
+  }
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public generos = Object.values(Genero).filter(
@@ -78,6 +86,7 @@ export class PacienteFormComponent {
       telefone: paciente.telefone,
       observacao: paciente.observacao,
     });
+    this.setTitle();
   }
 
   onSubmit() {
