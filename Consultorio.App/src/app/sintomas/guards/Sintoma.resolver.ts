@@ -1,8 +1,9 @@
-import { ResolveFn } from '@angular/router';
-import { SintomaService } from '../../services/sintoma.service';
 import { inject } from '@angular/core';
-import { Sintoma } from '../../models/Sintoma';
-import { Observable, asyncScheduler, of, scheduled } from 'rxjs';
+import { ResolveFn } from '@angular/router';
+import { asyncScheduler, Observable, of, scheduled } from 'rxjs';
+
+import { Sintoma } from './../model/sintoma';
+import { SintomaService } from '../../services/sintoma.service';
 
 export const SintomaResolver: ResolveFn<Observable<Sintoma>> = (
   route,

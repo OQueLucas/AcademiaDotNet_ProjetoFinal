@@ -4,10 +4,10 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, delay, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Paciente } from '../models/Paciente';
+import { Paciente } from '../pacientes/models/Paciente';
 
 @Injectable({
   providedIn: 'root',
@@ -33,25 +33,32 @@ export class PacienteService {
     return throwError(() => errorMessage);
   }
 
-  getPaciente(): Observable<Paciente[]> {
+  get(): Observable<Paciente[]> {
     return this.httpClient
       .get<Paciente[]>(this.baseUrl)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getPacienteById(id: number): Observable<Paciente> {
+  getById(id: number): Observable<Paciente> {
     return this.httpClient
       .get<Paciente>(this.baseUrl + '/' + id)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  post(paciente: Paciente) {
+  save(paciente: Partial<Paciente>) {
+    if (paciente.id) {
+      return this.put(paciente);
+    }
+    return this.post(paciente);
+  }
+
+  post(paciente: Partial<Paciente>) {
     return this.httpClient
       .post(`${this.baseUrl}`, paciente)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  put(paciente: Paciente): Observable<Paciente> {
+  put(paciente: Partial<Paciente>): Observable<Paciente> {
     return this.httpClient
       .put<Paciente>(
         this.baseUrl + '/' + paciente.id,
@@ -61,11 +68,11 @@ export class PacienteService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // deletePaciente(paciente: Paciente) {
-  //   return this.httpClient
-  //     .delete<Paciente>(this.baseUrl + '/' + paciente.id)
-  //     .pipe(retry(1), catchError(this.handleError));
-  // }
+  delete(id: number) {
+    return this.httpClient
+      .delete<Paciente>(this.baseUrl + '/' + id)
+      .pipe(retry(1), catchError(this.handleError));
+  }
 
   addPaciente(paciente: Paciente) {
     return this.httpClient

@@ -21,7 +21,7 @@ import { Sintoma } from '../model/sintoma';
   styleUrl: './sintoma-form.component.scss',
 })
 export class SintomaFormComponent implements OnInit {
-  titulo = 'Novo sintoma';
+  titulo = '';
 
   form = this._formBuider.group({
     id: [0],

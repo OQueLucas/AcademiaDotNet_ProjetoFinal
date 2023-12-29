@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
-import { LayoutModule } from '../shared/layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
 import { SintomaFormComponent } from './sintoma-form/sintoma-form.component';
 import { SintomasRoutingModule } from './sintomas-routing.module';
@@ -14,7 +13,6 @@ import { SintomasComponent } from './sintomas/sintomas.component';
   imports: [
     CommonModule,
     SintomasRoutingModule,
-    LayoutModule,
     AppMaterialModule,
     SharedModule,
     ReactiveFormsModule,

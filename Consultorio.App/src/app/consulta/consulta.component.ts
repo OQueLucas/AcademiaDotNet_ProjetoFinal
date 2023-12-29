@@ -88,7 +88,7 @@ export class ConsultaComponent {
   }
 
   getPacientes() {
-    this.PacienteService.getPaciente().subscribe((pacientes: Paciente[]) => {
+    this.PacienteService.get().subscribe((pacientes: Paciente[]) => {
       this.pacientes = pacientes;
     });
   }

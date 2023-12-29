@@ -19,9 +19,6 @@ import { ConfirmationDialogComponent } from '../../shared/components/confirmatio
 export class SintomasComponent {
   titulo = 'Sintomas';
 
-  dismissible = true;
-  // alerts: AlertType[] = [];
-
   // sintomas$: Observable<Sintoma[]>;
   sintomas$: Observable<Sintoma[]> | null = null;
 
@@ -75,7 +72,7 @@ export class SintomasComponent {
             this.onSuccess();
           },
           error: (error) => {
-            this.onError('Erro ao tentar remover curso.');
+            this.onError('Erro ao tentar remover sintoma.');
           },
         });
       }

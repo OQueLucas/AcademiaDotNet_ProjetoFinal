@@ -4,11 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { HomeComponent } from './home/home.component';
 import { MedicosComponent } from './medicos/medicos.component';
-import { PacientesComponent } from './pacientes/pacientes.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'pacientes', component: PacientesComponent },
+  {
+    path: 'pacientes',
+    loadChildren: () =>
+      import('./pacientes/pacientes.module').then((m) => m.PacientesModule),
+  },
   { path: 'medicos', component: MedicosComponent },
   {
     path: 'sintomas',

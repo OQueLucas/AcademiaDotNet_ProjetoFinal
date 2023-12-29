@@ -1,0 +1,125 @@
+<mat-card class="mt-3">
+  <mat-card-header>
+    <mat-toolbar color="primary">
+      <app-titulo [titulo]="(id.value === '0' ? 'Novo paciente' :  'Editar paciente: ' + id.value)">{{ titulo }}</app-titulo>
+    </mat-toolbar>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" class="d-flex flex-column gap-3 mt-3">
+      <input type="hidden" formControlName="id" #id>
+      <fieldset class="d-flex gap-3">
+        <mat-form-field class="flex-fill">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome">
+          <mat-error *ngIf="form.get('nome')?.invalid">{{getErrorMessage("nome")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Nome Social</mat-label>
+          <input matInput formControlName="nomeSocial" #nomeSocial>
+          <mat-error *ngIf="form.get('nomeSocial')?.invalid">{{getErrorMessage("nomeSocial")}}</mat-error>
+        </mat-form-field>
+      </fieldset>
+
+      <fieldset class="d-flex gap-3">
+
+        <mat-form-field class="flex-fill">
+          <mat-label>CPF</mat-label>
+          <input matInput formControlName="cpf" mask="000.000.000-00" #cpf>
+          @if (cpf.value.length == 15) {
+          <mat-hint align="end">{{cpf.value.length - 4}}/11</mat-hint>
+          }
+          @else if (cpf.value.length > 11) {
+          <mat-hint align="end">{{cpf.value.length - 3}}/11</mat-hint>
+          }
+          @else if (cpf.value.length > 7) {
+          <mat-hint align="end">{{cpf.value.length - 2}}/11</mat-hint>
+          }
+          @else if (cpf.value.length > 3) {
+          <mat-hint align="end">{{cpf.value.length - 1}}/11</mat-hint>
+          }
+          @else {
+          <mat-hint align="end">{{cpf.value.length}}/11</mat-hint>
+          }
+          <mat-error *ngIf="form.get('cpf')?.invalid">{{getErrorMessage("cpf")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </fieldset>
+      <fieldset class="d-flex gap-3">
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Gênero</mat-label>
+          <select matNativeControl required formControlName="genero">
+            <option label="-- Seleciona o gênero --"></option>
+            <option [value]="genero" *ngFor="let genero of generos">{{ GeneroToLabelMapping[genero] }}</option>
+          </select>
+          <mat-error *ngIf="form.get('genero')?.invalid">{{getErrorMessage("genero")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Tipo Sanguíneo</mat-label>
+          <select matNativeControl required formControlName="tipoSanguineo">
+            <option label="-- Seleciona o tipo sanguíneo --"></option>
+            <option [value]="tipo" *ngFor="let tipo of tiposSanguineo">{{ TipoSanguineoToLabelMapping[tipo] }}</option>
+          </select>
+          <mat-error *ngIf="form.get('tipoSanguineo')?.invalid">{{getErrorMessage("tipoSanguineo")}}</mat-error>
+        </mat-form-field>
+
+      </fieldset>
+      <fieldset class="d-flex gap-3">
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" #email>
+          <mat-error *ngIf="form.get('email')?.invalid">{{getErrorMessage("email")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="telefone" #telefone>
+          <mat-error *ngIf="form.get('telefone')?.invalid">{{getErrorMessage("telefone")}}</mat-error>
+        </mat-form-field>
+      </fieldset>
+      <fieldset class="d-flex gap-3">
+
+        <mat-form-field class="flex-fill">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" mask="00000-000" #cep>
+          <mat-hint align="end">{{cep.value.length > 5 ? cep.value.length - 1 : cep.value.length}}/8</mat-hint>
+          <mat-error *ngIf="form.get('cep')?.invalid">{{getErrorMessage("cep")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="bairro" #bairro>
+          <mat-error *ngIf="form.get('bairro')?.invalid">{{getErrorMessage("bairro")}}</mat-error>
+        </mat-form-field>
+
+      </fieldset>
+
+      <mat-form-field class="flex-fill">
+        <mat-label>Endereço</mat-label>
+        <input matInput formControlName="endereco" #endereco>
+        <mat-error *ngIf="form.get('endereco')?.invalid">{{getErrorMessage("endereco")}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="flex-fill">
+        <mat-label>Observação</mat-label>
+        <textarea matInput formControlName="observacao" #observacao></textarea>
+        <mat-error *ngIf="form.get('observacao')?.invalid">{{getErrorMessage("observacao")}}</mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="gap-3">
+    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+    <button mat-raised-button mat-button (click)="onCancel()">Cancelar</button>
+  </mat-card-actions>
+</mat-card>
