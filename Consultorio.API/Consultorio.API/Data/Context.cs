@@ -65,7 +65,8 @@ namespace Consultorio.API.Data
 
             modelBuilder.Entity<Consulta>()
                 .HasMany(consulta => consulta.Sintomas)
-                .WithOne(sintoma => sintoma.Consulta);
+                .WithOne(sintoma => sintoma.Consulta)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

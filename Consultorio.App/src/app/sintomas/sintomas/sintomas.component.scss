@@ -1,0 +1,31 @@
+mat-card {
+  text-align: center;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 600px;
+}
+
+.action-column {
+  flex: 0 0 200px;
+  justify-content: center;
+}
+
+.loading-spinner {
+  padding: 25px;
+  background: rgba($color: #000000, $alpha: 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-icon {
+  overflow: visible;
+  margin: 0;
+}
+.mat-flat-button {
+  line-height: 28px !important;
+  padding: 0 12px !important;
+  font-weight: 400 !important;
+}

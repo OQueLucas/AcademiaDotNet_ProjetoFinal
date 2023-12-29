@@ -14,6 +14,8 @@ namespace Consultorio.API.Services
 
         public async Task Adicionar(Sintoma sintoma)
         {
+            if (_sintomaRepository.GetBy(m => m.Nome == sintoma.Nome).Result.Any()) throw new Exception("Já possui este sintoma no sistema!");
+
             await _sintomaRepository.Add(sintoma);
         }
 

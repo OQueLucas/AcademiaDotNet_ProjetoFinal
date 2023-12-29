@@ -1,11 +1,16 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, retry, throwError } from 'rxjs';
+import { catchError, Observable, retry, throwError } from 'rxjs';
+
+import { environment } from '../../environments/environment';
 import { Paciente } from '../models/Paciente';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PacienteService {
   baseUrl = `${environment.baseUrl}api/paciente`;
@@ -41,7 +46,8 @@ export class PacienteService {
   }
 
   post(paciente: Paciente) {
-    return this.httpClient.post(`${this.baseUrl}`, paciente)
+    return this.httpClient
+      .post(`${this.baseUrl}`, paciente)
       .pipe(retry(2), catchError(this.handleError));
   }
 

@@ -48,7 +48,7 @@
 
     <fieldset nome="contato" class="d-flex gap-3">
       <div class="form-floating flex-fill">
-        <input  id="email" type="email" formControlName="email" class="form-control">
+        <input id="email" type="email" formControlName="email" class="form-control">
         <label for="email" class="form-label">Email</label>
       </div>
       <div class="form-floating flex-fill">
@@ -60,13 +60,13 @@
     <fieldset nome="endereco" class="d-flex flex-column gap-3">
       <div class="d-flex gap-3">
         <div class="form-floating flex-fill">
-        <input type="text" formControlName="cep" mask="00000-000" class="form-control">
-        <label class="form-label">Cep</label>
-      </div>
-      <div class="form-floating flex-fill">
-        <input type="text" formControlName="bairro" class="form-control">
-        <label class="form-label">Bairro</label>
-      </div>
+          <input type="text" formControlName="cep" mask="00000-000" class="form-control">
+          <label class="form-label">Cep</label>
+        </div>
+        <div class="form-floating flex-fill">
+          <input type="text" formControlName="bairro" class="form-control">
+          <label class="form-label">Bairro</label>
+        </div>
       </div>
       <div class="form-floating">
         <input type="text" formControlName="endereco" class="form-control">
@@ -87,17 +87,17 @@
   </form>
 </div>
 
-<div *ngIf="!pacienteSelecionado">
-  <app-titulo [titulo]="titulo">
-    <div class="mt-1">
-      <button class="btn btn-success" (click)="pacienteNovo()">Cadastrar Paciente</button>
-    </div>
-  </app-titulo>
-  <div class="card mt-4">
-    <div class="card-header">
-      <h5>Lista de Pacientes</h5>
-    </div>
-      <table class="table table-striped table-hover card-body">
+<!-- <div *ngIf="!pacienteSelecionado"> -->
+<app-titulo [titulo]="titulo">
+  <div class="mt-1">
+    <button class="btn btn-success" (click)="pacienteNovo()">Cadastrar Paciente</button>
+  </div>
+</app-titulo>
+<div class="card mt-4">
+  <div class="card-header">
+    <h5>Lista de Pacientes</h5>
+  </div>
+  <table class="table table-striped table-hover card-body">
     <thead class="table-light">
       <tr>
         <th scope="col">Nome</th>
@@ -125,5 +125,5 @@
       </tr>
     </tbody>
   </table>
-</div>
+  <!-- </div> -->
 </div>

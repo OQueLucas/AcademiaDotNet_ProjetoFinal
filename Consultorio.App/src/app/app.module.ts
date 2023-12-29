@@ -1,22 +1,28 @@
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import localePT from '@angular/common/locales/pt';
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PacientesComponent } from './pacientes/pacientes.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { NavComponent } from './nav/nav.component';
+import { ConsultaComponent } from './consulta/consulta.component';
 import { HomeComponent } from './home/home.component';
 import { MedicosComponent } from './medicos/medicos.component';
-import { SintomaComponent } from './sintoma/sintoma.component';
-import { ConsultaComponent } from './consulta/consulta.component';
-import { TituloComponent } from './titulo/titulo.component';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { registerLocaleData } from '@angular/common';
-import localePT from '@angular/common/locales/pt';
+import { NavComponent } from './nav/nav.component';
+import { PacientesComponent } from './pacientes/pacientes.component';
+import { LayoutModule } from './shared/layout/layout.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
-registerLocaleData(localePT, 'pt')
+registerLocaleData(localePT, 'pt');
 
 @NgModule({
   declarations: [
@@ -25,26 +31,30 @@ registerLocaleData(localePT, 'pt')
     PacientesComponent,
     HomeComponent,
     MedicosComponent,
-    SintomaComponent,
     ConsultaComponent,
-    TituloComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    LayoutModule,
     ReactiveFormsModule,
     NgxMaskDirective,
     NgxMaskPipe,
+    AlertModule.forRoot(),
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   providers: [
     provideClientHydration(),
     HttpClientModule,
     FormsModule,
     provideNgxMask(),
-    { provide: LOCALE_ID, useValue: 'pt' }
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [],
 })
-export class AppModule { }
+export class AppModule {}

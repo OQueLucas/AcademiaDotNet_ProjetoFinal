@@ -1,39 +1,71 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+
+import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
+import {
+  TipoSanguineo,
+  TipoSanguineoToLabelMapping,
+} from '../models/enum/TipoSanguineo.enum';
 import { Paciente } from '../models/Paciente';
 import { PacienteService } from '../services/paciente.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
-import { TipoSanguineoToLabelMapping, TipoSanguineo } from '../models/enum/TipoSanguineo.enum';
 
 @Component({
   selector: 'app-pacientes',
   templateUrl: './pacientes.component.html',
-  styleUrl: './pacientes.component.scss'
+  styleUrl: './pacientes.component.scss',
 })
-
 export class PacientesComponent implements OnInit {
   titulo = 'Pacientes';
 
-  public pacientes: Paciente[];
-  public pacienteForm: FormGroup;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  public pacientes: Paciente[] = [];
+
+  public pacienteForm: FormGroup = this.fb.group({
+    id: [''],
+    pessoaId: [''],
+    nome: ['', Validators.required],
+    nomeSocial: [''],
+    cpf: ['', Validators.required],
+    dataNascimento: ['', Validators.required],
+    email: [this.emailFormControl],
+    tipoSanguineo: ['', Validators.required],
+    genero: ['', Validators.required],
+    cep: [''],
+    bairro: [''],
+    endereco: [''],
+    telefone: [''],
+    observacao: [''],
+  });
+
   public pacienteSelecionado: Paciente;
 
   public modo = 'post';
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
-  public generos = Object.values(Genero).filter(value => typeof value === 'number');
+  public generos = Object.values(Genero).filter(
+    (value) => typeof value === 'number'
+  );
 
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
-  public tipoSanguineo = Object.values(TipoSanguineo).filter(value => typeof value === 'number');
+  public tipoSanguineo = Object.values(TipoSanguineo).filter(
+    (value) => typeof value === 'number'
+  );
   generoSelecionado = 'null';
   tipoSanguineoSelecionado = 'null';
-
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 
   constructor(
     private fb: FormBuilder,
     private PacienteService: PacienteService
-    ){
+  ) {
     this.criarForm();
   }
 
@@ -44,7 +76,7 @@ export class PacientesComponent implements OnInit {
   getPacientes() {
     this.PacienteService.getPaciente().subscribe((pacientes: Paciente[]) => {
       this.pacientes = pacientes;
-    })
+    });
   }
 
   criarForm() {
@@ -67,12 +99,11 @@ export class PacientesComponent implements OnInit {
   }
 
   savePaciente(paciente: Paciente) {
-    paciente.id === 0 ? (this.modo = 'post') : (this.modo = 'put');
-
-    this.PacienteService[this.modo](paciente).subscribe((retorno: Paciente) => {
-      this.getPacientes();
-      this.pacienteSelecionado = retorno;
-    });
+    // paciente.id === 0 ? (this.modo = 'post') : (this.modo = 'put');
+    // this.PacienteService.post(paciente).subscribe((retorno: Paciente) => {
+    //   this.getPacientes();
+    //   this.pacienteSelecionado = retorno;
+    // });
   }
 
   pacienteSubmit() {
@@ -94,6 +125,6 @@ export class PacientesComponent implements OnInit {
   }
 
   voltar() {
-    this.pacienteSelecionado = null;
+    // this.pacienteSelecionado = null;
   }
 }

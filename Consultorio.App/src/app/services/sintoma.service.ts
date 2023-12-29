@@ -1,11 +1,16 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, retry, throwError } from 'rxjs';
-import { Sintoma } from '../models/Sintoma';
+import { catchError, delay, first, Observable, retry, throwError } from 'rxjs';
+
+import { environment } from '../../environments/environment';
+import { Sintoma } from '../sintomas/model/sintoma';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SintomaService {
   baseUrl = `${environment.baseUrl}api/sintomas`;
@@ -28,43 +33,47 @@ export class SintomaService {
     return throwError(() => errorMessage);
   }
 
-  getSintoma(): Observable<Sintoma[]> {
-    return this.httpClient
-      .get<Sintoma[]>(this.baseUrl)
-      .pipe(retry(2), catchError(this.handleError));
+  get(): Observable<Sintoma[]> {
+    return this.httpClient.get<Sintoma[]>(this.baseUrl).pipe(
+      first(),
+      //delay(5000),
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 
-  getSintomaById(id: number): Observable<Sintoma> {
+  getById(id: number): Observable<Sintoma> {
     return this.httpClient
       .get<Sintoma>(this.baseUrl + '/' + id)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(first(), retry(2), catchError(this.handleError));
   }
 
-  post(sintoma: Sintoma): Observable<Sintoma> {
+  save(sintoma: Partial<Sintoma>) {
+    if (sintoma.id) {
+      return this.put(sintoma);
+    }
+    return this.post(sintoma);
+  }
+
+  private post(sintoma: Partial<Sintoma>): Observable<Sintoma> {
     return this.httpClient
       .post<Sintoma>(this.baseUrl, JSON.stringify(sintoma), this.httpOptions)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(first(), retry(2), catchError(this.handleError));
   }
 
-  put(sintoma: Sintoma): Observable<Sintoma> {
+  private put(sintoma: Partial<Sintoma>): Observable<Sintoma> {
     return this.httpClient
       .put<Sintoma>(
         this.baseUrl + '/' + sintoma.id,
         JSON.stringify(sintoma),
         this.httpOptions
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(first(), retry(1), catchError(this.handleError));
   }
 
-  deleteSintoma(sintoma: Sintoma) {
+  delete(id: number) {
     return this.httpClient
-      .delete<Sintoma>(this.baseUrl + '/' + sintoma.id)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  addSintoma(sintoma: Sintoma) {
-    return this.httpClient
-      .post<Sintoma>(this.baseUrl, JSON.stringify(sintoma))
-      .pipe(retry(2), catchError(this.handleError));
+      .delete(this.baseUrl + '/' + id)
+      .pipe(first(), retry(1), catchError(this.handleError));
   }
 }

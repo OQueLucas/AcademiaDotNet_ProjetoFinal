@@ -1,24 +1,10 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<mat-toolbar color="primary">
   <div class="container">
-    <a routerLink="" class="navbar-brand">Consultório</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item" routerLinkActive="active">
-          <a routerLink="pacientes" class="nav-link">Pacientes</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a routerLink="medicos" class="nav-link">Medicos</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a routerLink="sintomas" class="nav-link">Sintoma</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a routerLink="consultas" class="nav-link">Consulta</a>
-        </li>
-      </ul>
-    </div>
+    <span>Consultório</span>
+    <a mat-button routerLink="" class="navbar-brand">Home</a>
+    <a mat-button routerLink="pacientes" class="nav-link">Pacientes</a>
+    <a mat-button routerLink="medicos" class="nav-link">Medicos</a>
+    <a mat-button routerLink="sintomas" class="nav-link">Sintomas</a>
+    <a mat-button routerLink="consultas" class="nav-link">Consulta</a>
   </div>
-</nav>
+</mat-toolbar>

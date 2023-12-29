@@ -94,7 +94,7 @@ namespace Consultorio.API.Controllers
 
             if (sintomaEncontrado == null) return NotFound();
 
-            if (await _sintomaService.Remover(sintomaEncontrado)) return Ok("Sintoma apagado");
+           await _sintomaService.Remover(sintomaEncontrado);
 
             return NoContent();
         }

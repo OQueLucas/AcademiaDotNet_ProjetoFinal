@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
+import { TipoSanguineo, TipoSanguineoToLabelMapping } from '../models/enum/TipoSanguineo.enum';
 import { Medico } from '../models/Medico';
 import { MedicoService } from '../services/medico.service';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { TipoSanguineo, TipoSanguineoToLabelMapping } from '../models/enum/TipoSanguineo.enum';
-import { Genero, GeneroToLabelMapping } from '../models/enum/Genero.enum';
 
 @Component({
   selector: 'app-medicos',
