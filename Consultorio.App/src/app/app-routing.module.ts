@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ConsultaComponent } from './consulta/consulta.component';
 import { HomeComponent } from './home/home.component';
-import { MedicosComponent } from './medicos/medicos.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,7 +11,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pacientes/pacientes.module').then((m) => m.PacientesModule),
   },
-  { path: 'medicos', component: MedicosComponent },
+  {
+    path: 'medicos',
+    loadChildren: () =>
+      import('./medicos/medicos.module').then((m) => m.MedicosModule),
+  },
   {
     path: 'sintomas',
     loadChildren: () =>

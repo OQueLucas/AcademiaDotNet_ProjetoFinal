@@ -108,8 +108,6 @@ namespace Consultorio.API.Controllers
 
             if (medico == null) return NotFound();
 
-            if (await _medicoService.Remover(medico)) return Ok("Medico apagado");
-
             return NoContent();
         }
     }

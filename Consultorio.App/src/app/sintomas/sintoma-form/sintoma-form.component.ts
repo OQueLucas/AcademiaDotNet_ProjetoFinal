@@ -1,19 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  NonNullableFormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SintomaService } from '../../services/sintoma.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { Sintoma } from '../model/sintoma';
-
-// type AlertType = { type: string; msg: string };
+import { FormUtilsService } from '../../shared/form/form-utils.service';
 
 @Component({
   selector: 'app-sintoma-form',
@@ -31,38 +23,44 @@ export class SintomaFormComponent implements OnInit {
     }
   }
 
-  form = this._formBuider.group({
-    id: [0],
-    nome: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(30),
-    ]),
-  });
+  form: FormGroup;
 
   constructor(
     private _formBuider: FormBuilder,
     private _sintomaService: SintomaService,
     private _location: Location,
     private _route: ActivatedRoute,
-    private _snackBar: MatSnackBar
+    public formUtils: FormUtilsService
   ) {}
 
   ngOnInit(): void {
     const sintoma: Sintoma = this._route.snapshot.data['sintoma'];
-    // this.form.setValue(sintoma);
-    this.form.setValue({ id: sintoma.id, nome: sintoma.nome });
+    this.form = this._formBuider.group({
+      id: [sintoma.id],
+      nome: [
+        sintoma.nome,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(30),
+        ],
+      ],
+    });
     this.setTitle();
   }
 
   onSubmit() {
-    this._sintomaService.save(this.form.value).subscribe({
-      next: () => {
-        this.onSuccess();
-        this.voltar();
-      },
-      error: () => this.onError(),
-    });
+    if (this.form.valid) {
+      this._sintomaService.save(this.form.value).subscribe({
+        next: () => {
+          this.formUtils.message('Sintoma cadastrado com sucesso!');
+          this.voltar();
+        },
+        error: () => this.formUtils.message('Erro ao cadastrar sintoma!'),
+      });
+    } else {
+      this.formUtils.validateAllFormFields(this.form);
+    }
   }
 
   onCancel(): void {
@@ -71,38 +69,5 @@ export class SintomaFormComponent implements OnInit {
 
   voltar() {
     this._location.back();
-    // this.router.navigate(['sintomas']);
-  }
-
-  private onSuccess() {
-    this._snackBar.open('Sintoma salvo com sucesso!', '', { duration: 5000 });
-  }
-
-  private onError() {
-    this._snackBar.open('Erro ao salvar sintoma!', '', { duration: 5000 });
-  }
-
-  getErrorMessage(fieldName: string) {
-    const field = this.form.get(fieldName);
-
-    if (field.hasError('required')) {
-      return 'Campo obrigatório';
-    }
-
-    if (field.hasError('minlength')) {
-      const requiredLength = field.errors
-        ? field.errors['minlength']['requiredLength']
-        : 5;
-      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres`;
-    }
-
-    if (field.hasError('maxlength')) {
-      const requiredLength = field.errors
-        ? field.errors['maxlength']['requiredLength']
-        : 30;
-      return `Tamanho máximo precisa ser de ${requiredLength} caracteres`;
-    }
-
-    return 'Campo inválido';
   }
 }

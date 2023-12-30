@@ -4,10 +4,10 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, delay, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Medico } from '../models/Medico';
+import { Medico } from '../medicos/model/medico';
 
 @Injectable({
   providedIn: 'root',
@@ -33,25 +33,32 @@ export class MedicoService {
     return throwError(() => errorMessage);
   }
 
-  getMedico(): Observable<Medico[]> {
+  get(): Observable<Medico[]> {
     return this.httpClient
       .get<Medico[]>(this.baseUrl)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getMedicoById(id: number): Observable<Medico> {
+  getById(id: number) {
     return this.httpClient
       .get<Medico>(this.baseUrl + '/' + id)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  post(medico: Medico): Observable<Medico> {
+  save(medico: Partial<Medico>) {
+    if (medico.id) {
+      return this.put(medico);
+    }
+    return this.post(medico);
+  }
+
+  post(medico: Partial<Medico>) {
     return this.httpClient
-      .post<Medico>(this.baseUrl, JSON.stringify(medico), this.httpOptions)
+      .post<Medico>(this.baseUrl, medico)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  put(medico: Medico): Observable<Medico> {
+  put(medico: Partial<Medico>) {
     return this.httpClient
       .put<Medico>(
         this.baseUrl + '/' + medico.id,
@@ -61,15 +68,9 @@ export class MedicoService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // deleteMedico(medico: Medico) {
-  //   return this.httpClient
-  //     .delete<Medico>(this.baseUrl + '/' + medico.id)
-  //     .pipe(retry(1), catchError(this.handleError));
-  // }
-
-  addMedico(medico: Medico) {
+  delete(id: number) {
     return this.httpClient
-      .post<Medico>(this.baseUrl, JSON.stringify(medico))
-      .pipe(retry(2), catchError(this.handleError));
+      .delete<Medico>(this.baseUrl + '/' + id)
+      .pipe(retry(1), catchError(this.handleError));
   }
 }

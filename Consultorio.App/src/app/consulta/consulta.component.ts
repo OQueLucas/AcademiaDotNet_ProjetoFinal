@@ -94,7 +94,7 @@ export class ConsultaComponent {
   }
 
   getMedicos() {
-    this.MedicoService.getMedico().subscribe((medicos: Medico[]) => {
+    this.MedicoService.get().subscribe((medicos: Medico[]) => {
       this.medicos = medicos;
     });
   }

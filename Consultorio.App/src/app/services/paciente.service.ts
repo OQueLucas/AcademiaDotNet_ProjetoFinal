@@ -39,7 +39,7 @@ export class PacienteService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getById(id: number): Observable<Paciente> {
+  getById(id: number) {
     return this.httpClient
       .get<Paciente>(this.baseUrl + '/' + id)
       .pipe(retry(2), catchError(this.handleError));
@@ -58,7 +58,7 @@ export class PacienteService {
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  put(paciente: Partial<Paciente>): Observable<Paciente> {
+  put(paciente: Partial<Paciente>) {
     return this.httpClient
       .put<Paciente>(
         this.baseUrl + '/' + paciente.id,

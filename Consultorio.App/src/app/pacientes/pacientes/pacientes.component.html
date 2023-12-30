@@ -47,7 +47,8 @@
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef class="action-column">
-            <button (click)="onAdd()" mat-mini-fab color="accent" aria-label="Adicionar paciente">
+            <button (click)="onAdd()" mat-raised-button extended color="accent" aria-label="Adicionar paciente">
+              Novo
               <mat-icon>add</mat-icon>
             </button>
           </mat-header-cell>
@@ -55,11 +56,11 @@
           <mat-cell *matCellDef="let paciente" class="action-column">
             <button mat-button color="primary" aria-label="Editar paciente" (click)="onEdit(paciente)">
               Editar
-              <mat-icon>edit</mat-icon>
+              <mat-icon class="mat-icon-visible">edit</mat-icon>
             </button>
             <button mat-button color="warn" aria-label="Remover paciente" (click)="onRemove(paciente)">
               Remover
-              <mat-icon>delete</mat-icon>
+              <mat-icon class="mat-icon-visible">delete</mat-icon>
             </button>
           </mat-cell>
         </ng-container>

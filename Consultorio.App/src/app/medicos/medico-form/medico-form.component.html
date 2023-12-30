@@ -24,8 +24,30 @@
       <fieldset class="d-flex gap-3">
 
         <mat-form-field class="flex-fill">
+          <mat-label>CRM</mat-label>
+          <input matInput formControlName="crm" mask="SS 00000" placeholder="SP 00000" #crm>
+          @if (crm.value.length > 2) {
+          <mat-hint align="end">{{crm.value.length - 1}}/7</mat-hint>
+          }
+          @else {
+          <mat-hint align="end">{{crm.value.length}}/7</mat-hint>
+          }
+          <mat-error *ngIf="form.get('crm')?.invalid">{{formUtils.getErrorMessage(form, "crm")}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-fill">
+          <mat-label>Especialização</mat-label>
+          <input matInput formControlName="especializacao">
+          <mat-error *ngIf="form.get('especializacao')?.invalid">{{formUtils.getErrorMessage(form, "especializacao")}}</mat-error>
+        </mat-form-field>
+
+      </fieldset>
+
+      <fieldset class="d-flex gap-3">
+
+        <mat-form-field class="flex-fill">
           <mat-label>CPF</mat-label>
-          <input matInput formControlName="cpf" mask="000.000.000-00" #cpf>
+          <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="000.000.000-00" #cpf>
           @if (cpf.value.length == 15) {
           <mat-hint align="end">{{cpf.value.length - 4}}/11</mat-hint>
           }
@@ -46,8 +68,8 @@
 
         <mat-form-field>
           <mat-label>Data de Nascimento</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
-          <mat-hint>DD/MM/YYYY</mat-hint>
+          <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" formControlName="dataNascimento">
+          <mat-hint>DD/MM/AAAA</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -107,11 +129,6 @@
         <mat-label>Endereço</mat-label>
         <input matInput formControlName="endereco" #endereco>
         <mat-error *ngIf="form.get('endereco')?.invalid">{{formUtils.getErrorMessage(form, "endereco")}}</mat-error>
-      </mat-form-field>
-      <mat-form-field class="flex-fill">
-        <mat-label>Observação</mat-label>
-        <textarea matInput formControlName="observacao" #observacao></textarea>
-        <mat-error *ngIf="form.get('observacao')?.invalid">{{formUtils.getErrorMessage(form, "observacao")}}</mat-error>
       </mat-form-field>
 
     </form>
