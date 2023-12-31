@@ -68,6 +68,16 @@ export class ConsultaService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  putSintoma(consulta: Partial<Consulta>) {
+    return this.httpClient
+      .put<Consulta>(
+        this.baseUrl + '/' + consulta.id + '/sintomas',
+        JSON.stringify(consulta),
+        this.httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   delete(id: number) {
     return this.httpClient
       .delete<Consulta>(this.baseUrl + '/' + id)

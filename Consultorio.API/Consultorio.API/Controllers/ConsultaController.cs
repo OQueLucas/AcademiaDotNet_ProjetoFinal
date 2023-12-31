@@ -71,6 +71,25 @@ namespace Consultorio.API.Controllers
             }
         }
 
+        // PUT: api/Consulta/5
+        [HttpPut("{id}/sintomas")]
+        public async Task<IActionResult> PutConsultaSintoma(int id, ConsultaEdicaoViewModel consulta)
+        {
+            if (consulta.Id != id) BadRequest("Os Ids informados não são iguais!");
+
+            var consultaEncontrada = await _consultaService.BuscaId(id);
+            if (consultaEncontrada == null) return NotFound("Consulta não encontrado");
+            try
+            {
+                await _consultaService.AtualizarSintoma(_mapper.Map<Consulta>(consulta));
+                return Ok(consulta);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro: {ex.Message}");
+            }
+        }
+
         // POST: api/Consulta
         [HttpPost]
         public async Task<IActionResult> PostConsulta(ConsultaCriacaoViewModel consultaViewModel)

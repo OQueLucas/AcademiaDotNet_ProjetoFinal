@@ -22,6 +22,11 @@ namespace Consultorio.API.Services
             await _consultaRepository.Update(consulta);
         }
 
+        public async Task AtualizarSintoma(Consulta consulta)
+        {
+            await _consultaRepository.UpdateSintomas(consulta);
+        }
+
         public async Task<bool> Remover(Consulta consulta)
         {
             if (await _consultaRepository.Remove(consulta)) return true;

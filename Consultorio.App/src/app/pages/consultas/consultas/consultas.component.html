@@ -6,7 +6,7 @@
 
   <div class="mat-elevation-z8">
     <div *ngIf="consulta$ | async as consulta; else loading">
-      <mat-table [dataSource]="consulta">
+      <mat-table [dataSource]="consulta" matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
 
         <!-- Tipo de Consulta Column -->
         <ng-container matColumnDef="tipoConsulta">
@@ -16,7 +16,7 @@
 
         <!-- Data Column -->
         <ng-container matColumnDef="data">
-          <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Data </mat-header-cell>
           <mat-cell *matCellDef="let consulta"> {{ consulta.data | date: 'dd/MM/yyyy HH:mm'}} </mat-cell>
         </ng-container>
 

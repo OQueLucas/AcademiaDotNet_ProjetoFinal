@@ -6,5 +6,6 @@ namespace Consultorio.API.Interfaces
     {
         public Task<List<Consulta>> GetAll();
         public Task<Consulta> GetById(int id);
+        public Task UpdateSintomas(Consulta entity);
     }
 }

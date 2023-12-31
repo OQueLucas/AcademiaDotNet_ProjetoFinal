@@ -13,6 +13,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   exports: [
     MatCardModule,
@@ -26,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
   ],

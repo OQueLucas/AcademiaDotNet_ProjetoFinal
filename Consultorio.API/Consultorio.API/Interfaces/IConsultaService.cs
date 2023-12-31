@@ -8,6 +8,7 @@ namespace Consultorio.API.Interfaces
         Task Adicionar(Consulta consulta);
         Task<Consulta> BuscaId(int id);
         Task Atualizar(Consulta consulta);
+        Task AtualizarSintoma(Consulta consulta);
         Task<bool> Remover(Consulta consulta);
     }
 }

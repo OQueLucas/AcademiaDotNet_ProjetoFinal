@@ -110,31 +110,37 @@
 
       </fieldset>
 
-      <mat-toolbar>
+      <mat-toolbar class="gap-3">
         <span>Sintomas</span>
-        <button mat-icon-button color="accent" (click)="addNovoSintoma()">
-          <mat-icon aria-label="Adicionar um novo sintoma">add</mat-icon>
-        </button>
       </mat-toolbar>
-
+      <div class="d-flex align-items-center">
+        <mat-form-field class="px-4 flex-grow-1">
+          <mat-label>Adicionar sintoma</mat-label>
+          <select matNativeControl formControlName="sintomaSelect" (change)="onSelectSintoma($event)">
+            <option [value]="sintoma.id" *ngFor="let sintoma of sintomas">{{ sintoma.nome }}</option>
+          </select>
+        </mat-form-field>
+        <div class="px-4">
+          <button mat-mini-fab color="accent" (click)="onAddSintoma()">
+            <mat-icon aria-label="Adicionar um novo sintoma">add</mat-icon>
+          </button>
+        </div>
+      </div>
       <table formArrayName="sintomas" *ngFor="let sintoma of getSintomasFormArray(); let i = index">
-        <tr [formGroupName]="i">
+        <tr class="" [formGroupName]="i">
           <td>
-            <mat-form-field class="flex-fill">
-              <mat-label>Sintoma</mat-label>
-              <select matNativeControl formControlName="sintomaId">
-                <option [value]="tipo.id" *ngFor="let tipo of sintomas">{{ tipo.nome }}</option>
-              </select>
-              <mat-error *ngIf="form.get('sintomaId')?.invalid">{{formUtils.getErrorMessage(form, "sintomaId")}}</mat-error>
+            <mat-form-field class="flex-fill d-flex">
+              <input matInput formControlName="nome" readonly>
             </mat-form-field>
           </td>
           <td>
-            <button mat-icon-button color="warn" (click)="removeSintoma(i)">
+            <button mat-mini-fab color="warn" (click)="removeSintoma(i)">
               <mat-icon aria-label="Adicionar um novo sintoma">delete</mat-icon>
             </button>
           </td>
         </tr>
       </table>
+      <button mat-raised-button color="primary" (click)="onUpdateSintoma()">Atualizar Sintomas Removidos</button>
 
       <mat-form-field class="flex-fill">
         <mat-label>Descrição</mat-label>
@@ -142,6 +148,23 @@
         <mat-error *ngIf="form.get('descricao')?.invalid">{{formUtils.getErrorMessage(form, "descricao")}}</mat-error>
       </mat-form-field>
 
+
+
+
+      <!-- <table id="sintomas" class="table">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Sintomas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sintoma of sintomas">
+              <td>{{sintoma.sintomaId}}</td>
+              <td>{{sintoma.nome}}</td>
+            </tr>
+          </tbody>
+        </table> -->
     </form>
   </mat-card-content>
   <mat-card-actions class="gap-3">

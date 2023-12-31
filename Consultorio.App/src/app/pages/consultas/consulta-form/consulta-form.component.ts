@@ -3,6 +3,7 @@ import {
   FormBuilder,
   FormGroup,
   UntypedFormArray,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import {
@@ -108,6 +109,7 @@ export class ConsultaFormComponent {
       telefone: [consulta.telefone],
       descricao: [consulta.descricao],
       sintomas: this._formBuider.array(this.obterSintomas(consulta)),
+      sintomaSelect: [],
     });
     this.setTitle();
   }
@@ -125,7 +127,12 @@ export class ConsultaFormComponent {
   }
 
   private novoSintoma(
-    sintoma: SintomaConsulta = { id: null, sintomaId: null, nome: '' }
+    sintoma: SintomaConsulta = {
+      id: null,
+      sintomaId: null,
+      nome: '',
+      consultaId: null,
+    }
   ) {
     return this._formBuider.group({
       id: [sintoma.id],
@@ -138,11 +145,6 @@ export class ConsultaFormComponent {
     return (<UntypedFormArray>this.form.get('sintomas')).controls;
   }
 
-  addNovoSintoma() {
-    const sintomas = this.form.get('sintomas') as UntypedFormArray;
-    sintomas.push(this.novoSintoma());
-  }
-
   removeSintoma(index: number) {
     const sintomas = this.form.get('sintomas') as UntypedFormArray;
     sintomas.removeAt(index);
@@ -153,9 +155,54 @@ export class ConsultaFormComponent {
       this._consultaService.save(this.form.value).subscribe({
         next: () => {
           this.formUtils.message('Consulta cadastrado com sucesso!');
-          this.voltar();
         },
         error: () => this.formUtils.message('Erro ao cadastrar consulta!'),
+      });
+    } else {
+      this.formUtils.validateAllFormFields(this.form);
+    }
+  }
+
+  sintomaSelecionado: SintomaConsulta;
+
+  onAddSintoma() {
+    let anotado = false;
+    const sintomas = this.form.get('sintomas') as UntypedFormArray;
+
+    for (let c of this.getSintomasFormArray()) {
+      if (c.value.sintomaId == this.sintomaSelecionado.sintomaId) {
+        anotado = true;
+      }
+    }
+
+    if (anotado) return;
+
+    sintomas.push(this.novoSintoma(this.sintomaSelecionado));
+    this.form.patchValue({ sintomaSelect: null });
+  }
+
+  onSelectSintoma(event) {
+    const id = Number((event.target as HTMLSelectElement).value);
+
+    const sintoma = this.sintomas.find((sintoma: Sintoma) => {
+      return sintoma?.id == id;
+    });
+
+    this.sintomaSelecionado = {
+      id: null,
+      sintomaId: sintoma.id,
+      nome: sintoma.nome,
+      consultaId: null,
+    };
+  }
+
+  onUpdateSintoma() {
+    if (this.form.valid) {
+      this._consultaService.putSintoma(this.form.value).subscribe({
+        next: () => {
+          this.formUtils.message('Sintomas atualizados com sucesso!');
+        },
+        error: () => this.formUtils.message('Erro ao atualizar sintomas!'),
       });
     } else {
       this.formUtils.validateAllFormFields(this.form);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Observable, asyncScheduler, catchError, of, scheduled } from 'rxjs';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { ConsultaService } from '../../../services/consulta.service';
@@ -15,7 +15,7 @@ import { Consulta } from '../model/consulta';
   templateUrl: './consultas.component.html',
   styleUrl: './consultas.component.scss',
 })
-export class ConsultasComponent {
+export class ConsultasComponent implements AfterViewInit {
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoConsultaToLabelMapping = TipoConsulta;
 
@@ -40,6 +40,9 @@ export class ConsultasComponent {
     private _snackBar: MatSnackBar
   ) {
     this.refresh();
+  }
+  ngAfterViewInit(): void {
+    console.log('teste');
   }
 
   refresh() {

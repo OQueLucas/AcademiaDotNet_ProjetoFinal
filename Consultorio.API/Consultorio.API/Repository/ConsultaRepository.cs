@@ -22,6 +22,34 @@ namespace Consultorio.API.Repository
                     .ThenInclude(sintomaConsulta => sintomaConsulta.Sintoma).ToListAsync();
         }
 
+        public override async Task Update(Consulta entity)
+        {
+            _data.Update(entity);
+            await SaveChangesAsync();
+        }
+
+        public async Task UpdateSintomas(Consulta entity)
+        {
+            var all = _context.SintomaConsulta.Where(x => x.ConsultaId == entity.Id).AsNoTracking().ToList();
+            List<SintomaConsulta> sintomas = entity.Sintomas.ToList();
+            var remove = all.ToList();
+
+            foreach (var sintomaCadastrado in all)
+            {
+                foreach (var sintoma in sintomas)
+                {
+                    if (sintomaCadastrado.Id == sintoma.Id)
+                    {
+                        remove.Remove(sintomaCadastrado);
+                        break;
+                    }
+                }
+            }
+
+            _context.SintomaConsulta.RemoveRange(remove);
+            await SaveChangesAsync();
+        }
+
         public async Task<Consulta> GetById(int id)
         {
             return await _data.AsNoTrackingWithIdentityResolution()
