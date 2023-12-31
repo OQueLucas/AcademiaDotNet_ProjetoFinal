@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Consulta } from '../models/Consulta';
+import { Consulta } from '../pages/consultas/model/consulta';
 
 @Injectable({
   providedIn: 'root',
@@ -33,25 +33,32 @@ export class ConsultaService {
     return throwError(() => errorMessage);
   }
 
-  getConsulta(): Observable<Consulta[]> {
+  get(): Observable<Consulta[]> {
     return this.httpClient
       .get<Consulta[]>(this.baseUrl)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  getConsultaById(id: number): Observable<Consulta> {
+  getById(id: number) {
     return this.httpClient
       .get<Consulta>(this.baseUrl + '/' + id)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  post(consulta: Consulta): Observable<Consulta> {
+  save(consulta: Partial<Consulta>) {
+    if (consulta.id) {
+      return this.put(consulta);
+    }
+    return this.post(consulta);
+  }
+
+  post(consulta: Partial<Consulta>) {
     return this.httpClient
-      .post<Consulta>(this.baseUrl, JSON.stringify(consulta), this.httpOptions)
+      .post<Consulta>(this.baseUrl, consulta)
       .pipe(retry(2), catchError(this.handleError));
   }
 
-  put(consulta: Consulta): Observable<Consulta> {
+  put(consulta: Partial<Consulta>) {
     return this.httpClient
       .put<Consulta>(
         this.baseUrl + '/' + consulta.id,
@@ -61,15 +68,9 @@ export class ConsultaService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // deleteConsulta(consulta: Consulta) {
-  //   return this.httpClient
-  //     .delete<Consulta>(this.baseUrl + '/' + consulta.id)
-  //     .pipe(retry(1), catchError(this.handleError));
-  // }
-
-  addConsulta(consulta: Consulta) {
+  delete(id: number) {
     return this.httpClient
-      .post<Consulta>(this.baseUrl, JSON.stringify(consulta))
-      .pipe(retry(2), catchError(this.handleError));
+      .delete<Consulta>(this.baseUrl + '/' + id)
+      .pipe(retry(1), catchError(this.handleError));
   }
 }

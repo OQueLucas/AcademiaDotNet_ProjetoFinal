@@ -1,10 +1,10 @@
 <mat-toolbar color="primary" class="mb-5">
   <div class="container">
     <span>Consultório</span>
-    <a mat-button routerLink="" class="navbar-brand">Home</a>
-    <a mat-button routerLink="pacientes" class="nav-link">Pacientes</a>
-    <a mat-button routerLink="medicos" class="nav-link">Medicos</a>
-    <a mat-button routerLink="sintomas" class="nav-link">Sintomas</a>
-    <a mat-button routerLink="consultas" class="nav-link">Consulta</a>
+    <a mat-button routerLink="" [routerLinkActive]="['active']" class="navbar-brand">Home</a>
+    <a mat-button routerLink="pacientes" [routerLinkActive]="['active']" class="nav-link">Pacientes</a>
+    <a mat-button routerLink="medicos" [routerLinkActive]="['active']" class="nav-link">Medicos</a>
+    <a mat-button routerLink="sintomas" [routerLinkActive]="['active']" class="nav-link">Sintomas</a>
+    <a mat-button routerLink="consultas" [routerLinkActive]="['active']" class="nav-link">Consulta</a>
   </div>
 </mat-toolbar>

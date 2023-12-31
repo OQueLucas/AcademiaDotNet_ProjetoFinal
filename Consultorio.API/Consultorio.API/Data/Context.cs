@@ -19,6 +19,7 @@ namespace Consultorio.API.Data
         public DbSet<Paciente> Paciente { get; set; }
         public DbSet<Sintoma> Sintoma { get; set; }
         public DbSet<Consulta> Consulta { get; set; }
+        public DbSet<SintomaConsulta> SintomaConsulta { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,11 +62,6 @@ namespace Consultorio.API.Data
                 .WithMany(medico => medico.Consultas)
                 .HasForeignKey(consulta => consulta.MedicoId)
                 .HasPrincipalKey(medico => medico.Id)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Consulta>()
-                .HasMany(consulta => consulta.Sintomas)
-                .WithOne(sintoma => sintoma.Consulta)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

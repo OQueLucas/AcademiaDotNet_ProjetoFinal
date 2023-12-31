@@ -97,7 +97,7 @@ namespace Consultorio.API.Controllers
 
             if (consulta == null) return NotFound();
 
-            if (await _consultaService.Remover(consulta)) return Ok("Consulta apagado");
+            await _consultaService.Remover(consulta);
 
             return NoContent();
         }

@@ -1,0 +1,90 @@
+<mat-card>
+
+  <mat-toolbar color="primary">
+    <span>Consultas</span>
+  </mat-toolbar>
+
+  <div class="mat-elevation-z8">
+    <div *ngIf="consulta$ | async as consulta; else loading">
+      <mat-table [dataSource]="consulta">
+
+        <!-- Tipo de Consulta Column -->
+        <ng-container matColumnDef="tipoConsulta">
+          <mat-header-cell *matHeaderCellDef> Tipo de Consulta </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ TipoConsultaToLabelMapping[consulta.tipoConsulta] }} </mat-cell>
+        </ng-container>
+
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.data | date: 'dd/MM/yyyy HH:mm'}} </mat-cell>
+        </ng-container>
+
+        <!-- Medico Column -->
+        <ng-container matColumnDef="medicoNome">
+          <mat-header-cell *matHeaderCellDef> Medico </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.medicoNome }} </mat-cell>
+        </ng-container>
+
+        <!-- CRM Column -->
+        <ng-container matColumnDef="medicoCRM">
+          <mat-header-cell *matHeaderCellDef> CRM </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.medicoCRM | mask: 'SS 00000' }} </mat-cell>
+        </ng-container>
+
+        <!-- Especialização Column -->
+        <ng-container matColumnDef="especializacao">
+          <mat-header-cell *matHeaderCellDef> Especialização </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.especializacao }} </mat-cell>
+        </ng-container>
+
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.nome }} </mat-cell>
+        </ng-container>
+
+        <!-- Nome Social Column -->
+        <ng-container matColumnDef="nomeSocial">
+          <mat-header-cell *matHeaderCellDef> Nome Social </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ consulta.nomeSocial }} </mat-cell>
+        </ng-container>
+
+        <!-- Genero Column -->
+        <ng-container matColumnDef="genero">
+          <mat-header-cell *matHeaderCellDef> Genero </mat-header-cell>
+          <mat-cell *matCellDef="let consulta"> {{ GeneroToLabelMapping[consulta.genero] }} </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef class="action-column">
+            <button (click)="onAdd()" mat-raised-button extended color="accent" aria-label="Adicionar consulta">
+              Novo
+              <mat-icon>add</mat-icon>
+            </button>
+          </mat-header-cell>
+
+          <mat-cell *matCellDef="let consulta" class="action-column gap-1 p-2">
+            <button mat-stroked-button color="primary" aria-label="Editar consulta" (click)="onEdit(consulta)">
+              Editar
+              <mat-icon class="mat-icon-visible">edit</mat-icon>
+            </button>
+            <button mat-stroked-button color="warn" aria-label="Remover consulta" (click)="onRemove(consulta)">
+              Remover
+              <mat-icon class="mat-icon-visible">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>

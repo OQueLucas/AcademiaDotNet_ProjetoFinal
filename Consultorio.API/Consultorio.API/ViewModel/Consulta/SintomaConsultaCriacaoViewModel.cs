@@ -2,6 +2,6 @@
 {
     public class SintomaConsultaCriacaoViewModel
     {
-        public int? SintomaId { get; set; }
+        public int SintomaId { get; set; }
     }
 }

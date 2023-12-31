@@ -104,21 +104,28 @@ namespace Consultorio.API.Configuration
             CreateMap<Consulta, ConsultaCriacaoViewModel>()
                 .ForMember(dest => dest.TipoConsulta, opts => opts.MapFrom(src => src.TipoConsulta))
                 .ForMember(dest => dest.Descricao, opts => opts.MapFrom(src => src.Descricao))
+                .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
                 .ForMember(dest => dest.MedicoId, opts => opts.MapFrom(src => src.MedicoId))
                 .ForMember(dest => dest.MedicoCRM, opts => opts.MapFrom(src => src.MedicoCRM))
                 .ForMember(dest => dest.PacienteId, opts => opts.MapFrom(src => src.PacienteId))
                 .ForMember(dest => dest.Sintomas, opts => opts.MapFrom(src => src.Sintomas))
-                .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
-                .ForMember(dest => dest.Descricao, opts => opts.MapFrom(src => src.Descricao))
                 .ReverseMap();
 
             CreateMap<Consulta, ConsultaEdicaoViewModel>()
-                .ReverseMap();
-
-            CreateMap<Consulta, ConsultaViewModel>()
                 .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
                 .ForMember(dest => dest.TipoConsulta, opts => opts.MapFrom(src => src.TipoConsulta))
                 .ForMember(dest => dest.Descricao, opts => opts.MapFrom(src => src.Descricao))
+                .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
+                .ForMember(dest => dest.MedicoId, opts => opts.MapFrom(src => src.MedicoId))
+                .ForMember(dest => dest.MedicoCRM, opts => opts.MapFrom(src => src.MedicoCRM))
+                .ForMember(dest => dest.PacienteId, opts => opts.MapFrom(src => src.PacienteId))
+                .ForMember(dest => dest.Sintomas, opts => opts.MapFrom(src => src.Sintomas))
+                .ReverseMap();
+
+            CreateMap<Consulta, ConsultaViewModel>()
+                .ForMember(dest => dest.TipoConsulta, opts => opts.MapFrom(src => src.TipoConsulta))
+                .ForMember(dest => dest.Descricao, opts => opts.MapFrom(src => src.Descricao))
+                .ForMember(dest => dest.Data, opts => opts.MapFrom(src => src.Data))
                 .ForMember(dest => dest.MedicoId, opts => opts.MapFrom(src => src.MedicoId))
                 .ForMember(dest => dest.MedicoCRM, opts => opts.MapFrom(src => src.Medico.CRM))
                 .ForMember(dest => dest.Especializacao, opts => opts.MapFrom(src => src.Medico.Especializacao))
@@ -132,13 +139,20 @@ namespace Consultorio.API.Configuration
                 .ForMember(dest => dest.Email, opts => opts.MapFrom(src => src.Paciente.Pessoa.Email))
                 .ForMember(dest => dest.TipoSanguineo, opts => opts.MapFrom(src => src.Paciente.Pessoa.TipoSanguineo))
                 .ForMember(dest => dest.Genero, opts => opts.MapFrom(src => src.Paciente.Pessoa.Genero))
+                .ForMember(dest => dest.Sintomas, opts => opts.MapFrom(src => src.Sintomas))
                 .ReverseMap();
 
             CreateMap<SintomaConsulta, SintomaConsultaCriacaoViewModel>()
                 .ForMember(dest => dest.SintomaId, opts => opts.MapFrom(src => src.SintomaId))
                 .ReverseMap();
 
+            CreateMap<SintomaConsulta, SintomaConsultaEdicaoViewModel>()
+                .ForMember(dest => dest.Id, opts => opts.MapFrom(src => src.Id))
+                .ForMember(dest => dest.SintomaId, opts => opts.MapFrom(src => src.SintomaId))
+                .ReverseMap();
+
             CreateMap<SintomaConsulta, SintomaConsultaViewModel>()
+                .ForMember(dest => dest.SintomaId, opts => opts.MapFrom(src => src.Sintoma.Id))
                 .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Sintoma.Nome))
                 .ReverseMap();
         }

@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { catchError, delay, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Medico } from '../medicos/model/medico';
+import { Medico } from '../pages/medicos/model/medico';
 
 @Injectable({
   providedIn: 'root',
