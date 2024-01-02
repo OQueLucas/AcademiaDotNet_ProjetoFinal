@@ -1,6 +1,71 @@
 # 🩺 Consultório - Academia Dotnet Projeto Final
-
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?logo=C-sharp&logoColor=white)  ![Dot Net 6.0](https://img.shields.io/badge/6.0-blueviolet?logo=.net&logoColor=white)
+ ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?logo=microsoft%20sql%20server&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?logo=typescript&logoColor=white) 
+ 
 Projeto final da Academia Dotnet #5: Sistema de atendimento e gerenciamento de consulta de medicas.
+
+<table>
+  <tr>
+    <td>Tabela</td>
+    <td>Visualizar</td>
+    <td>Novo</td>
+    <td>Editar</td>
+  </tr>
+  <tr>
+    <td>Paciente</td>
+    <td> 
+      
+  ![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/2ef4eac5-26b4-42aa-8783-1e9cc9795a82)
+    </td>
+    <td>
+  ![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/6542f85b-9512-4c49-8a6e-26ad3a54aee6)
+    </td>
+    <td>
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/e72d2173-91fa-46aa-9cf3-91b07fd42f91)
+    </td>
+</tr>
+  <tr>
+    <td>Medico</td>
+    <td> 
+    
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/d46aae1b-7fd7-42c1-8578-83f82aad63d9)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/b7c70760-2cc1-42fe-a562-cec4f222b866)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/d2e30d02-e54d-464d-b108-092fa9a47d35)
+    </td>
+</tr>
+  <tr>
+<td>Sintoma</td>
+    
+  <td> 
+    
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/b6d71b7c-92cf-4565-8751-5b2c5597086f)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/565e0823-cf03-4007-8c83-5329950db971)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/9cb26b2b-4c1b-4bcc-a7a2-9ddc3fa7cb30)
+    </td>
+</tr>
+  <tr>
+<td>Consulta</td>
+    
+  <td> 
+    
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/8abc3543-5071-4a66-90b8-2545fa46d4cc)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/8ed36b4b-22d3-48f3-89cd-9076ed1291ff)
+    </td>
+    <td> 
+![image](https://github.com/OQueLucas/AcademiaDotNet_ProjetoFinal/assets/36959868/202bc987-6e44-442d-a9e4-ea00adca47d7)
+    </td>
+  </tr>
+</table>
 
 ## 📐 Regras de negócio
 
