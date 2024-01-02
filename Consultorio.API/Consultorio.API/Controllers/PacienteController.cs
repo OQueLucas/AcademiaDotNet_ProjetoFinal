@@ -75,7 +75,7 @@ namespace Consultorio.API.Controllers
 
         // POST: api/Paciente
         [HttpPost]
-        public async Task<IActionResult> PostPaciente(PacienteInputViewModel pacienteViewModel)
+        public async Task<IActionResult> PostPaciente(PacienteCriacaoViewModel pacienteViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 

@@ -56,7 +56,7 @@ namespace Consultorio.API.Configuration
                 .ForMember(dest => dest.Telefone, opts => opts.MapFrom(src => src.Pessoa.Telefone))
                 .ReverseMap();
 
-            CreateMap<Paciente, PacienteInputViewModel>()
+            CreateMap<Paciente, PacienteCriacaoViewModel>()
                 .ForMember(dest => dest.Nome, opts => opts.MapFrom(src => src.Pessoa.Nome))
                 .ForMember(dest => dest.NomeSocial, opts => opts.MapFrom(src => src.Pessoa.NomeSocial))
                 .ForMember(dest => dest.CPF, opts => opts.MapFrom(src => src.Pessoa.CPF))

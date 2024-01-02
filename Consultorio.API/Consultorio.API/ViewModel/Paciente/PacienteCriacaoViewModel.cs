@@ -2,7 +2,7 @@
 
 namespace Consultorio.API.ViewModel.Paciente
 {
-    public class PacienteInputViewModel
+    public class PacienteCriacaoViewModel
     {
         public string? Observacao { get; set; }
         public string Nome { get; set; }
