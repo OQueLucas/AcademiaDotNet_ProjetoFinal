@@ -25,6 +25,8 @@ Projeto final da Academia Dotnet #5: Sistema de atendimento e gerenciamento de c
 ### FrontEnd
 
 - `Angular`
+- `Angular Material`
+- `Bootstrap`
 
 ## UML
 

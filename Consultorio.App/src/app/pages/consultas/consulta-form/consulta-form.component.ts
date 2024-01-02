@@ -41,7 +41,7 @@ export class ConsultaFormComponent {
 
   setTitle() {
     if (this.form.value.id === 0) {
-      this.titulo = 'Novo consulta';
+      this.titulo = 'Nova consulta';
     } else {
       this.titulo = 'Editar consulta: ' + this.form.value.id;
     }
@@ -111,6 +111,8 @@ export class ConsultaFormComponent {
       sintomas: this._formBuider.array(this.obterSintomas(consulta)),
       sintomaSelect: [],
     });
+
+    console.log(this.form.value);
     this.setTitle();
   }
 
@@ -120,8 +122,6 @@ export class ConsultaFormComponent {
       consulta.sintomas.forEach((sintoma) =>
         sintomas.push(this.novoSintoma(sintoma))
       );
-    } else {
-      sintomas.push(this.novoSintoma());
     }
     return sintomas;
   }

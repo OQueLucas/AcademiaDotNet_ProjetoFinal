@@ -8,13 +8,13 @@
     <form [formGroup]="form" class="d-flex flex-column gap-3 mt-3">
       <input type="hidden" formControlName="id" #id>
       <fieldset class="d-flex gap-3">
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Nome</mat-label>
           <input matInput formControlName="nome">
           <mat-error *ngIf="form.get('nome')?.invalid">{{formUtils.getErrorMessage(form, "nome")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Nome Social</mat-label>
           <input matInput formControlName="nomeSocial" #nomeSocial>
           <mat-error *ngIf="form.get('nomeSocial')?.invalid">{{formUtils.getErrorMessage(form, "nomeSocial")}}</mat-error>
@@ -23,7 +23,7 @@
 
       <fieldset class="d-flex gap-3">
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>CPF</mat-label>
           <input matInput formControlName="cpf" mask="000.000.000-00" #cpf>
           @if (cpf.value.length == 15) {
@@ -44,7 +44,7 @@
           <mat-error *ngIf="form.get('cpf')?.invalid">{{formUtils.getErrorMessage(form, "cpf")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
           <mat-hint>DD/MM/YYYY</mat-hint>
@@ -55,7 +55,7 @@
       </fieldset>
       <fieldset class="d-flex gap-3">
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Gênero</mat-label>
           <select matNativeControl required formControlName="genero">
             <option [value]="genero" *ngFor="let genero of generos">{{ GeneroToLabelMapping[genero] }}</option>
@@ -63,7 +63,7 @@
           <mat-error *ngIf="form.get('genero')?.invalid">{{formUtils.getErrorMessage(form, "genero")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Tipo Sanguíneo</mat-label>
           <select matNativeControl required formControlName="tipoSanguineo">
             <option [value]="tipo" *ngFor="let tipo of tiposSanguineo">{{ TipoSanguineoToLabelMapping[tipo] }}</option>
@@ -74,13 +74,13 @@
       </fieldset>
       <fieldset class="d-flex gap-3">
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" #email>
           <mat-error *ngIf="form.get('email')?.invalid">{{formUtils.getErrorMessage(form, "email")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Telefone</mat-label>
           <input matInput formControlName="telefone" mask="(00) 0000-0000||(00) 00000-0000" placeholder="(00) 0000-0000" #telefone>
           <mat-error *ngIf="form.get('telefone')?.invalid">{{formUtils.getErrorMessage(form, "telefone")}}</mat-error>
@@ -88,14 +88,14 @@
       </fieldset>
       <fieldset class="d-flex gap-3">
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>CEP</mat-label>
           <input matInput formControlName="cep" mask="00000-000" #cep>
           <mat-hint align="end">{{cep.value.length > 5 ? cep.value.length - 1 : cep.value.length}}/8</mat-hint>
           <mat-error *ngIf="form.get('cep')?.invalid">{{formUtils.getErrorMessage(form, "cep")}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill">
+        <mat-form-field appearance="outline" class="flex-fill">
           <mat-label>Bairro</mat-label>
           <input matInput formControlName="bairro" #bairro>
           <mat-error *ngIf="form.get('bairro')?.invalid">{{formUtils.getErrorMessage(form, "bairro")}}</mat-error>
@@ -103,12 +103,12 @@
 
       </fieldset>
 
-      <mat-form-field class="flex-fill">
+      <mat-form-field appearance="outline" class="flex-fill">
         <mat-label>Endereço</mat-label>
         <input matInput formControlName="endereco" #endereco>
         <mat-error *ngIf="form.get('endereco')?.invalid">{{formUtils.getErrorMessage(form, "endereco")}}</mat-error>
       </mat-form-field>
-      <mat-form-field class="flex-fill">
+      <mat-form-field appearance="outline" class="flex-fill">
         <mat-label>Observação</mat-label>
         <textarea matInput formControlName="observacao" #observacao></textarea>
         <mat-error *ngIf="form.get('observacao')?.invalid">{{formUtils.getErrorMessage(form, "observacao")}}</mat-error>

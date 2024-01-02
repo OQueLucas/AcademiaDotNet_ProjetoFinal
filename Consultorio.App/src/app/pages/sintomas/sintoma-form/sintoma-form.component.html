@@ -8,7 +8,7 @@
     <form [formGroup]="form" class="d-flex gap-3 mt-3">
       <input type="hidden" formControlName="id" #id>
 
-      <mat-form-field class="flex-fill">
+      <mat-form-field appearance="outline" class="flex-fill">
         <mat-label>Nome</mat-label>
         <input matInput formControlName="nome" #nome>
         <mat-hint align="end">{{nome.value.length}}/30</mat-hint>
