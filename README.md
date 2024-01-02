@@ -180,9 +180,11 @@ git clone git@github.com:OQueLucas/AcademiaDotNet_ProjetoFinal.git
   - Após o download, acesse `Consultorio.APP/src/environments/environment.ts || environment.prod.ts` e ajuste a porta (se necessário).
 
   - Agora só iniciar o front end:
-
+ 
     ```bash
-    ng serve
+      npm install
+    
+      ng serve
     ```
 
 - Utilização
