@@ -15,7 +15,7 @@ import { Consulta } from '../model/consulta';
   templateUrl: './consultas.component.html',
   styleUrl: './consultas.component.scss',
 })
-export class ConsultasComponent implements AfterViewInit {
+export class ConsultasComponent {
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoConsultaToLabelMapping = TipoConsulta;
 
@@ -40,9 +40,6 @@ export class ConsultasComponent implements AfterViewInit {
     private _snackBar: MatSnackBar
   ) {
     this.refresh();
-  }
-  ngAfterViewInit(): void {
-    console.log('teste');
   }
 
   refresh() {

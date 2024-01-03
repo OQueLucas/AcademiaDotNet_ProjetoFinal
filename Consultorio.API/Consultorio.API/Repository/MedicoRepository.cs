@@ -22,7 +22,7 @@ namespace Consultorio.API.Repository
 
         public override async Task<List<Medico>> GetAll()
         {
-            return await _data.Include(medico => medico.Pessoa).ToListAsync();
+            return await _data.Include(medico => medico.Pessoa).OrderBy(medico => medico.Pessoa.Nome).ToListAsync();
         }
 
         public async Task<Medico> GetByCRM(string crm)

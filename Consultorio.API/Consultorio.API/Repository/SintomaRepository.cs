@@ -17,7 +17,7 @@ namespace Consultorio.API.Repository
 
         public async Task<Sintoma> GetById(int id)
         {
-            return await _data.AsNoTracking().FirstOrDefaultAsync(sintoma => sintoma.Id == id);
+            return await _data.AsNoTracking().OrderBy(sintoma => sintoma.Nome).FirstOrDefaultAsync(sintoma => sintoma.Id == id);
         }
     }
 }

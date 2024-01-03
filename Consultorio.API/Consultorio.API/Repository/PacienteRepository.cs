@@ -17,7 +17,7 @@ namespace Consultorio.API.Repository
 
         public override async Task<List<Paciente>> GetAll()
         {
-            return await _data.Include(paciente => paciente.Pessoa).ToListAsync();
+            return await _data.Include(paciente => paciente.Pessoa).OrderBy(paciente => paciente.Pessoa.Nome).ToListAsync();
         }
 
         public async Task<Paciente> GetById(int id)

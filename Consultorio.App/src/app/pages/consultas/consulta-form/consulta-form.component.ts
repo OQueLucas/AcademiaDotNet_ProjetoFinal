@@ -111,8 +111,6 @@ export class ConsultaFormComponent {
       sintomas: this._formBuider.array(this.obterSintomas(consulta)),
       sintomaSelect: [],
     });
-
-    console.log(this.form.value);
     this.setTitle();
   }
 
