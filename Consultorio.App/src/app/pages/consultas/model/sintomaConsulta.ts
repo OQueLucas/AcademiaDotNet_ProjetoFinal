@@ -1,6 +1,6 @@
 export interface SintomaConsulta {
-  id: number;
-  sintomaId: number;
-  consultaId: number;
+  id: number | null;
+  sintomaId: number | null;
+  consultaId: number | null;
   nome: string;
 }

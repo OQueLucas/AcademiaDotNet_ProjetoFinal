@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -10,6 +10,7 @@ import {
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { MedicoService } from '../../../services/medico.service';
 import { Medico } from '../model/medico';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-medico-form',
@@ -44,8 +45,13 @@ export class MedicoFormComponent {
     private _medicoService: MedicoService,
     private _location: Location,
     private _route: ActivatedRoute,
-    public formUtils: FormUtilsService
-  ) {}
+    public formUtils: FormUtilsService,
+    private _adapter: DateAdapter<any>,
+    @Inject(MAT_DATE_LOCALE) private _locale: string
+  ) {
+    this._locale = 'pt';
+    this._adapter.setLocale(this._locale);
+  }
 
   ngOnInit(): void {
     const medico: Medico = this._route.snapshot.data['medico'];

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../../services/paciente.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,6 +10,7 @@ import {
   TipoSanguineoToLabelMapping,
 } from '../../../enum/TipoSanguineo.enum';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @Component({
   selector: 'app-paciente-form',
@@ -44,8 +45,13 @@ export class PacienteFormComponent {
     private _pacienteService: PacienteService,
     private _location: Location,
     private _route: ActivatedRoute,
-    public formUtils: FormUtilsService
-  ) {}
+    public formUtils: FormUtilsService,
+    private _adapter: DateAdapter<any>,
+    @Inject(MAT_DATE_LOCALE) private _locale: string
+  ) {
+    this._locale = 'pt';
+    this._adapter.setLocale(this._locale);
+  }
 
   ngOnInit(): void {
     const paciente: Paciente = this._route.snapshot.data['paciente'];
