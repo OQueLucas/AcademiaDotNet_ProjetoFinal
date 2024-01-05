@@ -11,6 +11,8 @@ import {
 } from '../../../enum/TipoSanguineo.enum';
 import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UtilsService } from '../../../shared/utils.service';
 
 @Component({
   selector: 'app-paciente-form',
@@ -19,6 +21,8 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 })
 export class PacienteFormComponent {
   titulo: string;
+
+  alerts: any[] = [];
 
   setTitle() {
     if (this.form.value.id === 0) {
@@ -46,6 +50,7 @@ export class PacienteFormComponent {
     private _location: Location,
     private _route: ActivatedRoute,
     public formUtils: FormUtilsService,
+    public utils: UtilsService,
     private _adapter: DateAdapter<any>,
     @Inject(MAT_DATE_LOCALE) private _locale: string
   ) {
@@ -104,10 +109,14 @@ export class PacienteFormComponent {
     if (this.form.valid) {
       this._pacienteService.save(this.form.value).subscribe({
         next: () => {
-          this.formUtils.message('Paciente cadastrado com sucesso!');
-          this.voltar();
+          this.alerts = this.utils.processarSucesso(
+            'success',
+            'Paciente cadastrado com sucesso!'
+          );
         },
-        error: () => this.formUtils.message('Erro ao cadastrar paciente!'),
+        error: (error: HttpErrorResponse) => {
+          this.alerts = this.utils.processarFalha('danger', error);
+        },
       });
     } else {
       this.formUtils.validateAllFormFields(this.form);

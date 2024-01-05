@@ -3,25 +3,39 @@ using Consultorio.API.Model;
 
 namespace Consultorio.API.Services
 {
-    public class PacienteService : IPacienteService
+    public class PacienteService : BaseService, IPacienteService
     {
         private readonly IPacienteRepository _pacienteRepository;
 
-        public PacienteService(IPacienteRepository pacienteRepository)
+        public PacienteService(IPacienteRepository pacienteRepository, INotificador notificador) : base(notificador)
         {
             _pacienteRepository = pacienteRepository;
+
         }
 
-        public async Task Adicionar(Paciente paciente)
+        public async Task<bool> Adicionar(Paciente paciente)
         {
-            if (_pacienteRepository.GetBy(m => m.Pessoa.CPF == paciente.Pessoa.CPF).Result.Any()) throw new Exception("Já possui pessoa cadastrada com este CPF!");
+            if (_pacienteRepository.GetBy(m => m.Pessoa.CPF == paciente.Pessoa.CPF).Result.Any())
+            {
+                Notificar("CPF já cadastrado no sistema!");
+                return false;
+            }
 
             await _pacienteRepository.Add(paciente);
+            return true;
         }
 
-        public async Task Atualizar(Paciente paciente)
+        public async Task<bool> Atualizar(Paciente paciente)
         {
+            var pacienteExiste = await BuscaId(paciente.Id);
+            if (pacienteExiste == null)
+            {
+                Notificar("Paciente não encontrado");
+                return false;
+            }
+
             await _pacienteRepository.Update(paciente);
+            return true;
         }
 
         public async Task<bool> Remover(Paciente paciente)

@@ -8,29 +8,16 @@ import { catchError, delay, first, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Sintoma } from '../pages/sintomas/model/sintoma';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SintomaService {
-  baseUrl = `${environment.baseUrl}api/sintomas`;
+export class SintomaService extends BaseService {
+  baseUrl = `${environment.baseUrl}sintomas`;
 
-  constructor(private httpClient: HttpClient) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage =
-        `Código de erro: ${error.status}, ` + `mensagem: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => errorMessage);
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   get(): Observable<Sintoma[]> {
@@ -38,14 +25,14 @@ export class SintomaService {
       first(),
       //delay(5000),
       retry(2),
-      catchError(this.handleError)
+      catchError(this.serviceError)
     );
   }
 
   getById(id: number): Observable<Sintoma> {
     return this.httpClient
       .get<Sintoma>(this.baseUrl + '/' + id)
-      .pipe(first(), retry(2), catchError(this.handleError));
+      .pipe(first(), retry(2), catchError(this.serviceError));
   }
 
   save(sintoma: Partial<Sintoma>) {
@@ -57,8 +44,12 @@ export class SintomaService {
 
   private post(sintoma: Partial<Sintoma>): Observable<Sintoma> {
     return this.httpClient
-      .post<Sintoma>(this.baseUrl, JSON.stringify(sintoma), this.httpOptions)
-      .pipe(first(), retry(2), catchError(this.handleError));
+      .post<Sintoma>(
+        this.baseUrl,
+        JSON.stringify(sintoma),
+        this.obterHeaderJson()
+      )
+      .pipe(first(), retry(2), catchError(this.serviceError));
   }
 
   private put(sintoma: Partial<Sintoma>): Observable<Sintoma> {
@@ -66,14 +57,14 @@ export class SintomaService {
       .put<Sintoma>(
         this.baseUrl + '/' + sintoma.id,
         JSON.stringify(sintoma),
-        this.httpOptions
+        this.obterHeaderJson()
       )
-      .pipe(first(), retry(1), catchError(this.handleError));
+      .pipe(first(), retry(1), catchError(this.serviceError));
   }
 
   delete(id: number) {
     return this.httpClient
       .delete(this.baseUrl + '/' + id)
-      .pipe(first(), retry(1), catchError(this.handleError));
+      .pipe(first(), retry(1), catchError(this.serviceError));
   }
 }

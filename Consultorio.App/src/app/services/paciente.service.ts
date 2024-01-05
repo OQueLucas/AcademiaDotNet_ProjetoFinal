@@ -4,45 +4,32 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, Observable, retry, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Paciente } from '../pages/pacientes/models/Paciente';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PacienteService {
-  baseUrl = `${environment.baseUrl}api/paciente`;
+export class PacienteService extends BaseService {
+  baseUrl = `${environment.baseUrl}paciente`;
 
-  constructor(private httpClient: HttpClient) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage =
-        `Código de erro: ${error.status}, ` + `mensagem: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => errorMessage);
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   get(): Observable<Paciente[]> {
     return this.httpClient
       .get<Paciente[]>(this.baseUrl)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
       .get<Paciente>(this.baseUrl + '/' + id)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
   }
 
   save(paciente: Partial<Paciente>) {
@@ -53,9 +40,10 @@ export class PacienteService {
   }
 
   post(paciente: Partial<Paciente>) {
-    return this.httpClient
+    let response = this.httpClient
       .post(`${this.baseUrl}`, paciente)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
+    return response;
   }
 
   put(paciente: Partial<Paciente>) {
@@ -63,20 +51,20 @@ export class PacienteService {
       .put<Paciente>(
         this.baseUrl + '/' + paciente.id,
         JSON.stringify(paciente),
-        this.httpOptions
+        this.obterHeaderJson()
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 
   delete(id: number) {
     return this.httpClient
       .delete<Paciente>(this.baseUrl + '/' + id)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 
   addPaciente(paciente: Paciente) {
     return this.httpClient
       .post<Paciente>(this.baseUrl, JSON.stringify(paciente))
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 }

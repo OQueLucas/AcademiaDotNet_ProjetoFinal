@@ -9,6 +9,7 @@ import { ErrorDialogComponent } from '../../../shared/components/error-dialog/er
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
+import { UtilsService } from '../../../shared/utils.service';
 @Component({
   selector: 'app-pacientes',
   templateUrl: './pacientes.component.html',
@@ -28,11 +29,13 @@ export class PacientesComponent {
     'genero',
     'actions',
   ];
+  alerts: any[] = [];
 
   constructor(
     private PacienteService: PacienteService,
     private router: Router,
     private route: ActivatedRoute,
+    public utils: UtilsService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {
@@ -41,8 +44,9 @@ export class PacientesComponent {
 
   refresh() {
     this.pacientes$ = this.PacienteService.get().pipe(
-      catchError(() => {
+      catchError((error) => {
         this.onError('Erro ao carregar Pacientes.');
+        this.alerts = this.utils.processarFalha('danger', error);
         return scheduled(of([]), asyncScheduler);
       })
     );
@@ -82,6 +86,10 @@ export class PacientesComponent {
         });
       }
     });
+  }
+
+  private processarFalha(fail: any) {
+    this.alerts = fail.error.errors;
   }
 
   private onSuccess() {

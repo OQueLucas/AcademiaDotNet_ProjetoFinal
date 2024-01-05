@@ -6,7 +6,7 @@ namespace Consultorio.API.Model
     public class Pessoa : Entity
     {
         public Pessoa() { }
-        public Pessoa(string nome, string? nomeSocial, string cpf, DateTime dataNascimento, string? email, TipoSanguineo? tipoSanguineo, Genero genero, string? cep, string? bairro, string? endereco, string? telefone)
+        public Pessoa(string nome, string? nomeSocial, string cpf, DateTime dataNascimento, string? email, TipoSanguineo tipoSanguineo, Genero genero, string? cep, string? bairro, string? endereco, string? telefone)
         {
             Nome = nome;
             NomeSocial = nomeSocial;

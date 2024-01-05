@@ -4,11 +4,9 @@ namespace Consultorio.API.Model
 {
     public abstract class Entity
     {
-        public Entity()
-        {
-            
-        }
+        public Entity() {}
+
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
     }
 }

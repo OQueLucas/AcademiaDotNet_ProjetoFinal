@@ -1,7 +1,9 @@
 using Consultorio.API.Data;
 using Consultorio.API.Interfaces;
+using Consultorio.API.Notificacoes;
 using Consultorio.API.Repository;
 using Consultorio.API.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Consultorio.API
@@ -37,6 +39,7 @@ namespace Consultorio.API
             builder.Services.AddScoped<ISintomaRepository, SintomaRepository>();
             builder.Services.AddScoped<IConsultaRepository, ConsultaRepository>();
 
+            builder.Services.AddScoped<INotificador, Notificador>();
             builder.Services.AddScoped<IMedicoService, MedicoService>();
             builder.Services.AddScoped<IPacienteService, PacienteService>();
             builder.Services.AddScoped<ISintomaService, SintomaService>();

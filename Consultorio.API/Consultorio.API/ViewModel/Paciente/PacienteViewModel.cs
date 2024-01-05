@@ -11,7 +11,7 @@ namespace Consultorio.API.ViewModel.Paciente
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
         public string? Email { get; set; }
-        public TipoSanguineo? TipoSanguineo { get; set; }
+        public TipoSanguineo TipoSanguineo { get; set; }
         public Genero Genero { get; set; }
         public string? CEP { get; set; }
         public string? Bairro { get; set; }

@@ -11,7 +11,6 @@ import { PacientesRoutingModule } from './pacientes-routing.module';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { PacienteFormComponent } from './paciente-form/paciente-form.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [PacientesComponent, PacienteFormComponent],

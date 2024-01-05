@@ -8,12 +8,12 @@ namespace Consultorio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PacienteController : ControllerBase
+    public class PacienteController : MainController
     {
         private readonly IPacienteService _pacienteService;
         private readonly IMapper _mapper;
 
-        public PacienteController(IPacienteService pacienteService, IMapper mapper)
+        public PacienteController(IPacienteService pacienteService, IMapper mapper, INotificador notificador) : base(notificador)
         {
             _pacienteService = pacienteService;
             _mapper = mapper;
@@ -30,18 +30,13 @@ namespace Consultorio.API.Controllers
                 return NotFound();
             }
 
-            return Ok(pacientes);
+            return CustomResponse(pacientes);
         }
 
         // GET: api/Paciente/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Paciente>> GetPaciente(int id)
         {
-            if (_pacienteService == null)
-            {
-                return NotFound();
-            }
-
             var paciente = _mapper.Map<PacienteViewModel>(await _pacienteService.BuscaId(id));
 
             if (paciente == null)
@@ -49,47 +44,36 @@ namespace Consultorio.API.Controllers
                 return NotFound();
             }
 
-            return Ok(paciente);
-        }
-
-        // PUT: api/Paciente/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPaciente(int id, PacienteEdicaoViewModel pacienteViewModel)
-        {
-            if (pacienteViewModel.Id != id) BadRequest("Os Ids informados não são iguais!");
-
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            var paciente = await _pacienteService.BuscaId(id);
-            if (paciente == null) return NotFound("Paciente não encontrado");
-            try
-            {
-                await _pacienteService.Atualizar(_mapper.Map<Paciente>(pacienteViewModel));
-                return Ok(pacienteViewModel);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+            return CustomResponse(paciente);
         }
 
         // POST: api/Paciente
         [HttpPost]
         public async Task<IActionResult> PostPaciente(PacienteCriacaoViewModel pacienteViewModel)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            try
+            await _pacienteService.Adicionar(_mapper.Map<Paciente>(pacienteViewModel));
+
+            return CustomResponse(pacienteViewModel);
+        }
+
+        // PUT: api/Paciente/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPaciente(int id, PacienteEdicaoViewModel pacienteViewModel)
+        {
+            if (pacienteViewModel.Id != id)
             {
-                await _pacienteService.Adicionar(_mapper.Map<Paciente>(pacienteViewModel));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Ocorreu um erro ao cadastrar o Paciente:\n{ex.Message}");
+                NotificarErro("Os ids informados não são iguais!");
+                return CustomResponse();
             }
 
-            return Ok();
-            //return Created("", pacienteViewModel);
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await _pacienteService.Atualizar(_mapper.Map<Paciente>(pacienteViewModel));
+
+            return CustomResponse(pacienteViewModel);
+
         }
 
         // DELETE: api/Paciente/5

@@ -8,41 +8,28 @@ import { catchError, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Consulta } from '../pages/consultas/model/consulta';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ConsultaService {
-  baseUrl = `${environment.baseUrl}api/consulta`;
+export class ConsultaService extends BaseService {
+  baseUrl = `${environment.baseUrl}consulta`;
 
-  constructor(private httpClient: HttpClient) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage =
-        `Código de erro: ${error.status}, ` + `mensagem: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => errorMessage);
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   get(): Observable<Consulta[]> {
     return this.httpClient
       .get<Consulta[]>(this.baseUrl)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
       .get<Consulta>(this.baseUrl + '/' + id)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   save(consulta: Partial<Consulta>) {
@@ -55,7 +42,7 @@ export class ConsultaService {
   post(consulta: Partial<Consulta>) {
     return this.httpClient
       .post<Consulta>(this.baseUrl, consulta)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   put(consulta: Partial<Consulta>) {
@@ -63,9 +50,9 @@ export class ConsultaService {
       .put<Consulta>(
         this.baseUrl + '/' + consulta.id,
         JSON.stringify(consulta),
-        this.httpOptions
+        this.obterHeaderJson()
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 
   putSintoma(consulta: Partial<Consulta>) {
@@ -73,14 +60,14 @@ export class ConsultaService {
       .put<Consulta>(
         this.baseUrl + '/' + consulta.id + '/sintomas',
         JSON.stringify(consulta),
-        this.httpOptions
+        this.obterHeaderJson()
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 
   delete(id: number) {
     return this.httpClient
       .delete<Consulta>(this.baseUrl + '/' + id)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 }

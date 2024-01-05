@@ -8,41 +8,28 @@ import { catchError, delay, Observable, retry, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Medico } from '../pages/medicos/model/medico';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MedicoService {
-  baseUrl = `${environment.baseUrl}api/medico`;
+export class MedicoService extends BaseService {
+  baseUrl = `${environment.baseUrl}medico`;
 
-  constructor(private httpClient: HttpClient) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage =
-        `Código de erro: ${error.status}, ` + `mensagem: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(() => errorMessage);
+  constructor(private httpClient: HttpClient) {
+    super();
   }
 
   get(): Observable<Medico[]> {
     return this.httpClient
       .get<Medico[]>(this.baseUrl)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
       .get<Medico>(this.baseUrl + '/' + id)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   save(medico: Partial<Medico>) {
@@ -55,7 +42,7 @@ export class MedicoService {
   post(medico: Partial<Medico>) {
     return this.httpClient
       .post<Medico>(this.baseUrl, medico)
-      .pipe(retry(2), catchError(this.handleError));
+      .pipe(retry(2), catchError(this.serviceError));
   }
 
   put(medico: Partial<Medico>) {
@@ -63,14 +50,14 @@ export class MedicoService {
       .put<Medico>(
         this.baseUrl + '/' + medico.id,
         JSON.stringify(medico),
-        this.httpOptions
+        this.obterHeaderJson()
       )
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 
   delete(id: number) {
     return this.httpClient
       .delete<Medico>(this.baseUrl + '/' + id)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(retry(1), catchError(this.serviceError));
   }
 }
