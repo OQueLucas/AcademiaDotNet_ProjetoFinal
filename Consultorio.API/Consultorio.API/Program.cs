@@ -1,3 +1,4 @@
+using Consultorio.API.Configuration;
 using Consultorio.API.Data;
 using Consultorio.API.Interfaces;
 using Consultorio.API.Notificacoes;
@@ -33,6 +34,8 @@ namespace Consultorio.API
 
             builder.Services.AddDbContext<Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Consultorio")));
 
+            builder.Services.AddIdentityConfiguration(builder.Configuration);
+
             builder.Services.AddScoped<Context>();
             builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
             builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
@@ -57,6 +60,8 @@ namespace Consultorio.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

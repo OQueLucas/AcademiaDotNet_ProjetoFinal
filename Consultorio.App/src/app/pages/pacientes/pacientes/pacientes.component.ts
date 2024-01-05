@@ -9,7 +9,7 @@ import { ErrorDialogComponent } from '../../../shared/components/error-dialog/er
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
-import { UtilsService } from '../../../shared/utils.service';
+import { UtilsService } from '../../../services/utils.service';
 @Component({
   selector: 'app-pacientes',
   templateUrl: './pacientes.component.html',
