@@ -54,6 +54,10 @@ export class FormUtilsService {
       return `Tamanho máximo precisa ser de ${requiredLength} caracteres`;
     }
 
+    if (field.hasError('equalTo')) {
+      return 'As senhas não conferem';
+    }
+
     return 'Campo inválido';
   }
 

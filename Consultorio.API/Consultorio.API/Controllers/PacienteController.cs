@@ -4,6 +4,7 @@ using AutoMapper;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel.Paciente;
 using Microsoft.AspNetCore.Authorization;
+using Consultorio.API.Extensions;
 
 namespace Consultorio.API.Controllers
 {
@@ -50,6 +51,7 @@ namespace Consultorio.API.Controllers
         }
 
         // POST: api/Paciente
+        [ClaimsAuthorize("Paciente", "Adicionar")]
         [HttpPost]
         public async Task<IActionResult> PostPaciente(PacienteCriacaoViewModel pacienteViewModel)
         {
@@ -79,6 +81,7 @@ namespace Consultorio.API.Controllers
         }
 
         // DELETE: api/Paciente/5
+        [ClaimsAuthorize("Paciente", "Excluir")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaciente(int id)
         {

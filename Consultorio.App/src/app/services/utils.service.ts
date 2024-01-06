@@ -19,7 +19,7 @@ export class UtilsService {
     return [
       {
         type: type,
-        msg: `${fail.error.errors}`,
+        msg: fail.error.errors,
       },
     ];
   }

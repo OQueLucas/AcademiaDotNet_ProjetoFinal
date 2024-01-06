@@ -10,11 +10,19 @@ import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './shared/app-material/app-material.module';
 import { SharedModule } from './shared/shared.module';
-import { NavComponent } from './nav/nav.component';
+import { MenuComponent } from './nav/menu/menu.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MenuLoginComponent } from './nav/menu-login/menu-login.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    HomeComponent,
+    NotFoundComponent,
+    MenuLoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,6 +34,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NgxMaskDirective,
     NgxMaskPipe,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [HttpClientModule, FormsModule, provideNgxMask()],
   bootstrap: [AppComponent],

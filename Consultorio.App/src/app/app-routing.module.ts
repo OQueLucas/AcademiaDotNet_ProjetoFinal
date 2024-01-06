@@ -6,6 +6,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: 'pacientes',
     loadChildren: () =>
@@ -29,6 +30,11 @@ const routes: Routes = [
       import('./pages/consultas/consultas.module').then(
         (m) => m.ConsultasModule
       ),
+  },
+  {
+    path: 'conta',
+    loadChildren: () =>
+      import('./conta/conta.module').then((m) => m.ContaModule),
   },
 
   { path: '**', component: NotFoundComponent },

@@ -1,0 +1,30 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/home']">Meus Produtos</a>
+      <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <app-menu-login></app-menu-login>
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="" [routerLinkActiveOptions]="{ exact: true }" [routerLinkActive]="['active']">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="pacientes" [routerLinkActive]="['active']">Pacientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="medicos" [routerLinkActive]="['active']">Medicos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="sintomas" [routerLinkActive]="['active']">Sintomas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="consultas" [routerLinkActive]="['active']">Consulta</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- FIM Navigation -->

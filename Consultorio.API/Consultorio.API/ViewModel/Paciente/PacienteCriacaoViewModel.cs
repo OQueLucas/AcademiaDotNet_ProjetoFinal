@@ -1,4 +1,5 @@
 ﻿using Consultorio.API.Model.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace Consultorio.API.ViewModel.Paciente
 {
@@ -7,6 +8,7 @@ namespace Consultorio.API.ViewModel.Paciente
         public string? Observacao { get; set; }
         public string Nome { get; set; }
         public string? NomeSocial { get; set; }
+        [StringLength(11, ErrorMessage = "O campo {0} precisa ter {1} caracteres")]
         public string CPF { get; set; }
         public DateTime DataNascimento { get; set; }
         public string? Email { get; set; }

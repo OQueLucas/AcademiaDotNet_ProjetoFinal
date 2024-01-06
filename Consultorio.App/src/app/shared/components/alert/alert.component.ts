@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-type AlertType = { type: string; msg: string };
-
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
@@ -9,24 +7,11 @@ type AlertType = { type: string; msg: string };
 })
 export class AlertComponent {
   dismissible = true;
-  defaultAlerts: AlertType[] = [
-    {
-      type: 'success',
-      msg: `You successfully read this important alert message.`,
-    },
-    {
-      type: 'info',
-      msg: `This alert needs your attention, but it's not super important.`,
-    },
-    {
-      type: 'danger',
-      msg: `Better check yourself, you're not looking too good.`,
-    },
-  ];
 
-  @Input() alerts: AlertType[];
+  @Input() alerts: string[];
+  @Input() type: string = 'danger';
 
-  onClosed(dismissedAlert: AlertType): void {
+  onClosed(dismissedAlert): void {
     this.alerts = this.alerts.filter((alert) => alert !== dismissedAlert);
   }
 }
