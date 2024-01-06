@@ -13,6 +13,7 @@ import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from '../../../services/utils.service';
+import { CepConsulta } from '../models/CepConsulta';
 
 @Component({
   selector: 'app-paciente-form',
@@ -105,6 +106,21 @@ export class PacienteFormComponent {
     this.setTitle();
   }
 
+  buscarCep(cep: string) {
+    if (cep.length < 8) return;
+    this._pacienteService.consultarCep(cep).subscribe({
+      next: (cepResponse) => this.preencherEnderecoConsulta(cepResponse),
+      error: (erro) => this.alerts.push(erro),
+    });
+  }
+
+  preencherEnderecoConsulta(cepConsulta: CepConsulta) {
+    this.form.patchValue({
+      bairro: cepConsulta.bairro,
+      endereco: cepConsulta.logradouro,
+    });
+  }
+
   onSubmit() {
     if (this.form.valid) {
       this._pacienteService.save(this.form.value).subscribe({
@@ -113,9 +129,10 @@ export class PacienteFormComponent {
             'success',
             'Paciente cadastrado com sucesso!'
           );
+          this.form.reset();
         },
         error: (error: HttpErrorResponse) => {
-          this.alerts = this.utils.processarFalha('danger', error);
+          this.alerts = this.utils.processarFalha('danger', error.error.errors);
         },
       });
     } else {

@@ -53,7 +53,7 @@ namespace Consultorio.API.Controllers
         // POST: api/Paciente
         [ClaimsAuthorize("Paciente", "Adicionar")]
         [HttpPost]
-        public async Task<IActionResult> PostPaciente(PacienteCriacaoViewModel pacienteViewModel)
+        public async Task<IActionResult> Adicionar(PacienteCriacaoViewModel pacienteViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 

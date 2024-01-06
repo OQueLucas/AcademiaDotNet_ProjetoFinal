@@ -13,7 +13,10 @@ export class BaseService {
 
   protected obterHeaderJson() {
     return {
-      headers: new HttpHeaders({ 'Content-type': 'application/json' }),
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${this.LocalStorage.obterTokenUsuario()}`,
+      }),
     };
   }
 

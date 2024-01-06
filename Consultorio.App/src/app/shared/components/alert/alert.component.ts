@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class AlertComponent {
   dismissible = true;
 
-  @Input() alerts: string[];
+  @Input() alerts: any[] = [];
   @Input() type: string = 'danger';
 
   onClosed(dismissedAlert): void {

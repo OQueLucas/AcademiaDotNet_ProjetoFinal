@@ -1,5 +1,6 @@
-<div *ngFor="let alert of alerts">
-  <alert [type]="type" [dismissible]="dismissible" (onClosed)="onClosed(alert)">
-    {{ alert }}
-  </alert>
-</div>
+<alert [type]="type" [dismissible]="dismissible" (onClosed)="onClosed(alerts)" *ngIf="alerts.length > 0">
+  <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+  <ul>
+    <li *ngFor="let error of alerts">{{ error }}</li>
+  </ul>
+</alert>

@@ -125,8 +125,8 @@ export class CadastroComponent implements OnInit, AfterViewInit {
         },
         error: (falha) => {
           this.alerts = falha.error.errors;
-          this.toastr.error('Ocorreu um erro!', 'Opa :(');
           this.type = 'danger';
+          this.toastr.error('Ocorreu um erro!', 'Opa :(');
         },
       });
 

@@ -9,6 +9,7 @@ import { catchError, delay, map, Observable, retry, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Paciente } from '../pages/pacientes/models/Paciente';
 import { BaseService } from './base.service';
+import { CepConsulta } from '../pages/pacientes/models/CepConsulta';
 
 @Injectable({
   providedIn: 'root',
@@ -22,49 +23,59 @@ export class PacienteService extends BaseService {
 
   get(): Observable<Paciente[]> {
     return this.httpClient
-      .get<Paciente[]>(this.baseUrl)
-      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
+      .get<Paciente[]>(this.baseUrl, this.obterHeaderJson())
+      .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
-      .get<Paciente>(this.baseUrl + '/' + id)
-      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
+      .get<Paciente>(this.baseUrl + '/' + id, this.obterHeaderJson())
+      .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
-  save(paciente: Partial<Paciente>) {
+  save(paciente: Paciente) {
     if (paciente.id) {
       return this.put(paciente);
     }
     return this.post(paciente);
   }
 
-  post(paciente: Partial<Paciente>) {
+  post(paciente: Paciente) {
     let response = this.httpClient
-      .post(`${this.baseUrl}`, paciente)
-      .pipe(retry(2), catchError(this.serviceError));
+      .post(`${this.baseUrl}`, paciente, this.obterHeaderJson())
+      .pipe(retry(2), catchError(super.serviceError));
     return response;
   }
 
-  put(paciente: Partial<Paciente>) {
+  put(paciente: Paciente) {
     return this.httpClient
       .put<Paciente>(
         this.baseUrl + '/' + paciente.id,
         JSON.stringify(paciente),
         this.obterHeaderJson()
       )
-      .pipe(retry(1), catchError(this.serviceError));
+      .pipe(retry(1), catchError(super.serviceError));
   }
 
   delete(id: number) {
     return this.httpClient
-      .delete<Paciente>(this.baseUrl + '/' + id)
-      .pipe(retry(1), catchError(this.serviceError));
+      .delete<Paciente>(this.baseUrl + '/' + id, this.obterHeaderJson())
+      .pipe(retry(1), catchError(super.serviceError));
   }
 
   addPaciente(paciente: Paciente) {
     return this.httpClient
-      .post<Paciente>(this.baseUrl, JSON.stringify(paciente))
-      .pipe(retry(2), catchError(this.serviceError));
+      .post<Paciente>(
+        this.baseUrl,
+        JSON.stringify(paciente),
+        this.obterHeaderJson()
+      )
+      .pipe(retry(2), catchError(super.serviceError));
+  }
+
+  consultarCep(cep: string): Observable<CepConsulta> {
+    return this.httpClient
+      .get<CepConsulta>(`https://viacep.com.br/ws/${cep}/json`)
+      .pipe(catchError(super.serviceError));
   }
 }
