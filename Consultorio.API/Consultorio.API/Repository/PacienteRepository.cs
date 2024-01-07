@@ -24,5 +24,9 @@ namespace Consultorio.API.Repository
         {
             return await _data.Include(paciente => paciente.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(paciente => paciente.Id == id);
         }
+        public async Task<Paciente> ObterPacienteConsultas(int id)
+        {
+            return await _data.Include(paciente => paciente.Consultas).FirstOrDefaultAsync(paciente => paciente.Id == id);
+        }
     }
 }

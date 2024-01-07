@@ -59,13 +59,17 @@ namespace Consultorio.API
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(builder => {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors(MyAllowSpecificOrigins);
 
             app.MapControllers();
 

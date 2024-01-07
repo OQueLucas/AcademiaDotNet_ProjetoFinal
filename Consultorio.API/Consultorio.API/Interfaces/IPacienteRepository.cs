@@ -6,5 +6,6 @@ namespace Consultorio.API.Interfaces
     {
         public Task<List<Paciente>> GetAll();
         public Task<Paciente> GetById(int id);
+        public Task<Paciente> ObterPacienteConsultas(int id);
     }
 }

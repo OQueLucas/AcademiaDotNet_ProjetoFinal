@@ -6,7 +6,7 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { TituloComponent } from './components/titulo/titulo.component';
 import { AlertComponent } from './components/alert/alert.component';
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     TituloComponent,
     AlertComponent,
   ],
-  imports: [CommonModule, AppMaterialModule, AlertModule],
+  imports: [CommonModule, AppMaterialModule, NgbModule],
   exports: [
     ErrorDialogComponent,
     ConfirmationDialogComponent,

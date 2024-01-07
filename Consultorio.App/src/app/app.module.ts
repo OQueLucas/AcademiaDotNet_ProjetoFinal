@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,6 +14,12 @@ import { MenuComponent } from './nav/menu/menu.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MenuLoginComponent } from './nav/menu-login/menu-login.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ErrorInterceptor } from './services/error.handler.service';
+import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
+
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+];
 
 @NgModule({
   declarations: [
@@ -22,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     NotFoundComponent,
     MenuLoginComponent,
+    AcessoNegadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,8 +42,14 @@ import { ToastrModule } from 'ngx-toastr';
     NgxMaskPipe,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    HttpClientModule,
   ],
-  providers: [HttpClientModule, FormsModule, provideNgxMask()],
+  providers: [
+    HttpClientModule,
+    FormsModule,
+    provideNgxMask(),
+    httpInterceptorProviders,
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })

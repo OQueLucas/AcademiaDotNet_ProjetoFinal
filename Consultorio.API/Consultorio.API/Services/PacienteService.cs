@@ -40,6 +40,12 @@ namespace Consultorio.API.Services
 
         public async Task<bool> Remover(Paciente paciente)
         {
+            if (_pacienteRepository.ObterPacienteConsultas(paciente.Id).Result.Consultas.Any())
+            {
+                Notificar("O paciente possui consultas cadastradas");
+                return false;
+            }
+
             if (await _pacienteRepository.Remove(paciente)) return true;
 
             return false;

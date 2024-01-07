@@ -89,9 +89,10 @@ namespace Consultorio.API.Controllers
 
             if (paciente == null) return NotFound();
 
-            if (await _pacienteService.Remover(paciente)) return Ok("Paciente apagado");
+            await _pacienteService.Remover(paciente);
+                
+            return CustomResponse(paciente);
 
-            return NoContent();
         }
     }
 }

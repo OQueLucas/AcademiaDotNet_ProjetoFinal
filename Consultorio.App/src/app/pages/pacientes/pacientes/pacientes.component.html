@@ -1,4 +1,8 @@
-<app-alert [alerts]="alerts"></app-alert>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-atom" [fullScreen]="true">
+  <p style="color: white"> Carregando... </p>
+</ngx-spinner>
+<app-alert [alerts]="alerts" [type]="type"></app-alert>
+
 <mat-card>
 
   <mat-toolbar color="primary">

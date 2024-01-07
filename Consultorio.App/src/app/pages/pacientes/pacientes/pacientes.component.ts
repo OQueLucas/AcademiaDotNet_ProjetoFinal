@@ -10,6 +10,8 @@ import { ConfirmationDialogComponent } from '../../../shared/components/confirma
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { UtilsService } from '../../../services/utils.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-pacientes',
   templateUrl: './pacientes.component.html',
@@ -30,6 +32,7 @@ export class PacientesComponent {
     'actions',
   ];
   alerts: any[] = [];
+  type: string;
 
   constructor(
     private PacienteService: PacienteService,
@@ -37,22 +40,32 @@ export class PacientesComponent {
     private route: ActivatedRoute,
     public utils: UtilsService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) {
     this.refresh();
   }
 
   refresh() {
+    this.spinner.show();
     this.pacientes$ = this.PacienteService.get().pipe(
       catchError((error) => {
         this.onError('Erro ao carregar Pacientes.');
-        this.alerts = this.utils.processarFalha('danger', error);
+        this.alerts = error.error.errors;
+        this.type = 'danger';
         return scheduled(of([]), asyncScheduler);
       })
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pacientes$.subscribe({
+      next: () => {
+        this.spinner.hide();
+      },
+      error: () => {},
+    });
+  }
 
   onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route });
@@ -81,6 +94,8 @@ export class PacientesComponent {
             this.onSuccess();
           },
           error: (error) => {
+            this.alerts = error.error.errors;
+            this.type = 'danger';
             this.onError('Erro ao tentar remover paciente.');
           },
         });

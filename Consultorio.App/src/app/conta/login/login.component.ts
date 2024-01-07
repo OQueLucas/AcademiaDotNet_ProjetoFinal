@@ -106,8 +106,9 @@ export class LoginComponent {
 
           this.contaService.LocalStorage.salvarDadosLocaisUsuario(response);
           let toastr = this.toastr.success(
-            'Registro realizado com sucesso!',
-            'Bem vindo!!!'
+            'Login realizado com sucesso!',
+            'Bem vindo!!!',
+            { progressBar: true }
           );
           if (toastr) {
             toastr.onHidden.subscribe(() => {
@@ -116,6 +117,7 @@ export class LoginComponent {
           }
         },
         error: (falha) => {
+          this.type = 'danger';
           this.alerts = falha.error.errors;
           this.toastr.error('Ocorreu um erro!', 'Opa :(');
           this.type = 'danger';

@@ -14,6 +14,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from '../../../services/utils.service';
 import { CepConsulta } from '../models/CepConsulta';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-paciente-form',
@@ -24,6 +25,7 @@ export class PacienteFormComponent {
   titulo: string;
 
   alerts: any[] = [];
+  type: string;
 
   setTitle() {
     if (this.form.value.id === 0) {
@@ -53,6 +55,7 @@ export class PacienteFormComponent {
     public formUtils: FormUtilsService,
     public utils: UtilsService,
     private _adapter: DateAdapter<any>,
+    private toastr: ToastrService,
     @Inject(MAT_DATE_LOCALE) private _locale: string
   ) {
     this._locale = 'pt';
@@ -125,14 +128,18 @@ export class PacienteFormComponent {
     if (this.form.valid) {
       this._pacienteService.save(this.form.value).subscribe({
         next: () => {
-          this.alerts = this.utils.processarSucesso(
-            'success',
-            'Paciente cadastrado com sucesso!'
-          );
           this.form.reset();
+          this.alerts = [];
+          this.toastr.success('Paciente cadastrado com sucesso!', 'Sucesso!', {
+            progressBar: true,
+          });
         },
         error: (error: HttpErrorResponse) => {
-          this.alerts = this.utils.processarFalha('danger', error.error.errors);
+          this.alerts = error.error.errors;
+          this.type = 'danger';
+          this.toastr.error('Ocorreu algum erro!', 'Falha!', {
+            progressBar: true,
+          });
         },
       });
     } else {

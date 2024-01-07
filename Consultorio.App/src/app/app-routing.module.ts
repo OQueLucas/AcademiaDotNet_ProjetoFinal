@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
+import { canActivate } from './pages/pacientes/guards/paciente.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +15,7 @@ const routes: Routes = [
       import('./pages/pacientes/pacientes.module').then(
         (m) => m.PacientesModule
       ),
+    canActivate: [canActivate],
   },
   {
     path: 'medicos',
@@ -37,6 +40,8 @@ const routes: Routes = [
       import('./conta/conta.module').then((m) => m.ContaModule),
   },
 
+  { path: 'acesso-negado', component: AcessoNegadoComponent },
+  { path: 'nao-encontrado', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
