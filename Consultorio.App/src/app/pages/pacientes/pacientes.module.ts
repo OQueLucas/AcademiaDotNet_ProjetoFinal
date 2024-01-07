@@ -13,9 +13,15 @@ import { PacienteFormComponent } from './paciente-form/paciente-form.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { PacienteDetalhesComponent } from './paciente-detalhes/paciente-detalhes.component';
 import { ListaConsultasComponent } from './lista-consultas/lista-consultas.component';
+import { PacienteGuard } from './guards/paciente.guard';
 
 @NgModule({
-  declarations: [PacientesComponent, PacienteFormComponent, PacienteDetalhesComponent, ListaConsultasComponent],
+  declarations: [
+    PacientesComponent,
+    PacienteFormComponent,
+    PacienteDetalhesComponent,
+    ListaConsultasComponent,
+  ],
   imports: [
     CommonModule,
     PacientesRoutingModule,
@@ -25,5 +31,6 @@ import { ListaConsultasComponent } from './lista-consultas/lista-consultas.compo
     NgxMaskDirective,
     NgxMaskPipe,
   ],
+  providers: [PacienteGuard],
 })
 export class PacientesModule {}

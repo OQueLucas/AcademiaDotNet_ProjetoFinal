@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
-import { canActivate } from './pages/pacientes/guards/paciente.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

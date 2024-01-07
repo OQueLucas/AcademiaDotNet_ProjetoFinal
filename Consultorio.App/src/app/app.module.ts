@@ -16,6 +16,13 @@ import { MenuLoginComponent } from './nav/menu-login/menu-login.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ErrorInterceptor } from './services/error.handler.service';
 import { AcessoNegadoComponent } from './acesso-negado/acesso-negado.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+library.add(fas);
 
 export const httpInterceptorProviders = [
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -43,6 +50,8 @@ export const httpInterceptorProviders = [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
+    NgbModule,
+    FontAwesomeModule,
   ],
   providers: [
     HttpClientModule,
