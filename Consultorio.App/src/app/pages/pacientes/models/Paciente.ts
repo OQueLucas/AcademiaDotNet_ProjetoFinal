@@ -1,5 +1,6 @@
 import { Genero } from '../../../enum/Genero.enum';
 import { TipoSanguineo } from '../../../enum/TipoSanguineo.enum';
+import { Consulta } from '../../consultas/model/consulta';
 
 export interface Paciente {
   id: number;
@@ -16,4 +17,5 @@ export interface Paciente {
   endereco: string;
   telefone: string;
   observacao: string;
+  consultas: Consulta[];
 }

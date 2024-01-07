@@ -14,11 +14,13 @@ namespace Consultorio.API.Controllers
     public class PacienteController : MainController
     {
         private readonly IPacienteService _pacienteService;
+        private readonly IPacienteRepository _pacienteRepository;
         private readonly IMapper _mapper;
 
-        public PacienteController(IPacienteService pacienteService, IMapper mapper, INotificador notificador) : base(notificador)
+        public PacienteController(IPacienteService pacienteService, IPacienteRepository pacienteRepository, IMapper mapper, INotificador notificador) : base(notificador)
         {
             _pacienteService = pacienteService;
+            _pacienteRepository = pacienteRepository;
             _mapper = mapper;
         }
 
@@ -40,9 +42,9 @@ namespace Consultorio.API.Controllers
         // GET: api/Paciente/5
         [ClaimsAuthorize("Paciente", "Listar")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Paciente>> GetPaciente(int id)
+        public async Task<ActionResult<Paciente>> ObterPorId(int id)
         {
-            var paciente = _mapper.Map<PacienteViewModel>(await _pacienteService.BuscaId(id));
+            var paciente = _mapper.Map<PacienteViewModel>(await _pacienteRepository.ObterPacienteConsultas(id));
 
             if (paciente == null)
             {

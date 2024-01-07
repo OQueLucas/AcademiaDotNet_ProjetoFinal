@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PacienteService } from '../../../services/paciente.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Paciente } from '../models/Paciente';
 import { Location } from '@angular/common';
 import { Genero, GeneroToLabelMapping } from '../../../enum/Genero.enum';
@@ -78,6 +78,7 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
     private _pacienteService: PacienteService,
     private _location: Location,
     private _route: ActivatedRoute,
+    private router: Router,
     public formUtils: FormUtilsService,
     public utils: UtilsService,
     private _adapter: DateAdapter<any>,
@@ -189,6 +190,6 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
   }
 
   voltar() {
-    this._location.back();
+    this.router.navigate(['pacientes']);
   }
 }

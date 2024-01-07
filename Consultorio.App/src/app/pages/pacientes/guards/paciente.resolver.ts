@@ -28,6 +28,7 @@ export const pacienteResolver: ResolveFn<Observable<Paciente>> = (
       endereco: '',
       telefone: '',
       observacao: '',
+      consultas: [],
     }),
     asyncScheduler
   );

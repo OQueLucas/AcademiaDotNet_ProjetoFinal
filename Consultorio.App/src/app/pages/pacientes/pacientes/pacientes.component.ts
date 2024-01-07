@@ -26,6 +26,7 @@ export class PacientesComponent {
     'nome',
     'nomeSocial',
     'cpf',
+    'telefone',
     'email',
     'tipoSanguineo',
     'genero',
@@ -73,6 +74,10 @@ export class PacientesComponent {
 
   onEdit(paciente: Paciente) {
     this.router.navigate(['editar', paciente.id], { relativeTo: this.route });
+  }
+
+  onDetail(paciente: Paciente) {
+    this.router.navigate(['detalhes', paciente.id], { relativeTo: this.route });
   }
 
   onError(errorMessage: string) {

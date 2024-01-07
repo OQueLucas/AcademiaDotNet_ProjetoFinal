@@ -1,0 +1,90 @@
+<div class="container main-container">
+  <h1>Detalhes de {{ paciente.nome }}</h1>
+
+  <div>
+    <h4>Informação somente leitura</h4>
+    <hr />
+    <dl class="row">
+      <dt class="col-sm-2">
+        <label class="control-label">Nome</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.nome }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Nome Social</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.nomeSocial }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CPF</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{paciente.cpf | mask: '000.000.000-00' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Data de Nascimento</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.dataNascimento | date:'dd/MM/yyyy HH:mm' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Email</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.email }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Tipo Sanguíneo</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ TipoSanguineoToLabelMapping[paciente.tipoSanguineo] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Gênero</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ GeneroToLabelMapping[paciente.genero] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CEP</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.cep | mask:'00000-000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Bairro</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.bairro }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Endereço</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.endereco }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Telefone</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.telefone | mask: '(00) 0000-0000 || (00) 00000-0000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Observação</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ paciente.observacao }}
+      </dd>
+    </dl>
+  </div>
+
+  <app-lista-consultas [consultas]="paciente.consultas"></app-lista-consultas>
+
+
+  <div>
+    <a class="btn btn-dark" (click)="onEdit(paciente)">Editar</a>&nbsp;
+    <a class="btn btn-info" (click)="voltar()">Voltar</a>
+  </div>
+</div>

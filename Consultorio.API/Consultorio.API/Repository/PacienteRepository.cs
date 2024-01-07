@@ -26,7 +26,7 @@ namespace Consultorio.API.Repository
         }
         public async Task<Paciente> ObterPacienteConsultas(int id)
         {
-            return await _data.Include(paciente => paciente.Consultas).FirstOrDefaultAsync(paciente => paciente.Id == id);
+            return await _data.Include(paciente => paciente.Pessoa).Include(paciente => paciente.Consultas).ThenInclude(consulta => consulta.Medico).ThenInclude(medico => medico.Pessoa).FirstOrDefaultAsync(paciente => paciente.Id == id);
         }
     }
 }

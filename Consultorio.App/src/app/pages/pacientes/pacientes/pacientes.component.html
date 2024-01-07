@@ -29,9 +29,13 @@
         <ng-container matColumnDef="cpf">
           <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
           <mat-cell *matCellDef="let paciente"> {{ paciente.cpf | mask: '000.000.000-00' }} </mat-cell>
-        </ng-container>
 
-        <!-- Email Column -->
+        </ng-container><!-- Email Column -->
+        <ng-container matColumnDef="telefone">
+          <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
+          <mat-cell *matCellDef="let paciente"> {{ paciente.telefone | mask:'(00) 0000-0000 || (00) 00000-0000' }} </mat-cell>
+
+        </ng-container><!-- Email Column -->
         <ng-container matColumnDef="email">
           <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
           <mat-cell *matCellDef="let paciente"> {{ paciente.email }} </mat-cell>
@@ -62,6 +66,10 @@
             <button mat-stroked-button color="primary" aria-label="Editar paciente" (click)="onEdit(paciente)">
               Editar
               <mat-icon class="mat-icon-visible">edit</mat-icon>
+            </button>
+            <button mat-stroked-button color="accent" aria-label=" Remover paciente" (click)="onDetail(paciente)">
+              Detalhes
+              <mat-icon class="mat-icon-visible">list</mat-icon>
             </button>
             <button mat-stroked-button color="warn" aria-label="Remover paciente" (click)="onRemove(paciente)">
               Remover

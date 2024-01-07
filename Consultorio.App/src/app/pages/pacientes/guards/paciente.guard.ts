@@ -15,7 +15,9 @@ export const canActivate: CanActivateFn = (
 ) => {
   const localStorageUtils = new LocalStorageUtils();
   if (!localStorageUtils.obterTokenUsuario()) {
-    inject(Router).navigate(['/conta/login']);
+    inject(Router).navigate(['/conta/login'], {
+      queryParams: { returnUrl: state.url },
+    });
   }
 
   let user = localStorageUtils.obterUsuario();

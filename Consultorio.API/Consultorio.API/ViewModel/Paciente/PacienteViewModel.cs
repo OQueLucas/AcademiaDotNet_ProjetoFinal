@@ -1,4 +1,5 @@
 ﻿using Consultorio.API.Model.Enum;
+using Consultorio.API.ViewModel.Consulta;
 
 namespace Consultorio.API.ViewModel.Paciente
 {
@@ -18,5 +19,6 @@ namespace Consultorio.API.ViewModel.Paciente
         public string? Endereco { get; set; }
         public string? Telefone { get; set; }
         public string? Observacao { get; set; }
+        public ICollection<PacienteConsultaViewModel> Consultas { get; set; }
     }
 }

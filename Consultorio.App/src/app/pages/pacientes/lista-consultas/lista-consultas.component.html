@@ -1,0 +1,55 @@
+<hr>
+<h4>Consultas</h4>
+
+<table class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>
+        Consulta
+      </th>
+      <th>
+        Data
+      </th>
+      <th>
+        Medico
+      </th>
+      <th>
+        CRM
+      </th>
+      <th>
+        Especialização
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let consulta of consultas">
+      <td>
+        {{ tipoConsulta[consulta.tipoConsulta] }}
+      </td>
+      <td>
+        {{ consulta.data }}
+      </td>
+      <td>
+        {{ consulta.medicoNome }}
+      </td>
+      <td>
+        {{ consulta.medicoCRM }}
+      </td>
+      <td>
+        {{ consulta.especializacao }}
+      </td>
+      <td class="text-right">
+        <a class="btn btn-warning" [routerLink]="['/consultas/detalhes',consulta.id]">
+          <span class="fa fa-search">Detalhe</span>
+        </a>&nbsp;
+        <a class="btn btn-info" [routerLink]="['/consultas/editar',consulta.id]">
+          <span class="fa fa-pencil-alt">Editar</span>
+        </a>&nbsp;
+        <a class="btn btn-danger" [routerLink]="['/consultas/excluir',consulta.id]">
+          <span class="fa fa-trash">Excluir</span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

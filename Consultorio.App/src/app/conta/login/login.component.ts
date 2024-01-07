@@ -23,7 +23,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { UtilsService } from '../../services/utils.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -44,11 +44,14 @@ export class LoginComponent {
   genericValidator: GenericValidator;
   displayMessage: DisplayMessage = {};
 
+  returnUrl: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private contaService: ContaService,
     private utils: UtilsService,
     private router: Router,
+    private route: ActivatedRoute,
     private toastr: ToastrService
   ) {
     this.validationMessages = {
@@ -61,6 +64,8 @@ export class LoginComponent {
         // rangeLength: 'A senha de possui entre 6 e 15 caracteres',
       },
     };
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
 
     this.genericValidator = new GenericValidator(this.validationMessages);
   }
@@ -110,11 +115,9 @@ export class LoginComponent {
             'Bem vindo!!!',
             { progressBar: true }
           );
-          if (toastr) {
-            toastr.onHidden.subscribe(() => {
-              this.router.navigate(['/home']);
-            });
-          }
+          this.returnUrl
+            ? this.router.navigate([this.returnUrl])
+            : this.router.navigate(['/home']);
         },
         error: (falha) => {
           this.type = 'danger';
