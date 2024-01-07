@@ -1,5 +1,17 @@
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChildren,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControlName,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { PacienteService } from '../../../services/paciente.service';
 import { ActivatedRoute } from '@angular/router';
 import { Paciente } from '../models/Paciente';
@@ -15,14 +27,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from '../../../services/utils.service';
 import { CepConsulta } from '../models/CepConsulta';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, fromEvent, merge } from 'rxjs';
+import {
+  DisplayMessage,
+  GenericValidator,
+  ValidationMessages,
+} from '../../../utils/generic-form-validation';
 
 @Component({
   selector: 'app-paciente-form',
   templateUrl: './paciente-form.component.html',
   styleUrl: './paciente-form.component.scss',
 })
-export class PacienteFormComponent {
+export class PacienteFormComponent implements OnInit, AfterViewInit {
+  @ViewChildren(FormControlName, { read: ElementRef })
+  formInputElements: ElementRef[];
+
   titulo: string;
+  mudancasNaoSalvas: boolean;
+
+  validationMessages: ValidationMessages;
+  genericValidator: GenericValidator;
+  displayMessage: DisplayMessage = {};
 
   alerts: any[] = [];
   type: string;
@@ -109,6 +135,16 @@ export class PacienteFormComponent {
     this.setTitle();
   }
 
+  ngAfterViewInit(): void {
+    let controlBlurs: Observable<any>[] = this.formInputElements.map(
+      (formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur')
+    );
+
+    merge(...controlBlurs).subscribe(() => {
+      this.mudancasNaoSalvas = true;
+    });
+  }
+
   buscarCep(cep: string) {
     if (cep.length < 8) return;
     this._pacienteService.consultarCep(cep).subscribe({
@@ -133,6 +169,7 @@ export class PacienteFormComponent {
           this.toastr.success('Paciente cadastrado com sucesso!', 'Sucesso!', {
             progressBar: true,
           });
+          this.mudancasNaoSalvas = false;
         },
         error: (error: HttpErrorResponse) => {
           this.alerts = error.error.errors;

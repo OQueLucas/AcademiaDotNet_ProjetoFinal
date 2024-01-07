@@ -23,6 +23,7 @@ namespace Consultorio.API.Controllers
         }
 
         // GET: api/Paciente
+        [ClaimsAuthorize("Paciente", "Listar")]
         [HttpGet]
         public async Task<IActionResult> GetPacientes()
         {
@@ -37,6 +38,7 @@ namespace Consultorio.API.Controllers
         }
 
         // GET: api/Paciente/5
+        [ClaimsAuthorize("Paciente", "Listar")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Paciente>> GetPaciente(int id)
         {
@@ -63,6 +65,7 @@ namespace Consultorio.API.Controllers
         }
 
         // PUT: api/Paciente/5
+        [ClaimsAuthorize("Paciente", "Editar")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaciente(int id, PacienteEdicaoViewModel pacienteViewModel)
         {

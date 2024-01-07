@@ -15,7 +15,6 @@ const routes: Routes = [
       import('./pages/pacientes/pacientes.module').then(
         (m) => m.PacientesModule
       ),
-    canActivate: [canActivate],
   },
   {
     path: 'medicos',
