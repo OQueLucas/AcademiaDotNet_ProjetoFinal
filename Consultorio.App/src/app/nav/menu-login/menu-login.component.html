@@ -10,8 +10,13 @@
     <a class="nav-link text-light" id="saudacaoUsuario" href="javascript:void(0)">{{ email }}</a>
   </li>
   <li *ngSwitchCase="true" class="nav-item">
+    <a class="nav-link text-light" id="minhaConta" [routerLink]="['/conta/admin/role']">Roles</a>
+  </li>
+  <li *ngSwitchCase="true" class="nav-item">
+    <a class="nav-link text-light" id="usuarios" [routerLink]="['/conta/usuarios']">Usuarios</a>
+  </li>
+  <li *ngSwitchCase="true" class="nav-item">
     <a class="nav-link text-light" href="javascript:void(0)" (click)="logout()">
       Sair <fa-icon [icon]="logoutIcon"></fa-icon></a>
-
   </li>
 </ul>

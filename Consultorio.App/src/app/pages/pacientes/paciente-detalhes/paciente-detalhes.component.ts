@@ -9,7 +9,7 @@ import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
   templateUrl: './paciente-detalhes.component.html',
   styleUrl: './paciente-detalhes.component.scss',
 })
-export class PacienteDetalhesComponent implements AfterViewInit {
+export class PacienteDetalhesComponent {
   paciente: Paciente;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
@@ -17,9 +17,6 @@ export class PacienteDetalhesComponent implements AfterViewInit {
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.paciente = this.route.snapshot.data['paciente'];
-  }
-  ngAfterViewInit(): void {
-    console.log(this.paciente);
   }
 
   onEdit(paciente: Paciente) {

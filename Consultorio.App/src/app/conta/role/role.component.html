@@ -1,0 +1,33 @@
+<div class="card border-primary">
+  <h4 class="card-header bg-primary text-white">Usuários</h4>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Nome normalizado</th>
+        <th>Selo de simultaneidade</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of roles">
+        <td>{{ role.id }}</td>
+        <td>{{ role.name }}</td>
+        <td>{{ role.normalizedName }}</td>
+        <td>{{ role.concurrencyStamp }}</td>
+        <td class="text-right">
+          <a class="btn btn-warning" [routerLink]="['/roles/detalhes',role.id]">
+            <span class="fa fa-search">Detalhe</span>
+          </a>&nbsp;
+          <a class="btn btn-info" [routerLink]="['/roles/editar',role.id]">
+            <span class="fa fa-pencil-alt">Editar</span>
+          </a>&nbsp;
+          <a class="btn btn-danger" [routerLink]="['/roles/excluir',role.id]">
+            <span class="fa fa-trash">Excluir</span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

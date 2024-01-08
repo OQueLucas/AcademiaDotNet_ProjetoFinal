@@ -43,6 +43,7 @@ namespace Consultorio.API
             builder.Services.AddScoped<IConsultaRepository, ConsultaRepository>();
 
             builder.Services.AddScoped<INotificador, Notificador>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IMedicoService, MedicoService>();
             builder.Services.AddScoped<IPacienteService, PacienteService>();
             builder.Services.AddScoped<ISintomaService, SintomaService>();

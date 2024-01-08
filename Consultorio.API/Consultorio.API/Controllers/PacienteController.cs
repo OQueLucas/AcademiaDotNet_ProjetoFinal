@@ -4,11 +4,10 @@ using AutoMapper;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel.Paciente;
 using Microsoft.AspNetCore.Authorization;
-using Consultorio.API.Extensions;
 
 namespace Consultorio.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Medico")]
     [Route("api/[controller]")]
     [ApiController]
     public class PacienteController : MainController
@@ -25,7 +24,6 @@ namespace Consultorio.API.Controllers
         }
 
         // GET: api/Paciente
-        [ClaimsAuthorize("Paciente", "Listar")]
         [HttpGet]
         public async Task<IActionResult> GetPacientes()
         {
@@ -40,7 +38,6 @@ namespace Consultorio.API.Controllers
         }
 
         // GET: api/Paciente/5
-        [ClaimsAuthorize("Paciente", "Listar")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Paciente>> ObterPorId(int id)
         {
@@ -55,7 +52,6 @@ namespace Consultorio.API.Controllers
         }
 
         // POST: api/Paciente
-        [ClaimsAuthorize("Paciente", "Adicionar")]
         [HttpPost]
         public async Task<IActionResult> Adicionar(PacienteCriacaoViewModel pacienteViewModel)
         {
@@ -67,7 +63,6 @@ namespace Consultorio.API.Controllers
         }
 
         // PUT: api/Paciente/5
-        [ClaimsAuthorize("Paciente", "Editar")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaciente(int id, PacienteEdicaoViewModel pacienteViewModel)
         {
@@ -86,7 +81,6 @@ namespace Consultorio.API.Controllers
         }
 
         // DELETE: api/Paciente/5
-        [ClaimsAuthorize("Paciente", "Excluir")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaciente(int id)
         {

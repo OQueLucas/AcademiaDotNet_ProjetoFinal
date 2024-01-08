@@ -14,5 +14,6 @@ namespace Consultorio.API.ViewModel.UserViewModel
 
         [Compare("Password", ErrorMessage = "As senhas não conferem")]
         public string ConfirmPassword { get; set; }
+        public ICollection<string>? Roles { get; set; }
     }
 }

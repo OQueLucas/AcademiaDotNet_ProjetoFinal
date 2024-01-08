@@ -13,9 +13,19 @@ import { ContaService } from './services/conta.service';
 // import { NarikCustomValidatorsModule } from '@narik/custom-validators';
 import { SharedModule } from '../shared/shared.module';
 import { ToastrModule } from 'ngx-toastr';
+import { RoleComponent } from './role/role.component';
+import { UsuariosComponent } from './usuarios/usuarios/usuarios.component';
+import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
 
 @NgModule({
-  declarations: [ContaAppComponent, CadastroComponent, LoginComponent],
+  declarations: [
+    ContaAppComponent,
+    CadastroComponent,
+    LoginComponent,
+    RoleComponent,
+    UsuariosComponent,
+    DetalhesComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule,

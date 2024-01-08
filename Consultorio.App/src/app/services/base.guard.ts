@@ -31,7 +31,9 @@ export abstract class BaseGuard {
           this.navegarAcessoNegado();
         }
 
-        let userClaims = user.claims.find((x) => x.type === claim.nome);
+        let userClaims = user.claims.find(
+          (x) => x.type === claim.nome && x.value === claim.valor
+        );
 
         if (!userClaims) {
           this.navegarAcessoNegado();

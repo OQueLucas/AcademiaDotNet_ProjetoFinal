@@ -1,6 +1,11 @@
+import { Role } from './Role';
+
 export interface Usuario {
   id: string;
+  userName: string;
   email: string;
-  password: string;
-  confirmPassword: string;
+  emailConfirmed: boolean;
+  phoneNumber: number;
+  phoneNumberConfirmed: boolean;
+  roles: Role[];
 }

@@ -12,7 +12,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Usuario } from '../models/usuario';
+import { UsuarioLogin } from '../models/UsuarioLogin';
 import { ContaService } from '../services/conta.service';
 import {
   ValidationMessages,
@@ -38,7 +38,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   type: string;
   mensagens: any[] = [];
   cadastroForm: FormGroup;
-  usuario: Usuario;
+  usuario: UsuarioLogin;
 
   validationMessages: ValidationMessages;
   genericValidator: GenericValidator;

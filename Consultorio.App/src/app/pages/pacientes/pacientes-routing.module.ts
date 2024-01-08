@@ -11,14 +11,14 @@ const routes: Routes = [
     path: '',
     component: PacientesComponent,
     canActivate: [PacienteGuard],
-    data: [{ claim: { nome: 'Paciente', valor: 'Listar' } }],
+    data: [{ claim: { nome: 'role', valor: 'Medico' } }],
   },
   {
     path: 'detalhes/:id',
     component: PacienteDetalhesComponent,
     resolve: { paciente: pacienteResolver },
     canActivate: [PacienteGuard],
-    data: [{ claim: { nome: 'Paciente', valor: 'Listar' } }],
+    data: [{ claim: { nome: 'role', valor: 'Medico' } }],
   },
   {
     path: 'novo',
@@ -26,14 +26,14 @@ const routes: Routes = [
     resolve: { paciente: pacienteResolver },
     canDeactivate: [PacienteGuard],
     canActivate: [PacienteGuard],
-    data: [{ claim: { nome: 'Paciente', valor: 'Adicionar' } }],
+    data: [{ claim: { nome: 'role', valor: 'Medico' } }],
   },
   {
     path: 'editar/:id',
     component: PacienteFormComponent,
     resolve: { paciente: pacienteResolver },
     canActivate: [PacienteGuard],
-    data: [{ claim: { nome: 'Paciente', valor: 'Editar' } }],
+    data: [{ claim: { nome: 'role', valor: 'Medico' } }],
   },
 ];
 

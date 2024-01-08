@@ -1,0 +1,33 @@
+<div class="card border-primary">
+  <h4 class="card-header bg-primary text-white">Usuários</h4>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>UserName</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.userName }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>{{ usuario.phoneNumber }}</td>
+        <td class="text-right">
+          <a class="btn btn-warning" [routerLink]="['/conta/usuarios/detalhes/',usuario.id]">
+            <span class="fa fa-search">Detalhe</span>
+          </a>&nbsp;
+          <a class="btn btn-info" [routerLink]="['/conta/usuarios/editar',usuario.id]">
+            <span class="fa fa-pencil-alt">Editar</span>
+          </a>&nbsp;
+          <a class="btn btn-danger" (click)="remove(usuario.id)">
+            <span class="fa fa-trash">Excluir</span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

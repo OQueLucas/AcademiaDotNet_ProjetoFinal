@@ -1,0 +1,64 @@
+<div class="container main-container">
+  <h1></h1>
+
+  <div class="d-flex gap-4">
+    <div class="card border-primary">
+      <h1 class="card-header bg-primary text-white">Detalhes de {{ usuario.userName }}</h1>
+      <div class="card-body">
+        <p class="card-text">Informação somente leitura</p>
+        <hr>
+        <dl class="row">
+          <dt class="col-sm-2">
+            <label class="control-label">User Name</label>
+          </dt>
+          <dd class="col-sm-10">
+            {{ usuario.userName }}
+          </dd>
+          <dt class="col-sm-2">
+            <label class="control-label">Email</label>
+          </dt>
+          <dd class="col-sm-10">
+            {{ usuario.email }}
+          </dd>
+          <dt class="col-sm-2">
+            <label class="control-label">Email Confirmed</label>
+          </dt>
+          <dd class="col-sm-10">
+            {{ usuario.emailConfirmed }}
+          </dd>
+          <dt class="col-sm-2">
+            <label class="control-label">Phone Number</label>
+          </dt>
+          <dd class="col-sm-10">
+            {{ usuario.phoneNumber }}
+          </dd>
+          <dt class="col-sm-2">
+            <label class="control-label">Phone Number Confirmed</label>
+          </dt>
+          <dd class="col-sm-10">
+            {{ usuario.phoneNumberConfirmed }}
+          </dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="card border-primary">
+      <h4 class="card-header bg-primary text-white">Permissões de acesso</h4>
+      <div class="card-body">
+        <p class="card-text">Adicione e revogue os acessos aqui.</p>
+        <form [formGroup]="form" *ngIf="roles" class="flex-fill">
+          <div class="form-check form-switch" *ngFor="let role of getRoleFormArray(); let i=index" formArrayName="roles">
+            <input class="form-check-input" [formControlName]="i" id="{{ i }}" type="checkbox" [(ngModel)]="roles[i].isSelected"> <label class="form-check-label" for="{{ i }}"> {{roles[i].name}}</label>
+          </div>
+          <button class="btn btn-primary" (click)="onSubmit()">Salvar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <div>
+    <a class="btn btn-dark" (click)="onEdit(usuario)">Editar</a>&nbsp;
+    <a class="btn btn-info" (click)="voltar()">Voltar</a>
+  </div> -->
+</div>
