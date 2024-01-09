@@ -1,90 +1,55 @@
-<mat-card>
-
-  <mat-toolbar color="primary">
-    <span>Consultas</span>
-  </mat-toolbar>
-
-  <div class="mat-elevation-z8">
-    <div *ngIf="consulta$ | async as consulta; else loading">
-      <mat-table [dataSource]="consulta" matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
-
-        <!-- Tipo de Consulta Column -->
-        <ng-container matColumnDef="tipoConsulta">
-          <mat-header-cell *matHeaderCellDef> Tipo de Consulta </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ TipoConsultaToLabelMapping[consulta.tipoConsulta] }} </mat-cell>
-        </ng-container>
-
-        <!-- Data Column -->
-        <ng-container matColumnDef="data">
-          <mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Data </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.data | date: 'dd/MM/yyyy HH:mm'}} </mat-cell>
-        </ng-container>
-
-        <!-- Medico Column -->
-        <ng-container matColumnDef="medicoNome">
-          <mat-header-cell *matHeaderCellDef> Medico </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.medicoNome }} </mat-cell>
-        </ng-container>
-
-        <!-- CRM Column -->
-        <ng-container matColumnDef="medicoCRM">
-          <mat-header-cell *matHeaderCellDef> CRM </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.medicoCRM | mask: 'SS 00000' }} </mat-cell>
-        </ng-container>
-
-        <!-- Especialização Column -->
-        <ng-container matColumnDef="especializacao">
-          <mat-header-cell *matHeaderCellDef> Especialização </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.especializacao }} </mat-cell>
-        </ng-container>
-
-        <!-- Nome Column -->
-        <ng-container matColumnDef="nome">
-          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.nome }} </mat-cell>
-        </ng-container>
-
-        <!-- Nome Social Column -->
-        <ng-container matColumnDef="nomeSocial">
-          <mat-header-cell *matHeaderCellDef> Nome Social </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ consulta.nomeSocial }} </mat-cell>
-        </ng-container>
-
-        <!-- Genero Column -->
-        <ng-container matColumnDef="genero">
-          <mat-header-cell *matHeaderCellDef> Genero </mat-header-cell>
-          <mat-cell *matCellDef="let consulta"> {{ GeneroToLabelMapping[consulta.genero] }} </mat-cell>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef class="action-column">
-            <button (click)="onAdd()" mat-raised-button extended color="accent" aria-label="Adicionar consulta">
-              Novo
-              <mat-icon>add</mat-icon>
-            </button>
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let consulta" class="action-column gap-1 p-2">
-            <button mat-stroked-button color="primary" aria-label="Editar consulta" (click)="onEdit(consulta)">
-              Editar
-              <mat-icon class="mat-icon-visible">edit</mat-icon>
-            </button>
-            <button mat-stroked-button color="warn" aria-label="Remover consulta" (click)="onRemove(consulta)">
-              Remover
-              <mat-icon class="mat-icon-visible">delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
-    <ng-template #loading>
-      <div class="loading-spinner">
-        <mat-spinner></mat-spinner>
-      </div>
-    </ng-template>
+<app-alert [alerts]="alerts" [type]="type"></app-alert>
+<div class="card">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1 class="">Consultas</h1>
   </div>
-</mat-card>
+  <table class="table table-hover table-striped shadow-lg mb-0">
+    <thead>
+      <tr>
+        <th>Tipo de Consulta</th>
+        <th>Data</th>
+        <th>Medico</th>
+        <th>CRM</th>
+        <th>Especialização</th>
+        <th>Nome</th>
+        <th>Nome Social</th>
+        <th>Genero</th>
+        <th class="acoes">
+          <a class="btn btn-primary" (click)=" onAdd()" aria-label="Adicionar consulta">
+            <fa-icon [icon]="novoIcon"></fa-icon> Novo
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (consulta of consultas; track consulta.id) {
+      <tr>
+        <td> {{ TipoConsultaToLabelMapping[consulta.tipoConsulta] }} </td>
+        <td> {{ consulta.data | date: 'dd/MM/yyyy HH:mm' }} </td>
+        <td> {{ consulta.medicoNome }} </td>
+        <td> {{ consulta.medicoCRM | mask: 'SS 00000' }}</td>
+        <td> {{ consulta.especializacao }}</td>
+        <td> {{ consulta.nome }} </td>
+        <td> {{ consulta.nomeSocial }}</td>
+        <td> {{ GeneroToLabelMapping[consulta.genero] }} </td>
+
+
+        <td class="acoes">
+          <a class="btn btn-outline-success btn-sm" (click)="onDetail(consulta.id)">
+            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
+          </a>&nbsp;
+          <a class="btn btn-outline-primary btn-sm" (click)="onEdit(consulta.id)">
+            <fa-icon [icon]="editarIcon"></fa-icon> Editar
+          </a>&nbsp;
+          <a class="btn btn-outline-danger btn-sm" (click)="onRemove(consulta.id)">
+            <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
+          </a>
+        </td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="8" style="text-align: center">Nenhuma consulta encontrada</td>
+      </tr>
+      }
+    </tbody>
+  </table>

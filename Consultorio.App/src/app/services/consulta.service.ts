@@ -22,13 +22,13 @@ export class ConsultaService extends BaseService {
 
   get(): Observable<Consulta[]> {
     return this.httpClient
-      .get<Consulta[]>(this.baseUrl)
+      .get<Consulta[]>(this.baseUrl, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
-      .get<Consulta>(this.baseUrl + '/' + id)
+      .get<Consulta>(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
@@ -41,7 +41,7 @@ export class ConsultaService extends BaseService {
 
   post(consulta: Partial<Consulta>) {
     return this.httpClient
-      .post<Consulta>(this.baseUrl, consulta)
+      .post<Consulta>(this.baseUrl, consulta, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
@@ -67,7 +67,7 @@ export class ConsultaService extends BaseService {
 
   delete(id: number) {
     return this.httpClient
-      .delete<Consulta>(this.baseUrl + '/' + id)
+      .delete<Consulta>(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(retry(1), catchError(this.serviceError));
   }
 }

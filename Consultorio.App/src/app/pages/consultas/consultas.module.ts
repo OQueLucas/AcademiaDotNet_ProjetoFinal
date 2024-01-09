@@ -8,6 +8,7 @@ import { AppMaterialModule } from '../../shared/app-material/app-material.module
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { ConsultaGuard } from './guards/consulta.guard';
 
 @NgModule({
   declarations: [ConsultasComponent, ConsultaFormComponent],
@@ -20,5 +21,6 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     NgxMaskDirective,
     NgxMaskPipe,
   ],
+  providers: [ConsultaGuard],
 })
 export class ConsultasModule {}

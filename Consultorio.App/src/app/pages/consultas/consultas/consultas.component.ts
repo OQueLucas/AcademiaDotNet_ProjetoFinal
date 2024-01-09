@@ -9,6 +9,8 @@ import { ErrorDialogComponent } from '../../../shared/components/error-dialog/er
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { TipoConsulta } from '../../../enum/TipoConsulta.enum';
 import { Consulta } from '../model/consulta';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-consultas',
@@ -16,39 +18,44 @@ import { Consulta } from '../model/consulta';
   styleUrl: './consultas.component.scss',
 })
 export class ConsultasComponent {
+  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoConsultaToLabelMapping = TipoConsulta;
 
-  consulta$: Observable<Consulta[]> | null = null;
-  displayedColumns = [
-    'tipoConsulta',
-    'data',
-    'medicoNome',
-    'medicoCRM',
-    'especializacao',
-    'nome',
-    'nomeSocial',
-    'genero',
-    'actions',
-  ];
+  alerts: any[] = [];
+  type: string;
+
+  consultas: Consulta[] = null;
 
   constructor(
     private ConsultaService: ConsultaService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
+    private toastr: ToastrService,
     private _snackBar: MatSnackBar
   ) {
     this.refresh();
   }
 
   refresh() {
-    this.consulta$ = this.ConsultaService.get().pipe(
-      catchError(() => {
-        this.onError('Erro ao carregar Consultas.');
+    this.ConsultaService.get().subscribe({
+      next: (response) => {
+        this.consultas = response;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar as consulta!', 'Falha!', {
+          progressBar: true,
+        });
         return scheduled(of([]), asyncScheduler);
-      })
-    );
+      },
+    });
   }
 
   ngOnInit(): void {}
@@ -57,8 +64,12 @@ export class ConsultasComponent {
     this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
-  onEdit(consulta: Consulta) {
-    this.router.navigate(['editar', consulta.id], { relativeTo: this.route });
+  onEdit(id: number) {
+    this.router.navigate(['editar', id], { relativeTo: this.route });
+  }
+
+  onDetail(id: number) {
+    this.router.navigate(['detalhes', id], { relativeTo: this.route });
   }
 
   onError(errorMessage: string) {
@@ -67,20 +78,30 @@ export class ConsultasComponent {
     });
   }
 
-  onRemove(consulta: Consulta) {
+  onRemove(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover essa consulta?',
     });
 
     dialogRef.afterClosed().subscribe((result: Boolean) => {
       if (result) {
-        this.ConsultaService.delete(consulta.id).subscribe({
+        this.ConsultaService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.onSuccess();
+            this.toastr.success('Consulta removida com sucesso!', 'Sucesso!', {
+              progressBar: true,
+            });
           },
           error: (error) => {
-            this.onError('Erro ao tentar remover consulta.');
+            this.alerts = error.error.errors;
+            this.type = 'danger';
+            this.toastr.error(
+              'Ocorreu algum erro ao remover consulta!',
+              'Falha!',
+              {
+                progressBar: true,
+              }
+            );
           },
         });
       }

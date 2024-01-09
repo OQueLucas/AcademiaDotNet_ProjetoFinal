@@ -39,6 +39,7 @@ export class ConsultaFormComponent {
   public medicos: Medico[] = [];
   public sintomas: Sintoma[] = [];
   public form: FormGroup;
+  public mudancasNaoSalvas;
 
   public TipoConsultaToLabelMapping = TipoConsultaToLabelMapping;
   public tipoConsulta = Object.values(TipoConsulta).filter(

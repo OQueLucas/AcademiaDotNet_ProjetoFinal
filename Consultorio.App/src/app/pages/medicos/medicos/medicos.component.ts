@@ -28,7 +28,6 @@ export class MedicosComponent {
   type: string;
 
   medicos: Medico[] | null = null;
-  displayedColumns = ['nome', 'nomeSocial', 'crm', 'especializacao', 'actions'];
 
   constructor(
     private MedicoService: MedicoService,
