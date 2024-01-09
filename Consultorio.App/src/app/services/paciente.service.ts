@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, map, Observable, retry, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, retry } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Paciente } from '../pages/pacientes/models/Paciente';

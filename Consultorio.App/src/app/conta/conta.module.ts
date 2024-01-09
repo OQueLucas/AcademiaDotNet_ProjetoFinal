@@ -12,7 +12,6 @@ import { ContaRoutingModule } from './conta.route';
 import { ContaService } from './services/conta.service';
 // import { NarikCustomValidatorsModule } from '@narik/custom-validators';
 import { SharedModule } from '../shared/shared.module';
-import { RoleComponent } from '../admin/role/role.component';
 
 @NgModule({
   declarations: [ContaAppComponent, CadastroComponent, LoginComponent],

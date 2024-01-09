@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Paciente } from '../models/Paciente';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';

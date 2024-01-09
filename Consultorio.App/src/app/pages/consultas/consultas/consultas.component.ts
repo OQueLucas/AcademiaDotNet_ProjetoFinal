@@ -1,5 +1,5 @@
-import { AfterViewInit, Component } from '@angular/core';
-import { Observable, asyncScheduler, catchError, of, scheduled } from 'rxjs';
+import { Component } from '@angular/core';
+import { asyncScheduler, of, scheduled } from 'rxjs';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { ConsultaService } from '../../../services/consulta.service';
 import { ActivatedRoute, Router } from '@angular/router';

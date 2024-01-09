@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChildren,
-} from '@angular/core';
+import { Component, ElementRef, ViewChildren } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
