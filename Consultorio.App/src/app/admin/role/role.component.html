@@ -1,5 +1,5 @@
 <div class="card border-primary">
-  <h4 class="card-header bg-primary text-white">Usuários</h4>
+  <h1 class="card-header bg-primary text-white">Roles</h1>
   <table class="table table-hover table-striped">
     <thead>
       <tr>
@@ -17,13 +17,13 @@
         <td>{{ role.normalizedName }}</td>
         <td>{{ role.concurrencyStamp }}</td>
         <td class="text-right">
-          <a class="btn btn-warning" [routerLink]="['/roles/detalhes',role.id]">
+          <a class="btn btn-warning" [routerLink]="['/admin/roles/detalhes',role.id]">
             <span class="fa fa-search">Detalhe</span>
           </a>&nbsp;
-          <a class="btn btn-info" [routerLink]="['/roles/editar',role.id]">
+          <a class="btn btn-info" [routerLink]="['/admin/roles/editar',role.id]">
             <span class="fa fa-pencil-alt">Editar</span>
           </a>&nbsp;
-          <a class="btn btn-danger" [routerLink]="['/roles/excluir',role.id]">
+          <a class="btn btn-danger" [routerLink]="['/admin/roles/excluir',role.id]">
             <span class="fa fa-trash">Excluir</span>
           </a>
         </td>

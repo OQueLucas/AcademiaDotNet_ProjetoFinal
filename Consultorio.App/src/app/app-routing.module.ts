@@ -37,6 +37,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./conta/conta.module').then((m) => m.ContaModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then((m) => m.AdminModule),
+  },
 
   { path: 'acesso-negado', component: AcessoNegadoComponent },
   { path: 'nao-encontrado', component: NotFoundComponent },

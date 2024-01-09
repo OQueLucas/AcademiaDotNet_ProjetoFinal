@@ -28,6 +28,16 @@ export class AdminService extends BaseService {
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
+  adicionarRolesUsuario(id: string, roles: UserRole[]): Observable<UserRole[]> {
+    return this.http
+      .post<UserRole>(
+        this.baseUrl + 'role/' + id,
+        JSON.stringify(roles),
+        this.obterHeaderJson()
+      )
+      .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
+  }
+
   obterUsuario(id: string) {
     return this.http
       .get<Usuario>(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())

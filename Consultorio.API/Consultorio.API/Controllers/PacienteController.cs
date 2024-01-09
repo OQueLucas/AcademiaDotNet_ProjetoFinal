@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Consultorio.API.Controllers
 {
-    [Authorize(Roles = "Medico")]
+    [Authorize(Roles = "Medico, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PacienteController : MainController

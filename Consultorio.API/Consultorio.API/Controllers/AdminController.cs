@@ -122,16 +122,35 @@ namespace Consultorio.API.Controllers
             return CustomResponse(roles);
         }
 
-        [HttpPost("Role")]
-        public async Task<ActionResult> AdicionarRoleUsuario([FromBody] UserRoleCreateViewModel userRole)
+        [HttpPost("Role/{userId}")]
+        public async Task<ActionResult> AdicionarRoleUsuario([FromBody] List<UserRolesViewModel> roles, string userId)
         {
-            var user = await _userManager.FindByEmailAsync(userRole.Email);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            var assignedRole = new List<string>();
+            if (user == null)
+            {
+                NotificarErro("Usuário não encontrado");
+                return CustomResponse(user);
+            }
 
-            await _userService.AtribuirRoles(user, userRole.Roles);
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var result = await _userManager.RemoveFromRolesAsync(user, userRoles);
 
-            return CustomResponse(assignedRole);
+            if(!result.Succeeded)
+            {
+                NotificarErro("Não foi possível remover as regras existentes!");
+                return CustomResponse(result);
+            }
+
+            result = await _userManager.AddToRolesAsync(user, roles.Where(role => role.IsSelected).Select(role => role.Name));
+
+            if (!result.Succeeded)
+            {
+                NotificarErro("Não foi possível adicionar as regras selecionadas!");
+                return CustomResponse(result);
+            }
+
+            return CustomResponse(result);
         }
     }
 }

@@ -12,20 +12,10 @@ import { ContaRoutingModule } from './conta.route';
 import { ContaService } from './services/conta.service';
 // import { NarikCustomValidatorsModule } from '@narik/custom-validators';
 import { SharedModule } from '../shared/shared.module';
-import { ToastrModule } from 'ngx-toastr';
-import { RoleComponent } from './role/role.component';
-import { UsuariosComponent } from './usuarios/usuarios/usuarios.component';
-import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
+import { RoleComponent } from '../admin/role/role.component';
 
 @NgModule({
-  declarations: [
-    ContaAppComponent,
-    CadastroComponent,
-    LoginComponent,
-    RoleComponent,
-    UsuariosComponent,
-    DetalhesComponent,
-  ],
+  declarations: [ContaAppComponent, CadastroComponent, LoginComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -34,7 +24,6 @@ import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
     // NarikCustomValidatorsModule,
   ],
   providers: [ContaService],

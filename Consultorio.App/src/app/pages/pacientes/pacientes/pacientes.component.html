@@ -1,91 +1,53 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-atom" [fullScreen]="true">
-  <p style="color: white"> Carregando... </p>
-</ngx-spinner>
 <app-alert [alerts]="alerts" [type]="type"></app-alert>
-
-<mat-card>
-
-  <mat-toolbar color="primary">
-    <span>Pacientes</span>
-  </mat-toolbar>
-
-  <div class="mat-elevation-z8">
-    <div *ngIf="pacientes$ | async as pacientes; else loading">
-      <mat-table [dataSource]="pacientes">
-
-        <!-- Nome Column -->
-        <ng-container matColumnDef="nome">
-          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ paciente.nome }} </mat-cell>
-        </ng-container>
-
-        <!-- Nome Social Column -->
-        <ng-container matColumnDef="nomeSocial">
-          <mat-header-cell *matHeaderCellDef> Nome Social </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ paciente.nomeSocial }} </mat-cell>
-        </ng-container>
-
-        <!-- CPF Column -->
-        <ng-container matColumnDef="cpf">
-          <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ paciente.cpf | mask: '000.000.000-00' }} </mat-cell>
-
-        </ng-container><!-- Email Column -->
-        <ng-container matColumnDef="telefone">
-          <mat-header-cell *matHeaderCellDef> Telefone </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ paciente.telefone | mask:'(00) 0000-0000 || (00) 00000-0000' }} </mat-cell>
-
-        </ng-container><!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ paciente.email }} </mat-cell>
-        </ng-container>
-
-        <!-- Tipo Sanguíneo Column -->
-        <ng-container matColumnDef="tipoSanguineo">
-          <mat-header-cell *matHeaderCellDef> Tipo Sanguíneo </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ TipoSanguineoToLabelMapping[paciente.tipoSanguineo] }} </mat-cell>
-        </ng-container>
-
-        <!-- Genero Column -->
-        <ng-container matColumnDef="genero">
-          <mat-header-cell *matHeaderCellDef> Gênero </mat-header-cell>
-          <mat-cell *matCellDef="let paciente"> {{ GeneroToLabelMapping[paciente.genero] }} </mat-cell>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef class="action-column">
-            <button (click)="onAdd()" mat-raised-button extended color="accent" aria-label="Adicionar paciente">
-              Novo
-              <mat-icon>add</mat-icon>
-            </button>
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let paciente" class="action-column gap-1 p-2">
-            <button mat-stroked-button color="primary" aria-label="Editar paciente" (click)="onEdit(paciente)">
-              Editar
-              <mat-icon class="mat-icon-visible">edit</mat-icon>
-            </button>
-            <button mat-stroked-button color="accent" aria-label=" Remover paciente" (click)="onDetail(paciente)">
-              Detalhes
-              <mat-icon class="mat-icon-visible">list</mat-icon>
-            </button>
-            <button mat-stroked-button color="warn" aria-label="Remover paciente" (click)="onRemove(paciente)">
-              Remover
-              <mat-icon class="mat-icon-visible">delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
-    <ng-template #loading>
-      <div class="loading-spinner">
-        <mat-spinner></mat-spinner>
-      </div>
-    </ng-template>
+<div class="card ">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1 class="">Usuários</h1>
   </div>
-</mat-card>
+  <table class="table table-hover table-striped shadow-lg p-3 bg-body rounded">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Nome Social</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th>Tipo Sanguíneo</th>
+        <th>Gênero</th>
+        <th class="d-flex justify-content-center">
+          <a class="btn btn-primary" (click)=" onAdd()" aria-label="Adicionar paciente">
+            <fa-icon [icon]="novoIcon"></fa-icon> Novo
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (paciente of pacientes; track paciente.cpf) {
+      <tr>
+        <td> {{ paciente.nome }} </td>
+        <td> {{ paciente.nomeSocial }}</td>
+        <td> {{ paciente.cpf | mask: 'AAA.AAA.AAA-AA' }}</td>
+        <td> {{ paciente.telefone | mask: '(00) 0000-0000||(00) 00000-0000' }}</td>
+        <td> {{ paciente.email }}</td>
+        <td> {{ TipoSanguineoToLabelMapping[paciente.tipoSanguineo] }}</td>
+        <td> {{ GeneroToLabelMapping[paciente.genero] }}</td>
+
+        <td class=" text-right d-flex gap-1 justify-content-center">
+          <a class="btn btn-outline-success btn-sm" (click)="onDetail(paciente)">
+            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
+          </a>
+          <a class="btn btn-outline-primary btn-sm" (click)="onEdit(paciente)">
+            <fa-icon [icon]="editarIcon"></fa-icon> Editar
+          </a>
+          <a class="btn btn-outline-danger btn-sm" (click)="onRemove(paciente.id)">
+            <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
+          </a>
+        </td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="8" style="text-align: center">Nenhum paciente encontrado</td>
+      </tr>
+      }
+
+    </tbody>
+  </table>

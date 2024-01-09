@@ -1,5 +1,5 @@
 <div class="card border-primary">
-  <h4 class="card-header bg-primary text-white">Usuários</h4>
+  <h1 class="card-header bg-primary text-white">Usuários</h1>
   <table class="table table-hover table-striped">
     <thead>
       <tr>
@@ -17,14 +17,14 @@
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.phoneNumber }}</td>
         <td class="text-right">
-          <a class="btn btn-warning" [routerLink]="['/conta/usuarios/detalhes/',usuario.id]">
-            <span class="fa fa-search">Detalhe</span>
+          <a class="btn btn-outline-success btn-sm" [routerLink]="['/admin/usuarios/detalhes/',usuario.id]">
+            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
           </a>&nbsp;
-          <a class="btn btn-info" [routerLink]="['/conta/usuarios/editar',usuario.id]">
-            <span class="fa fa-pencil-alt">Editar</span>
+          <a class="btn btn-outline-primary btn-sm" [routerLink]="['/admin/usuarios/editar',usuario.id]">
+            <fa-icon [icon]="editarIcon"></fa-icon> Editar
           </a>&nbsp;
-          <a class="btn btn-danger" (click)="remove(usuario.id)">
-            <span class="fa fa-trash">Excluir</span>
+          <a class="btn btn-outline-danger btn-sm" (click)="remove(usuario.id)">
+            <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
           </a>
         </td>
       </tr>

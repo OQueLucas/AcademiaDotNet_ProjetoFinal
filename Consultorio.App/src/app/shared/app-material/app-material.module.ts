@@ -14,7 +14,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
-import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   exports: [
     MatCardModule,
@@ -31,7 +30,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxSpinnerModule,
   ],
 })
 export class AppMaterialModule {}

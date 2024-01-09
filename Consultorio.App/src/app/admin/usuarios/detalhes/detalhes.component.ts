@@ -11,6 +11,7 @@ import {
   FormGroup,
   UntypedFormArray,
 } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-detalhes',
@@ -26,7 +27,8 @@ export class DetalhesComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private adminService: AdminService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.usuario = this.route.snapshot.data['usuario'];
     this.adminService
@@ -36,6 +38,14 @@ export class DetalhesComponent implements AfterViewInit {
         this.buildForm();
       });
   }
+
+  reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
   buildForm() {
     this.form = this.formBuilder.group({
       userId: this.usuario.id,
@@ -65,6 +75,21 @@ export class DetalhesComponent implements AfterViewInit {
         .filter((valor) => valor !== null),
     });
 
-    console.log(valueSubmit);
+    this.adminService
+      .adicionarRolesUsuario(this.usuario.id, this.roles)
+      .subscribe({
+        next: () => {
+          this.form.reset();
+          this.toastr.success('Permissões alteradas com sucesso!', 'Sucesso!', {
+            progressBar: true,
+          });
+          this.reloadCurrentRoute();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastr.error('Ocorreu algum erro! ' + error, 'Falha!', {
+            progressBar: true,
+          });
+        },
+      });
   }
 }

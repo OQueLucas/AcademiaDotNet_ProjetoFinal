@@ -7,6 +7,9 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { TituloComponent } from './components/titulo/titulo.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ConfirmationDialogComponent,
     TituloComponent,
     AlertComponent,
+    NgxSpinnerModule,
+    FontAwesomeModule,
+    NgbModule,
+    FormsModule,
   ],
 })
 export class SharedModule {}

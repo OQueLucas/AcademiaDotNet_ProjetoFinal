@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ContaService } from '../services/conta.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Role } from '../models/Role';
 import { AdminService } from '../services/admin.service';
+import { Role } from '../models/Role';
 
 @Component({
   selector: 'app-conta',
