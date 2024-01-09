@@ -11,6 +11,7 @@ import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
 import { UsuariosComponent } from './usuarios/usuarios/usuarios.component';
 import { RoleComponent } from './role/role.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AdminGuard } from './services/admin.guard';
 
 @NgModule({
   declarations: [
@@ -29,5 +30,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HttpClientModule,
     NgxSpinnerModule,
   ],
+  providers: [AdminGuard],
 })
 export class AdminModule {}

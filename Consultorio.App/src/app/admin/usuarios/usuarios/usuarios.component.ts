@@ -15,6 +15,10 @@ export class UsuariosComponent {
   detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
   editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
   excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
+  alerts: any[] = [];
+  type: string;
 
   constructor(
     private spinner: NgxSpinnerService,

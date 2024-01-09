@@ -1,27 +1,24 @@
 ﻿using AutoMapper;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel.UserViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Consultorio.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : MainController
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IMapper _mapper;
 
-        private readonly IUserService _userService;
-
-        public AdminController(INotificador notificador, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUserService userService, IMapper mapper) : base(notificador)
+        public AdminController(INotificador notificador, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) : base(notificador)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _userService = userService;
-            _mapper = mapper;
         }
 
         [HttpGet("Usuario")]

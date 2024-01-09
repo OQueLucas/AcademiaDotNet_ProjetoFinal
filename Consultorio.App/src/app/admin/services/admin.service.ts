@@ -38,6 +38,12 @@ export class AdminService extends BaseService {
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
+  removerRole(id: string) {
+    return this.http
+      .delete(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
+      .pipe(map(this.extractData), retry(1), catchError(super.serviceError));
+  }
+
   obterUsuario(id: string) {
     return this.http
       .get<Usuario>(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
@@ -52,7 +58,7 @@ export class AdminService extends BaseService {
 
   removerUsuario(id: string) {
     return this.http
-      .delete<Usuario[]>(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
+      .delete(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
       .pipe(map(this.extractData), retry(1), catchError(super.serviceError));
   }
 }

@@ -1,33 +1,45 @@
-<div class="card border-primary">
-  <h1 class="card-header bg-primary text-white">Roles</h1>
-  <table class="table table-hover table-striped">
+<app-alert [alerts]="alerts" [type]="type"></app-alert>
+<div class="card">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1 class="">Roles</h1>
+  </div>
+  <table class="table table-hover table-striped shadow-lg mb-0">
     <thead>
       <tr>
-        <th>Id</th>
+        <th>#</th>
         <th>Nome</th>
         <th>Nome normalizado</th>
         <th>Selo de simultaneidade</th>
-        <th></th>
+        <th class="acoes">
+          <a class="btn btn-primary" [routerLink]="['/admin/roles/novo']" aria-label="Adicionar role">
+            <fa-icon [icon]="novoIcon"></fa-icon> Novo
+          </a>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let role of roles">
+      @for (role of roles; track role.id) {
+      <tr>
         <td>{{ role.id }}</td>
         <td>{{ role.name }}</td>
         <td>{{ role.normalizedName }}</td>
         <td>{{ role.concurrencyStamp }}</td>
-        <td class="text-right">
-          <a class="btn btn-warning" [routerLink]="['/admin/roles/detalhes',role.id]">
-            <span class="fa fa-search">Detalhe</span>
+        <td class="acoes">
+          <a class="btn btn-outline-success btn-sm" [routerLink]="['/admin/roles/detalhes/',role.id]">
+            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
           </a>&nbsp;
-          <a class="btn btn-info" [routerLink]="['/admin/roles/editar',role.id]">
-            <span class="fa fa-pencil-alt">Editar</span>
+          <a class="btn btn-outline-primary btn-sm" [routerLink]="['/admin/roles/editar',role.id]">
+            <fa-icon [icon]="editarIcon"></fa-icon> Editar
           </a>&nbsp;
-          <a class="btn btn-danger" [routerLink]="['/admin/roles/excluir',role.id]">
-            <span class="fa fa-trash">Excluir</span>
+          <a class="btn btn-outline-danger btn-sm" (click)="remove(role.id)">
+            <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
           </a>
         </td>
       </tr>
+      } @empty {
+      <tr>
+        <td colspan="5" style="text-align: center">Nenhum role encontrado</td>
+      </tr>
+      }
     </tbody>
   </table>
-</div>
