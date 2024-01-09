@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
+import { asyncScheduler, of, scheduled } from 'rxjs';
 
 import { SintomaService } from '../../../services/sintoma.service';
-import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { Sintoma } from '../model/sintoma';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { ToastrService } from 'ngx-toastr';
 
 // type AlertType = { type: string; msg: string };
 
@@ -17,10 +17,18 @@ import { ConfirmationDialogComponent } from '../../../shared/components/confirma
   styleUrl: './sintomas.component.scss',
 })
 export class SintomasComponent {
+  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
+  alerts: any[] = [];
+  type: string;
+
   titulo = 'Sintomas';
 
   // sintomas$: Observable<Sintoma[]>;
-  sintomas$: Observable<Sintoma[]> | null = null;
+  sintomas: Sintoma[] = [];
 
   displayedColumns = ['id', 'nome', 'actions'];
 
@@ -29,18 +37,25 @@ export class SintomasComponent {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private toastr: ToastrService
   ) {
     this.refresh();
   }
 
   refresh() {
-    this.sintomas$ = this.SintomaService.get().pipe(
-      catchError((error) => {
-        this.onError('Erro ao carregar Sintomas.');
-        return of([]);
-      })
-    );
+    this.SintomaService.get().subscribe({
+      next: (response) => {
+        this.sintomas = response;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar os sintomas!', 'Falha!', {
+          progressBar: true,
+        });
+        return scheduled(of([]), asyncScheduler);
+      },
+    });
   }
 
   ngOnInit(): void {}
@@ -49,41 +64,41 @@ export class SintomasComponent {
     this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
-  onEdit(sintoma: Sintoma) {
-    this.router.navigate(['editar', sintoma.id], { relativeTo: this.route });
+  onEdit(id: number) {
+    this.router.navigate(['editar', id], { relativeTo: this.route });
   }
 
-  onError(errorMessage: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMessage,
-    });
+  onDetail(id: number) {
+    this.router.navigate(['detalhes', id], { relativeTo: this.route });
   }
 
-  onRemove(sintoma: Sintoma) {
+  onRemove(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse sintoma?',
     });
 
     dialogRef.afterClosed().subscribe((result: Boolean) => {
       if (result) {
-        this.SintomaService.delete(sintoma.id).subscribe({
+        this.SintomaService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.onSuccess();
+            this.toastr.success('Sintoma removido com sucesso!', 'Sucesso!', {
+              progressBar: true,
+            });
           },
           error: (error) => {
-            this.onError('Erro ao tentar remover sintoma.');
+            this.alerts = error.error.errors;
+            this.type = 'danger';
+            this.toastr.error(
+              'Ocorreu algum erro ao remover sintoma!',
+              'Falha!',
+              {
+                progressBar: true,
+              }
+            );
           },
         });
       }
-    });
-  }
-
-  private onSuccess() {
-    this._snackBar.open('Sintoma removido com sucesso!', 'X', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
     });
   }
 }

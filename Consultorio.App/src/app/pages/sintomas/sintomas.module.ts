@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { SintomaFormComponent } from './sintoma-form/sintoma-form.component';
 import { SintomasRoutingModule } from './sintomas-routing.module';
 import { SintomasComponent } from './sintomas/sintomas.component';
+import { SintomaGuard } from './guards/sintoma.guard';
 
 @NgModule({
   declarations: [SintomasComponent, SintomaFormComponent],
@@ -17,5 +18,6 @@ import { SintomasComponent } from './sintomas/sintomas.component';
     SharedModule,
     ReactiveFormsModule,
   ],
+  providers: [SintomaGuard],
 })
 export class SintomasModule {}

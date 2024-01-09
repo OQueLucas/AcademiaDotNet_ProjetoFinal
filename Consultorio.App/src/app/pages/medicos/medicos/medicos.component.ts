@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Observable, asyncScheduler, catchError, of, scheduled } from 'rxjs';
+import { asyncScheduler, of, scheduled } from 'rxjs';
 import { MedicoService } from '../../../services/medico.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
@@ -37,7 +35,6 @@ export class MedicosComponent {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar,
     private toastr: ToastrService
   ) {
     this.refresh();
@@ -48,8 +45,12 @@ export class MedicosComponent {
       next: (response) => {
         this.medicos = response;
       },
-      error: () => {
-        this.onError('Erro ao carregar Medicos.');
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar os medicos!', 'Falha!', {
+          progressBar: true,
+        });
         return scheduled(of([]), asyncScheduler);
       },
     });
@@ -63,12 +64,6 @@ export class MedicosComponent {
 
   onEdit(medico: Medico) {
     this.router.navigate(['editar', medico.id], { relativeTo: this.route });
-  }
-
-  onError(errorMessage: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMessage,
-    });
   }
 
   onDetail(medico: Medico) {
@@ -85,16 +80,15 @@ export class MedicosComponent {
         this.MedicoService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.toastr.success('Paciente removido com sucesso!', 'Sucesso!', {
+            this.toastr.success('Medico removido com sucesso!', 'Sucesso!', {
               progressBar: true,
             });
           },
           error: (error) => {
-            this.onError('Erro ao tentar remover medico.');
             this.alerts = error.error.errors;
             this.type = 'danger';
             this.toastr.error(
-              'Ocorreu algum erro ao remover paciente!',
+              'Ocorreu algum erro ao remover medico!',
               'Falha!',
               {
                 progressBar: true,

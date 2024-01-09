@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, delay, first, Observable, retry, throwError } from 'rxjs';
+import { catchError, first, Observable, retry } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Sintoma } from '../pages/sintomas/model/sintoma';
@@ -21,17 +17,14 @@ export class SintomaService extends BaseService {
   }
 
   get(): Observable<Sintoma[]> {
-    return this.httpClient.get<Sintoma[]>(this.baseUrl).pipe(
-      first(),
-      //delay(5000),
-      retry(2),
-      catchError(this.serviceError)
-    );
+    return this.httpClient
+      .get<Sintoma[]>(this.baseUrl, this.obterHeaderJson())
+      .pipe(first(), retry(2), catchError(this.serviceError));
   }
 
   getById(id: number): Observable<Sintoma> {
     return this.httpClient
-      .get<Sintoma>(this.baseUrl + '/' + id)
+      .get<Sintoma>(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(first(), retry(2), catchError(this.serviceError));
   }
 
@@ -64,7 +57,7 @@ export class SintomaService extends BaseService {
 
   delete(id: number) {
     return this.httpClient
-      .delete(this.baseUrl + '/' + id)
+      .delete(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(first(), retry(1), catchError(this.serviceError));
   }
 }

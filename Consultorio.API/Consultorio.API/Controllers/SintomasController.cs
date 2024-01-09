@@ -3,9 +3,11 @@ using Consultorio.API.Model;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Consultorio.API.Controllers
 {
+    [Authorize(Roles = "Medico, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class SintomasController : ControllerBase
