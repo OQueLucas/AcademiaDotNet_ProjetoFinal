@@ -1,0 +1,96 @@
+<div class="container main-container">
+  <h1>Detalhes de {{ medico.nome }}</h1>
+
+  <div>
+    <h4>Informação somente leitura</h4>
+    <hr />
+    <dl class="row">
+      <dt class="col-sm-2">
+        <label class="control-label">Nome</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.nome }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Nome Social</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.nomeSocial }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CRM</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.crm | mask: 'SS 00000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Especialização</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.especializacao }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CPF</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{medico.cpf | mask: '000.000.000-00' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Data de Nascimento</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.dataNascimento | date:'dd/MM/yyyy HH:mm' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Email</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.email }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Tipo Sanguíneo</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ TipoSanguineoToLabelMapping[medico.tipoSanguineo] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Gênero</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ GeneroToLabelMapping[medico.genero] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CEP</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.cep | mask:'00000-000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Bairro</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.bairro }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Endereço</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.endereco }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Telefone</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ medico.telefone | mask: '(00) 0000-0000 || (00) 00000-0000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Observação</label>
+      </dt>
+    </dl>
+  </div>
+
+  <div>
+    <a class="btn btn-dark" (click)="onEdit(medico)">Editar</a>&nbsp;
+    <a class="btn btn-info" (click)="voltar()">Voltar</a>
+  </div>
+</div>

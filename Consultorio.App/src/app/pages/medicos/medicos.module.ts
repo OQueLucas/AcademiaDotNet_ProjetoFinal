@@ -8,9 +8,15 @@ import { MedicosRoutingModule } from './medicos-routing.module';
 import { MedicosComponent } from './medicos/medicos.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { MedicoFormComponent } from './medico-form/medico-form.component';
+import { MedicoDetalhesComponent } from './medico-detalhes/medico-detalhes.component';
+import { MedicoGuard } from './guards/medico.guard';
 
 @NgModule({
-  declarations: [MedicosComponent, MedicoFormComponent],
+  declarations: [
+    MedicosComponent,
+    MedicoFormComponent,
+    MedicoDetalhesComponent,
+  ],
   imports: [
     CommonModule,
     MedicosRoutingModule,
@@ -20,5 +26,6 @@ import { MedicoFormComponent } from './medico-form/medico-form.component';
     NgxMaskDirective,
     NgxMaskPipe,
   ],
+  providers: [MedicoGuard],
 })
 export class MedicosModule {}

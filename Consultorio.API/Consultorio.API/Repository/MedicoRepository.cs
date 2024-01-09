@@ -29,5 +29,10 @@ namespace Consultorio.API.Repository
         {
             return await _data.Include(medico => medico.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.CRM == crm);
         }
+
+        public async Task<Medico> ObterMedicoConsultas(int id)
+        {
+            return await _data.Include(medico => medico.Pessoa).Include(medico => medico.Consultas).ThenInclude(consulta => consulta.Paciente).ThenInclude(paciente => paciente.Pessoa).AsNoTrackingWithIdentityResolution().FirstOrDefaultAsync(medico => medico.Id == id);
+        }
     }
 }

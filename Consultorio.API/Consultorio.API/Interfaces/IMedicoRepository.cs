@@ -7,6 +7,7 @@ namespace Consultorio.API.Interfaces
         public Task<List<Medico>> GetAll();
         public Task<Medico> GetByCRM(string crm);
         public Task<Medico> GetById(int id);
+        public Task<Medico> ObterMedicoConsultas(int id);
 
     }
 }

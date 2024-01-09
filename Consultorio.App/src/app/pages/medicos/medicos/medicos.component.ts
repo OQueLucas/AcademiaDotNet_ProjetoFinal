@@ -57,6 +57,10 @@ export class MedicosComponent {
     });
   }
 
+  onDetail(medico: Medico) {
+    this.router.navigate(['detalhes', medico.id], { relativeTo: this.route });
+  }
+
   onRemove(medico: Medico) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse medico?',

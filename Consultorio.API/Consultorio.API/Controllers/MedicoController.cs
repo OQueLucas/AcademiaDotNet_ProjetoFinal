@@ -2,18 +2,20 @@
 using Consultorio.API.Interfaces;
 using Consultorio.API.Model;
 using Consultorio.API.ViewModel.Medico;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Consultorio.API.Controllers
 {
+    [Authorize(Roles = "Medico, Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicoController : ControllerBase
+    public class MedicoController : MainController
     {
         private readonly IMedicoService _medicoService;
         private readonly IMapper _mapper;
 
-        public MedicoController(IMedicoService medicoService, IMapper mapper)
+        public MedicoController(IMedicoService medicoService, IMapper mapper, INotificador notificador) : base(notificador)
         {
             _medicoService = medicoService;
             _mapper = mapper;
@@ -108,7 +110,9 @@ namespace Consultorio.API.Controllers
 
             if (medico == null) return NotFound();
 
-            return NoContent();
+            await _medicoService.Remover(medico);
+
+            return CustomResponse(medico);
         }
     }
 }

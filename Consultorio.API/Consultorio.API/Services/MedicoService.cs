@@ -1,13 +1,14 @@
 ﻿using Consultorio.API.Interfaces;
 using Consultorio.API.Model;
+using Consultorio.API.Repository;
 
 namespace Consultorio.API.Services
 {
-    public class MedicoService : IMedicoService
+    public class MedicoService : BaseService, IMedicoService
     {
         private readonly IMedicoRepository _medicoRepository;
 
-        public MedicoService(IMedicoRepository medicoRepository)
+        public MedicoService(IMedicoRepository medicoRepository, INotificador notificador) : base(notificador)
         {
             _medicoRepository = medicoRepository;
         }
@@ -28,6 +29,12 @@ namespace Consultorio.API.Services
 
         public async Task<bool> Remover(Medico medico)
         {
+            if (_medicoRepository.ObterMedicoConsultas(medico.Id).Result.Consultas.Any())
+            {
+                Notificar("O paciente possui consultas cadastradas");
+                return false;
+            }
+
             if (await _medicoRepository.Remove(medico)) return true;
 
             return false;

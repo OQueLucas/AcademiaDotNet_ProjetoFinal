@@ -19,6 +19,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 })
 export class MedicoFormComponent {
   titulo: string;
+  mudancasNaoSalvas: boolean;
 
   setTitle() {
     if (this.form.value.id === 0) {
