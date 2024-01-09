@@ -9,6 +9,8 @@ import { ConfirmationDialogComponent } from '../../../shared/components/confirma
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { Medico } from '../model/medico';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-medicos',
@@ -16,10 +18,18 @@ import { Medico } from '../model/medico';
   styleUrl: './medicos.component.scss',
 })
 export class MedicosComponent {
+  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
 
-  medicos$: Observable<Medico[]> | null = null;
+  alerts: any[] = [];
+  type: string;
+
+  medicos: Medico[] | null = null;
   displayedColumns = ['nome', 'nomeSocial', 'crm', 'especializacao', 'actions'];
 
   constructor(
@@ -27,18 +37,22 @@ export class MedicosComponent {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private toastr: ToastrService
   ) {
     this.refresh();
   }
 
   refresh() {
-    this.medicos$ = this.MedicoService.get().pipe(
-      catchError(() => {
+    this.MedicoService.get().subscribe({
+      next: (response) => {
+        this.medicos = response;
+      },
+      error: () => {
         this.onError('Erro ao carregar Medicos.');
         return scheduled(of([]), asyncScheduler);
-      })
-    );
+      },
+    });
   }
 
   ngOnInit(): void {}
@@ -61,31 +75,34 @@ export class MedicosComponent {
     this.router.navigate(['detalhes', medico.id], { relativeTo: this.route });
   }
 
-  onRemove(medico: Medico) {
+  onRemove(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse medico?',
     });
 
     dialogRef.afterClosed().subscribe((result: Boolean) => {
       if (result) {
-        this.MedicoService.delete(medico.id).subscribe({
+        this.MedicoService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.onSuccess();
+            this.toastr.success('Paciente removido com sucesso!', 'Sucesso!', {
+              progressBar: true,
+            });
           },
           error: (error) => {
             this.onError('Erro ao tentar remover medico.');
+            this.alerts = error.error.errors;
+            this.type = 'danger';
+            this.toastr.error(
+              'Ocorreu algum erro ao remover paciente!',
+              'Falha!',
+              {
+                progressBar: true,
+              }
+            );
           },
         });
       }
-    });
-  }
-
-  private onSuccess() {
-    this._snackBar.open('Medico removido com sucesso!', 'X', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
     });
   }
 }

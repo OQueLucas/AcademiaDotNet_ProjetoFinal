@@ -22,13 +22,13 @@ export class MedicoService extends BaseService {
 
   get(): Observable<Medico[]> {
     return this.httpClient
-      .get<Medico[]>(this.baseUrl)
+      .get<Medico[]>(this.baseUrl, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
-      .get<Medico>(this.baseUrl + '/' + id)
+      .get<Medico>(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
@@ -41,7 +41,7 @@ export class MedicoService extends BaseService {
 
   post(medico: Partial<Medico>) {
     return this.httpClient
-      .post<Medico>(this.baseUrl, medico)
+      .post<Medico>(this.baseUrl, medico, this.obterHeaderJson())
       .pipe(retry(2), catchError(this.serviceError));
   }
 
@@ -57,7 +57,7 @@ export class MedicoService extends BaseService {
 
   delete(id: number) {
     return this.httpClient
-      .delete<Medico>(this.baseUrl + '/' + id)
+      .delete<Medico>(this.baseUrl + '/' + id, this.obterHeaderJson())
       .pipe(retry(1), catchError(this.serviceError));
   }
 }

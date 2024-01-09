@@ -1,9 +1,9 @@
 <app-alert [alerts]="alerts" [type]="type"></app-alert>
-<div class="card ">
+<div class="card">
   <div class="card-header bg-primary text-white d-flex justify-content-between">
-    <h1 class="">Usuários</h1>
+    <h1 class="">Pacientes</h1>
   </div>
-  <table class="table table-hover table-striped shadow-lg p-3 bg-body rounded">
+  <table class="table table-hover table-striped shadow-lg mb-0 rounded">
     <thead>
       <tr>
         <th>Nome</th>
@@ -13,7 +13,7 @@
         <th>Email</th>
         <th>Tipo Sanguíneo</th>
         <th>Gênero</th>
-        <th class="d-flex justify-content-center">
+        <th class="acoes">
           <a class="btn btn-primary" (click)=" onAdd()" aria-label="Adicionar paciente">
             <fa-icon [icon]="novoIcon"></fa-icon> Novo
           </a>
@@ -25,19 +25,19 @@
       <tr>
         <td> {{ paciente.nome }} </td>
         <td> {{ paciente.nomeSocial }}</td>
-        <td> {{ paciente.cpf | mask: 'AAA.AAA.AAA-AA' }}</td>
+        <td> {{ paciente.cpf | mask: '000.000.000-00' }}</td>
         <td> {{ paciente.telefone | mask: '(00) 0000-0000||(00) 00000-0000' }}</td>
         <td> {{ paciente.email }}</td>
         <td> {{ TipoSanguineoToLabelMapping[paciente.tipoSanguineo] }}</td>
         <td> {{ GeneroToLabelMapping[paciente.genero] }}</td>
 
-        <td class=" text-right d-flex gap-1 justify-content-center">
+        <td class="acoes">
           <a class="btn btn-outline-success btn-sm" (click)="onDetail(paciente)">
             <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
-          </a>
+          </a>&nbsp;
           <a class="btn btn-outline-primary btn-sm" (click)="onEdit(paciente)">
             <fa-icon [icon]="editarIcon"></fa-icon> Editar
-          </a>
+          </a>&nbsp;
           <a class="btn btn-outline-danger btn-sm" (click)="onRemove(paciente.id)">
             <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
           </a>
@@ -48,6 +48,6 @@
         <td colspan="8" style="text-align: center">Nenhum paciente encontrado</td>
       </tr>
       }
-
     </tbody>
   </table>
+</div>

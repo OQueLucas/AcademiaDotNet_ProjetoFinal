@@ -63,22 +63,44 @@ table.table tbody {
   color: #fff !important;
   background-color: #28a745 !important;
 }
+
 .mat-success[disabled] {
   background-color: rgba(0, 0, 0, 0.12) !important;
 }
+
 h1.card-header,
 .card h1 {
   margin: 0;
 }
+
 .card {
   border: 0;
 }
+
 table {
-  tr {
-    padding: 0, 20px, 0, 20px;
-  }
   td,
   th {
     vertical-align: middle;
+    text-align: center;
   }
+  .acoes {
+    width: 300px;
+  }
+}
+
+table {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+
+tbody {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+tr {
+  width: 100%;
+  display: table;
+  table-layout: fixed;
 }

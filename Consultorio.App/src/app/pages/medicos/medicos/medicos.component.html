@@ -1,70 +1,46 @@
-<mat-card>
-
-  <mat-toolbar color="primary">
-    <span>Medicos</span>
-  </mat-toolbar>
-
-  <div class="mat-elevation-z8">
-    <div *ngIf="medicos$ | async as medicos; else loading">
-      <mat-table [dataSource]="medicos">
-
-        <!-- Nome Column -->
-        <ng-container matColumnDef="nome">
-          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-          <mat-cell *matCellDef="let medico"> {{ medico.nome }} </mat-cell>
-        </ng-container>
-
-        <!-- Nome Social Column -->
-        <ng-container matColumnDef="nomeSocial">
-          <mat-header-cell *matHeaderCellDef> Nome Social </mat-header-cell>
-          <mat-cell *matCellDef="let medico"> {{ medico.nomeSocial }} </mat-cell>
-        </ng-container>
-
-        <!-- CRM Column -->
-        <ng-container matColumnDef="crm">
-          <mat-header-cell *matHeaderCellDef> CRM </mat-header-cell>
-          <mat-cell *matCellDef="let medico"> {{ medico.crm | mask: 'SS 00000' }} </mat-cell>
-        </ng-container>
-
-        <!-- Especialização Column -->
-        <ng-container matColumnDef="especializacao">
-          <mat-header-cell *matHeaderCellDef> Especialização </mat-header-cell>
-          <mat-cell *matCellDef="let medico"> {{ medico.especializacao }} </mat-cell>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef class="action-column">
-            <button (click)="onAdd()" mat-raised-button extended color="accent" aria-label="Adicionar medico">
-              Novo
-              <mat-icon>add</mat-icon>
-            </button>
-          </mat-header-cell>
-
-          <mat-cell *matCellDef="let medico" class="action-column gap-1 p-2">
-            <button mat-stroked-button color="primary" aria-label="Editar medico" (click)="onEdit(medico)">
-              Editar
-              <mat-icon class="mat-icon-visible">edit</mat-icon>
-            </button>
-            <button mat-stroked-button color="primary" aria-label="Editar medico" (click)="onDetail(medico)">
-              Editar
-              <mat-icon class="mat-icon-visible">detail</mat-icon>
-            </button>
-            <button mat-stroked-button color="warn" aria-label="Remover medico" (click)="onRemove(medico)">
-              Remover
-              <mat-icon class="mat-icon-visible">delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
-    </div>
-    <ng-template #loading>
-      <div class="loading-spinner">
-        <mat-spinner></mat-spinner>
-      </div>
-    </ng-template>
+<app-alert [alerts]="alerts" [type]="type"></app-alert>
+<div class="card">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1 class="">Medicos</h1>
   </div>
-</mat-card>
+  <table class="table table-hover table-striped shadow-lg mb-0">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Nome Social</th>
+        <th>CRM</th>
+        <th>Especialização</th>
+        <th class="acoes">
+          <a class="btn btn-primary" (click)=" onAdd()" aria-label="Adicionar medico">
+            <fa-icon [icon]="novoIcon"></fa-icon> Novo
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (medico of medicos; track medico.crm) {
+      <tr>
+        <td> {{ medico.nome }} </td>
+        <td> {{ medico.nomeSocial }}</td>
+        <td> {{ medico.crm | mask: 'SS 00000' }}</td>
+        <td> {{ medico.especializacao }}</td>
+
+        <td class="acoes">
+          <a class="btn btn-outline-success btn-sm" (click)="onDetail(medico)">
+            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
+          </a>&nbsp;
+          <a class="btn btn-outline-primary btn-sm" (click)="onEdit(medico)">
+            <fa-icon [icon]="editarIcon"></fa-icon> Editar
+          </a>&nbsp;
+          <a class="btn btn-outline-danger btn-sm" (click)="onRemove(medico.id)">
+            <fa-icon [icon]="excluirIcon"></fa-icon> Excluir
+          </a>
+        </td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="8" style="text-align: center">Nenhum medico encontrado</td>
+      </tr>
+      }
+    </tbody>
+  </table>

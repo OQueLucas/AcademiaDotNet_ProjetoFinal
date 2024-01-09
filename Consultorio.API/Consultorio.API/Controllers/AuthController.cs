@@ -38,7 +38,7 @@ namespace Consultorio.API.Controllers
 
             if (result.Succeeded)
             {
-                if (registerUser.Roles.Count > 0)
+                if (registerUser.Roles != null)
                 {
                     await _userService.AtribuirRoles(user, registerUser.Roles);
                 }
