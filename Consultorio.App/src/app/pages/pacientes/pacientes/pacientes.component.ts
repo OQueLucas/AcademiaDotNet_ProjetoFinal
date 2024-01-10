@@ -32,7 +32,7 @@ export class PacientesComponent {
   public type: string;
 
   public iterador = 0;
-  public linha = new Array(18);
+  public linha = new Array(15);
   public coluna = new Array(7);
 
   constructor(
@@ -41,7 +41,6 @@ export class PacientesComponent {
     private route: ActivatedRoute,
     public utils: UtilsService,
     public dialog: MatDialog,
-    public spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) {
     this.refresh();
@@ -100,19 +99,15 @@ export class PacientesComponent {
   }
 
   private refresh() {
-    this.spinner.show();
     this.PacienteService.get().subscribe({
       next: (pacientes) => {
         this.pacientes = pacientes;
+        this.nenhumPaciente = true;
       },
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
-        this.spinner.hide();
         this.nenhumPaciente = true;
-      },
-      complete: () => {
-        this.spinner.hide();
       },
     });
   }

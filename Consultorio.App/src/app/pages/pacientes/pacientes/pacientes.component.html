@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (paciente of pacientes; track paciente.cpf) {
+      @for (paciente of pacientes; track paciente.id) {
       <tr>
         <td> {{ paciente.nome }} </td>
         <td> {{ paciente.nomeSocial }}</td>
@@ -57,12 +57,9 @@
         </td>
         }
         <td class="acoes">
-          <a tabindex="-1" class="btn btn-outline-success btn-sm disabled placeholder col-3" aria-hidden="true">
-          </a>&nbsp;
-          <a tabindex="-1" class="btn btn-outline-primary btn-sm disabled placeholder col-3" aria-hidden="true">
-          </a>&nbsp;
-          <a tabindex="-1" class="btn btn-outline-danger btn-sm disabled placeholder col-3" aria-hidden="true">
-          </a>
+          <a tabindex="-1" class="btn btn-outline-success btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
+          <a tabindex="-1" class="btn btn-outline-primary btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
+          <a tabindex="-1" class="btn btn-outline-danger btn-sm disabled placeholder col-3" aria-hidden="true"></a>
         </td>
       </tr>
       }

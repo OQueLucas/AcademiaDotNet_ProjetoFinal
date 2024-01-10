@@ -90,7 +90,9 @@
   </div>
 
   <div>
-    <a class="btn btn-dark" (click)="onEdit(medico)">Editar</a>&nbsp;
-    <a class="btn btn-info" (click)="voltar()">Voltar</a>
+    <a class="btn btn-primary" (click)="onEdit(medico)">
+      <fa-icon [icon]="editarIcon"></fa-icon> Editar
+    </a>&nbsp;
+    <a class="btn btn-dark" (click)="voltar()"><fa-icon [icon]="voltarIcon"></fa-icon> Voltar</a>
   </div>
 </div>

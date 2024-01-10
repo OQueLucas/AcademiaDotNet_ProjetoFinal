@@ -15,10 +15,10 @@ export class PacienteDetalhesComponent {
   public voltarIcon = icon({ prefix: 'fas', iconName: 'arrow-left' });
 
   public paciente: Paciente;
+  public nenhumaConsulta;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
-  public nenhumaConsulta;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.paciente = this.route.snapshot.data['paciente'];

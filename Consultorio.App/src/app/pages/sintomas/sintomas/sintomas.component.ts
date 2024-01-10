@@ -27,10 +27,12 @@ export class SintomasComponent {
 
   titulo = 'Sintomas';
 
-  // sintomas$: Observable<Sintoma[]>;
   sintomas: Sintoma[] = [];
+  public nenhumSintoma: boolean = false;
 
-  displayedColumns = ['id', 'nome', 'actions'];
+  public iterador = 0;
+  public linha = new Array(15);
+  public coluna = new Array(2);
 
   constructor(
     private SintomaService: SintomaService,
@@ -46,6 +48,7 @@ export class SintomasComponent {
     this.SintomaService.get().subscribe({
       next: (response) => {
         this.sintomas = response;
+        this.nenhumSintoma = false;
       },
       error: (error) => {
         this.alerts = error.error.errors;
@@ -53,7 +56,7 @@ export class SintomasComponent {
         this.toastr.error('Ocorreu algum ao carregar os sintomas!', 'Falha!', {
           progressBar: true,
         });
-        return scheduled(of([]), asyncScheduler);
+        this.nenhumSintoma = true;
       },
     });
   }

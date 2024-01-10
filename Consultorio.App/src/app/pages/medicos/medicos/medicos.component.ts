@@ -24,9 +24,14 @@ export class MedicosComponent {
   public alerts: any[] = [];
   public type: string;
   public medicos: Medico[] = [];
+  public nenhumMedico: boolean = false;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
+
+  public iterador = 0;
+  public linha = new Array(15);
+  public coluna = new Array(4);
 
   constructor(
     private MedicoService: MedicoService,
@@ -84,6 +89,7 @@ export class MedicosComponent {
     this.MedicoService.get().subscribe({
       next: (response) => {
         this.medicos = response;
+        this.nenhumMedico = false;
       },
       error: (error) => {
         this.alerts = error.error.errors;
@@ -91,6 +97,7 @@ export class MedicosComponent {
         this.toastr.error('Ocorreu algum ao carregar os medicos!', 'Falha!', {
           progressBar: true,
         });
+        this.nenhumMedico = true;
         return scheduled(of([]), asyncScheduler);
       },
     });

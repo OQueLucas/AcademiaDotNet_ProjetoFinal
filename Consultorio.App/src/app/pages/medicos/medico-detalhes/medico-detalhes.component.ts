@@ -3,6 +3,7 @@ import { Medico } from '../model/medico';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
 import { ActivatedRoute, Router } from '@angular/router';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-medico-detalhes',
@@ -10,7 +11,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './medico-detalhes.component.scss',
 })
 export class MedicoDetalhesComponent {
-  medico: Medico;
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public voltarIcon = icon({ prefix: 'fas', iconName: 'arrow-left' });
+
+  public medico: Medico;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
