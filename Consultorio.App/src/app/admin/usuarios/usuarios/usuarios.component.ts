@@ -17,6 +17,11 @@ export class UsuariosComponent {
   public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
   public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
 
+  public nenhumUsuario: boolean = false;
+  public iterador = 0;
+  public linha = new Array(15);
+  public coluna = new Array(4);
+
   public alerts: any[] = [];
   public type: string;
 
@@ -33,6 +38,16 @@ export class UsuariosComponent {
     this.adminService.listarUsuarios().subscribe({
       next: (usuarios: Usuario[]) => {
         this.usuarios = usuarios;
+        this.nenhumUsuario = false;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error(
+          'Ocorreu algum erro ao carregar os usuários!',
+          'Falha!'
+        );
+        this.nenhumUsuario = true;
       },
       complete: () => {
         this.spinner.hide();
@@ -43,15 +58,11 @@ export class UsuariosComponent {
   public remove(id: string) {
     this.adminService.removerUsuario(id).subscribe({
       next: () => {
-        this.toastr.success('Usuário removido com sucesso!', 'Sucesso!', {
-          progressBar: true,
-        });
+        this.toastr.success('Usuário removido com sucesso!', 'Sucesso!');
         this.refresh();
       },
       error: () => {
-        this.toastr.error('Erro ao remover usuário!', 'erro!', {
-          progressBar: true,
-        });
+        this.toastr.error('Erro ao remover usuário!', 'erro!');
       },
     });
   }

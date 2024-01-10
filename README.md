@@ -1,9 +1,9 @@
-# 🩺 Consultório - Academia Dotnet Projeto Final
+# 🩺 Consultório - Academia DotNET Projeto Final
 
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?logo=C-sharp&logoColor=white) ![Dot Net 6.0](https://img.shields.io/badge/6.0-blueviolet?logo=.net&logoColor=white)
 ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?logo=microsoft%20sql%20server&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?logo=typescript&logoColor=white)
 
-Projeto final da Academia Dotnet #5: Sistema de atendimento e gerenciamento de consulta de medicas.
+Projeto final da Academia dotNET #5: Sistema de atendimento e gerenciamento de consulta de medicas.
 
 ## Video do projeto
 
@@ -94,10 +94,17 @@ Projeto final da Academia Dotnet #5: Sistema de atendimento e gerenciamento de c
 - Sintomas:
   - Cadastro e manipulação de tipos de sintomas para cadastrar em consulta.
 
+- Auth:
+  - Autenticação e registro de usuários;
+
+- Admin:
+  - Atribuição de regras e listagem de usuários;
+
 Para melhor organização e para a possibilidade de crescimento do código, foi utilizado:
 
 - Padrão de services/repositories, com injeção de dependência.
 - ViewModels para visualização, criação e edição.
+  - Mapper para as ViewModels.
 
 ### Frontend
 
@@ -119,6 +126,13 @@ Para melhor organização e para a possibilidade de crescimento do código, foi 
 - Sintomas:
   - Lista de sintomas cadastrados;
   - Cadastro e manipulação de tipos de sintomas para cadastrar em consulta.
+
+- Roles:
+  - Lista de sintomas do sistema;
+
+- Usuários:
+  - Lista de usuários cadastrados;
+  - Cadastro e manipulação de regras para usuários.
 
 ### Pontos de melhorias
 
@@ -151,6 +165,9 @@ Por questão do projeto ser feito com a estratégia de MVP, foi realizado as pri
 - `C#`
 - `Entity Framework`
 - `Migration`
+- `AutoMapper`
+- `JWT`
+- `Identity`
 
 ### Database
 

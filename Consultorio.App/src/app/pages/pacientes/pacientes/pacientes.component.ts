@@ -74,19 +74,14 @@ export class PacientesComponent {
         this.PacienteService.delete(pacienteId).subscribe({
           next: () => {
             this.refresh();
-            this.toastr.success('Paciente removido com sucesso!', 'Sucesso!', {
-              progressBar: true,
-            });
+            this.toastr.success('Paciente removido com sucesso!', 'Sucesso!');
           },
           error: (error) => {
             this.alerts = error.error.errors;
             this.type = 'danger';
             this.toastr.error(
               'Ocorreu algum erro ao remover paciente!',
-              'Falha!',
-              {
-                progressBar: true,
-              }
+              'Falha!'
             );
           },
         });
@@ -107,6 +102,10 @@ export class PacientesComponent {
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
+        this.toastr.error(
+          'Ocorreu algum erro ao carregar os pacientes!',
+          'Falha!'
+        );
         this.nenhumPaciente = true;
       },
     });

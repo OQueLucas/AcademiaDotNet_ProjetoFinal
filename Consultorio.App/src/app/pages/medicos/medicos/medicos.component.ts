@@ -65,9 +65,7 @@ export class MedicosComponent {
         this.MedicoService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.toastr.success('Medico removido com sucesso!', 'Sucesso!', {
-              progressBar: true,
-            });
+            this.toastr.success('Medico removido com sucesso!', 'Sucesso!');
           },
           error: (error) => {
             this.alerts = error.error.errors;
@@ -94,9 +92,10 @@ export class MedicosComponent {
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar os medicos!', 'Falha!', {
-          progressBar: true,
-        });
+        this.toastr.error(
+          'Ocorreu algum erro ao carregar os medicos!',
+          'Falha!'
+        );
         this.nenhumMedico = true;
         return scheduled(of([]), asyncScheduler);
       },

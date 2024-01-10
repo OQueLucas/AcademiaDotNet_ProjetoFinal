@@ -31,15 +31,11 @@ export class RoleComponent {
   public remove(id: string) {
     this.adminService.removerRole(id).subscribe({
       next: () => {
-        this.toastr.success('Role removido com sucesso!', 'Sucesso!', {
-          progressBar: true,
-        });
+        this.toastr.success('Role removido com sucesso!', 'Sucesso!');
         this.refresh();
       },
       error: () => {
-        this.toastr.error('Erro ao remover role!', 'erro!', {
-          progressBar: true,
-        });
+        this.toastr.error('Erro ao remover role!', 'erro!');
       },
     });
   }
@@ -52,9 +48,7 @@ export class RoleComponent {
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar as roles!', 'Falha!', {
-          progressBar: true,
-        });
+        this.toastr.error('Ocorreu algum erro ao carregar as roles!', 'Falha!');
         return scheduled(of([]), asyncScheduler);
       },
     });

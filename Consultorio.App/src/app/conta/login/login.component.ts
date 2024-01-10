@@ -105,9 +105,7 @@ export class LoginComponent {
           this.alerts = [];
 
           this.contaService.LocalStorage.salvarDadosLocaisUsuario(response);
-          this.toastr.success('Login realizado com sucesso!', 'Bem vindo!!!', {
-            progressBar: true,
-          });
+          this.toastr.success('Login realizado com sucesso!', 'Bem vindo!!!');
           this.returnUrl
             ? this.router.navigate([this.returnUrl])
             : this.router.navigate(['/home']);

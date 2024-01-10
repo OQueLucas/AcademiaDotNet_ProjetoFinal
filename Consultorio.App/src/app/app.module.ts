@@ -46,7 +46,9 @@ export const httpInterceptorProviders = [
     NgxMaskDirective,
     NgxMaskPipe,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      progressBar: true,
+    }),
     HttpClientModule,
     FontAwesomeModule,
   ],

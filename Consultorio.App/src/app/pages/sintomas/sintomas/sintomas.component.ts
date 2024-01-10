@@ -53,9 +53,10 @@ export class SintomasComponent {
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar os sintomas!', 'Falha!', {
-          progressBar: true,
-        });
+        this.toastr.error(
+          'Ocorreu algum erro ao carregar os sintomas!',
+          'Falha!'
+        );
         this.nenhumSintoma = true;
       },
     });
@@ -85,9 +86,7 @@ export class SintomasComponent {
         this.SintomaService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.toastr.success('Sintoma removido com sucesso!', 'Sucesso!', {
-              progressBar: true,
-            });
+            this.toastr.success('Sintoma removido com sucesso!', 'Sucesso!');
           },
           error: (error) => {
             this.alerts = error.error.errors;

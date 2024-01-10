@@ -66,9 +66,7 @@ export class ConsultasComponent {
         this.ConsultaService.delete(id).subscribe({
           next: () => {
             this.refresh();
-            this.toastr.success('Consulta removida com sucesso!', 'Sucesso!', {
-              progressBar: true,
-            });
+            this.toastr.success('Consulta removida com sucesso!', 'Sucesso!');
           },
           error: (error) => {
             this.alerts = error.error.errors;
@@ -95,9 +93,10 @@ export class ConsultasComponent {
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar as consulta!', 'Falha!', {
-          progressBar: true,
-        });
+        this.toastr.error(
+          'Ocorreu algum erro ao carregar as consulta!',
+          'Falha!'
+        );
         this.nenhumaConsulta = true;
       },
     });

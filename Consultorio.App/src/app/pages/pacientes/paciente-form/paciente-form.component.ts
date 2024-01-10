@@ -148,17 +148,16 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
         next: () => {
           this.form.reset();
           this.alerts = [];
-          this.toastr.success('Paciente cadastrado com sucesso!', 'Sucesso!', {
-            progressBar: true,
-          });
+          this.toastr.success('Paciente cadastrado com sucesso!', 'Sucesso!');
           this.mudancasNaoSalvas = false;
         },
         error: (error: HttpErrorResponse) => {
           this.alerts = error.error.errors;
           this.type = 'danger';
-          this.toastr.error('Ocorreu algum erro!', 'Falha!', {
-            progressBar: true,
-          });
+          this.toastr.error(
+            'Ocorreu algum erro no cadastro do paciente!',
+            'Falha!'
+          );
         },
       });
     } else {

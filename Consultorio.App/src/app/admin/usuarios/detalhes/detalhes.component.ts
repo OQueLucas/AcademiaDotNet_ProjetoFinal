@@ -57,15 +57,11 @@ export class DetalhesComponent {
       .subscribe({
         next: () => {
           this.form.reset();
-          this.toastr.success('Permissões alteradas com sucesso!', 'Sucesso!', {
-            progressBar: true,
-          });
+          this.toastr.success('Permissões alteradas com sucesso!', 'Sucesso!');
           this.reloadCurrentRoute();
         },
         error: (error: HttpErrorResponse) => {
-          this.toastr.error('Ocorreu algum erro! ' + error, 'Falha!', {
-            progressBar: true,
-          });
+          this.toastr.error('Ocorreu algum erro! ' + error, 'Falha!');
         },
       });
   }
