@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry } from 'rxjs';
+import { catchError, map, Observable, retry } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Medico } from '../pages/medicos/model/medico';
@@ -19,13 +19,13 @@ export class MedicoService extends BaseService {
   get(): Observable<Medico[]> {
     return this.httpClient
       .get<Medico[]>(this.baseUrl, this.obterHeaderJson())
-      .pipe(retry(2), catchError(this.serviceError));
+      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
   }
 
   getById(id: number) {
     return this.httpClient
       .get<Medico>(this.baseUrl + '/' + id, this.obterHeaderJson())
-      .pipe(retry(2), catchError(this.serviceError));
+      .pipe(map(this.extractData), retry(2), catchError(this.serviceError));
   }
 
   save(medico: Partial<Medico>) {

@@ -24,21 +24,14 @@ namespace Consultorio.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMedicos()
         {
-            try
-            {
-                var medico = _mapper.Map<List<MedicoViewModel>>(await _medicoService.BuscarTodos());
+            var medico = _mapper.Map<List<MedicoViewModel>>(await _medicoService.BuscarTodos());
 
-                if (medico == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(medico);
-            }
-            catch (Exception ex)
+            if (medico == null)
             {
-                return BadRequest($"Erro: {ex.Message}");
+                return NotFound();
             }
+
+            return CustomResponse(medico);
         }
 
         [HttpPost]

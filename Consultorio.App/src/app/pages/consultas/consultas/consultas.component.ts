@@ -88,7 +88,7 @@ export class ConsultasComponent {
     this.ConsultaService.get().subscribe({
       next: (response) => {
         this.consultas = response;
-        this.nenhumaConsulta = false;
+        this.nenhumaConsulta = true;
       },
       error: (error) => {
         this.alerts = error.error.errors;

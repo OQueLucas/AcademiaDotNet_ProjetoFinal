@@ -87,7 +87,7 @@ export class MedicosComponent {
     this.MedicoService.get().subscribe({
       next: (response) => {
         this.medicos = response;
-        this.nenhumMedico = false;
+        this.nenhumMedico = true;
       },
       error: (error) => {
         this.alerts = error.error.errors;
@@ -97,7 +97,6 @@ export class MedicosComponent {
           'Falha!'
         );
         this.nenhumMedico = true;
-        return scheduled(of([]), asyncScheduler);
       },
     });
   }

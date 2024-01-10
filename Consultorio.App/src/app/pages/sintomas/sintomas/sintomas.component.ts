@@ -48,7 +48,7 @@ export class SintomasComponent {
     this.SintomaService.get().subscribe({
       next: (response) => {
         this.sintomas = response;
-        this.nenhumSintoma = false;
+        this.nenhumSintoma = true;
       },
       error: (error) => {
         this.alerts = error.error.errors;
