@@ -18,5 +18,5 @@ export class ListaSintomasComponent {
 
   public iterador = 0;
   public linha = new Array(4);
-  public coluna = new Array(5);
+  public coluna = new Array(2);
 }

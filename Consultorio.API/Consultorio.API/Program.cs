@@ -49,6 +49,8 @@ namespace Consultorio.API
             builder.Services.AddScoped<ISintomaService, SintomaService>();
             builder.Services.AddScoped<IConsultaService, ConsultaService>();
 
+            builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
             builder.Services.AddAutoMapper(typeof(Program));
 
             var app = builder.Build();
@@ -68,6 +70,8 @@ namespace Consultorio.API
 
             app.UseHttpsRedirection();
 
+            CriarPerfisUsuariosAsync(app);
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -75,6 +79,18 @@ namespace Consultorio.API
             app.MapControllers();
 
             app.Run();
+
+            async Task CriarPerfisUsuariosAsync(WebApplication app)
+            {
+                var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+                using (var scope = scopedFactory.CreateScope())
+                {
+                    var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+                    await service.SeedRolesAsync();
+                    await service.SeedUsersAsync();
+                }
+            }
         }
     }
 }
