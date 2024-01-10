@@ -221,6 +221,28 @@ git clone git@github.com:OQueLucas/AcademiaDotNet_ProjetoFinal.git
 
 - Utilização
 
+  - Acesse com algum usuário padrão:
+    - Paciente (Atualmente, Paciente não possui nenhuma função liberada além de login e se registrar):
+
+      ```bash
+        paciente@teste.com.br
+        Senha@123
+      ```
+
+    - Medico:
+
+      ```bash
+        medico@teste.com.br
+        Senha@123
+      ```
+
+    - Admin:
+
+      ```bash
+        admin@teste.com.br
+        Senha@123
+      ```
+
   - Cadastre os Pacientes e os Medicos.
   - Cadastre os sintomas.
   - Agora poderá selecionar os pacientes e medicos cadastros no formulário de consulta e cadastrar novas consultas para os pacientes.

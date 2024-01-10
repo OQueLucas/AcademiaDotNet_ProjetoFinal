@@ -60,7 +60,7 @@ namespace Consultorio.API.Services
                 user.LockoutEnabled = false;
                 user.SecurityStamp = Guid.NewGuid().ToString();
 
-                IdentityResult result = await _userManager.CreateAsync(user, "Usuario123!");
+                IdentityResult result = await _userManager.CreateAsync(user, "Senha@123");
 
                 if (result.Succeeded)
                 {
@@ -79,7 +79,7 @@ namespace Consultorio.API.Services
                 user.LockoutEnabled = false;
                 user.SecurityStamp = Guid.NewGuid().ToString();
 
-                IdentityResult result = await _userManager.CreateAsync(user, "Admin123!");
+                IdentityResult result = await _userManager.CreateAsync(user, "Senha@123");
 
                 if (result.Succeeded)
                 {
@@ -98,7 +98,7 @@ namespace Consultorio.API.Services
                 user.LockoutEnabled = false;
                 user.SecurityStamp = Guid.NewGuid().ToString();
 
-                IdentityResult result = await _userManager.CreateAsync(user, "Admin123!");
+                IdentityResult result = await _userManager.CreateAsync(user, "Senha@123");
 
                 if (result.Succeeded)
                 {
