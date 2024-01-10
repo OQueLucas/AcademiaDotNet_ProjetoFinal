@@ -3,6 +3,7 @@ import { Paciente } from '../models/Paciente';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneroToLabelMapping } from '../../../enum/Genero.enum';
 import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-paciente-detalhes',
@@ -10,13 +11,18 @@ import { TipoSanguineoToLabelMapping } from '../../../enum/TipoSanguineo.enum';
   styleUrl: './paciente-detalhes.component.scss',
 })
 export class PacienteDetalhesComponent {
-  paciente: Paciente;
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public voltarIcon = icon({ prefix: 'fas', iconName: 'arrow-left' });
+
+  public paciente: Paciente;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
+  public nenhumaConsulta;
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.paciente = this.route.snapshot.data['paciente'];
+    this.nenhumaConsulta = this.paciente.consultas.length == 0;
   }
 
   public onEdit(paciente: Paciente) {

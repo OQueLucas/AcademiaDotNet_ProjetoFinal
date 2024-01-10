@@ -31,6 +31,10 @@ export class PacientesComponent {
   public alerts: any[] = [];
   public type: string;
 
+  public iterador = 0;
+  public linha = new Array(18);
+  public coluna = new Array(7);
+
   constructor(
     private PacienteService: PacienteService,
     private router: Router,
@@ -42,10 +46,6 @@ export class PacientesComponent {
   ) {
     this.refresh();
   }
-
-  iterador = 0;
-  linha = new Array(18);
-  coluna = new Array(7);
 
   public onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route });

@@ -1,4 +1,4 @@
-<div class="container main-container">
+<div class="container main-container mb-3">
   <h1>Detalhes de {{ paciente.nome }}</h1>
 
   <div>
@@ -80,11 +80,12 @@
     </dl>
   </div>
 
-  <app-lista-consultas [consultas]="paciente.consultas"></app-lista-consultas>
-
-
   <div>
-    <a class="btn btn-dark" (click)="onEdit(paciente)">Editar</a>&nbsp;
-    <a class="btn btn-info" (click)="voltar()">Voltar</a>
+    <a class="btn btn-primary" (click)="onEdit(paciente)">
+      <fa-icon [icon]="editarIcon"></fa-icon> Editar
+    </a>&nbsp;
+    <a class="btn btn-dark" (click)="voltar()"><fa-icon [icon]="voltarIcon"></fa-icon> Voltar</a>
   </div>
 </div>
+
+<app-lista-consultas [consultas]="paciente.consultas" [vazio]="nenhumaConsulta"></app-lista-consultas>
