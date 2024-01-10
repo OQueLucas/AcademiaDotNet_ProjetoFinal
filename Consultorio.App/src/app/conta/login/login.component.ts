@@ -16,8 +16,8 @@ import {
 // import { CustomValidators } from '@narik/custom-validators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, fromEvent, merge } from 'rxjs';
-import { UtilsService } from '../../services/utils.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +27,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginComponent {
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[];
+
+  public loginIcon = icon({ prefix: 'fas', iconName: 'right-to-bracket' });
 
   public alerts: any[] = [];
   public type: string;

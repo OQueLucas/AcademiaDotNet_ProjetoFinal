@@ -17,9 +17,11 @@ export class MenuLoginComponent {
 
   constructor(private router: Router) {}
 
-  logoutIcon = icon({ prefix: 'fas', iconName: 'right-from-bracket' });
+  public loginIcon = icon({ prefix: 'fas', iconName: 'right-to-bracket' });
+  public logoutIcon = icon({ prefix: 'fas', iconName: 'right-from-bracket' });
+  public registrarIcon = icon({ prefix: 'fas', iconName: 'user-plus' });
 
-  usuarioLogado(): boolean {
+  public usuarioLogado(): boolean {
     this.token = this.localStorageUtils.obterTokenUsuario();
     this.user = this.localStorageUtils.obterUsuario();
 
@@ -28,7 +30,7 @@ export class MenuLoginComponent {
     return this.token !== null;
   }
 
-  logout() {
+  public logout() {
     this.localStorageUtils.limparDadosLocaisUsuario();
     this.router.navigate(['/home']);
   }

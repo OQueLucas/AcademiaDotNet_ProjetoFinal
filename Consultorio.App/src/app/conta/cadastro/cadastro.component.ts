@@ -24,6 +24,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { UtilsService } from '../../services/utils.service';
 import { Router } from '@angular/router';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-cadastro',
@@ -33,6 +34,8 @@ import { Router } from '@angular/router';
 export class CadastroComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[];
+
+  public registrarIcon = icon({ prefix: 'fas', iconName: 'user-plus' });
 
   public alerts: any[] = [];
   public type: string;
