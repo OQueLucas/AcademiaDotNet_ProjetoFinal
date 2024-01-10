@@ -19,11 +19,11 @@ export class PacienteDetalhesComponent {
     this.paciente = this.route.snapshot.data['paciente'];
   }
 
-  onEdit(paciente: Paciente) {
+  public onEdit(paciente: Paciente) {
     this.router.navigate(['pacientes/editar', paciente.id]);
   }
 
-  voltar() {
+  public voltar() {
     this.router.navigate(['pacientes']);
   }
 }

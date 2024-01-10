@@ -11,15 +11,15 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
   styleUrl: './role.component.scss',
 })
 export class RoleComponent {
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
 
-  roles: Role[] = [];
+  public roles: Role[] = [];
 
-  alerts: any[] = [];
-  type: string;
+  public alerts: any[] = [];
+  public type: string;
 
   constructor(
     private adminService: AdminService,
@@ -28,23 +28,7 @@ export class RoleComponent {
     this.refresh();
   }
 
-  refresh() {
-    this.adminService.getRoles().subscribe({
-      next: (response) => {
-        this.roles = response;
-      },
-      error: (error) => {
-        this.alerts = error.error.errors;
-        this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar as roles!', 'Falha!', {
-          progressBar: true,
-        });
-        return scheduled(of([]), asyncScheduler);
-      },
-    });
-  }
-
-  remove(id: string) {
+  public remove(id: string) {
     this.adminService.removerRole(id).subscribe({
       next: () => {
         this.toastr.success('Role removido com sucesso!', 'Sucesso!', {
@@ -56,6 +40,22 @@ export class RoleComponent {
         this.toastr.error('Erro ao remover role!', 'erro!', {
           progressBar: true,
         });
+      },
+    });
+  }
+
+  private refresh() {
+    this.adminService.getRoles().subscribe({
+      next: (response) => {
+        this.roles = response;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar as roles!', 'Falha!', {
+          progressBar: true,
+        });
+        return scheduled(of([]), asyncScheduler);
       },
     });
   }

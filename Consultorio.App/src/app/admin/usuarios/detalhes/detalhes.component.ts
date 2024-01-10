@@ -18,10 +18,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './detalhes.component.html',
   styleUrl: './detalhes.component.scss',
 })
-export class DetalhesComponent implements AfterViewInit {
-  usuario: Usuario;
-  form: FormGroup;
-  roles: UserRole[];
+export class DetalhesComponent {
+  public usuario: Usuario;
+  public form: FormGroup;
+  public roles: UserRole[];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,34 +39,11 @@ export class DetalhesComponent implements AfterViewInit {
       });
   }
 
-  reloadCurrentRoute() {
-    let currentUrl = this.router.url;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([currentUrl]);
-    });
-  }
-
-  buildForm() {
-    this.form = this.formBuilder.group({
-      userId: this.usuario.id,
-      roles: this.buildRoles(),
-    });
-  }
-
-  buildRoles() {
-    const values = this.roles.map((role) => {
-      new FormControl(role.isSelected);
-    });
-    return this.formBuilder.array(values);
-  }
-
   public getRoleFormArray() {
     return (<UntypedFormArray>this.form.get('roles')).controls;
   }
 
-  ngAfterViewInit(): void {}
-
-  onSubmit() {
+  public onSubmit() {
     let valueSubmit = Object.assign({}, this.form.value);
 
     valueSubmit = Object.assign(valueSubmit, {
@@ -91,5 +68,26 @@ export class DetalhesComponent implements AfterViewInit {
           });
         },
       });
+  }
+
+  private reloadCurrentRoute() {
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  private buildForm() {
+    this.form = this.formBuilder.group({
+      userId: this.usuario.id,
+      roles: this.buildRoles(),
+    });
+  }
+
+  private buildRoles() {
+    const values = this.roles.map((role) => {
+      new FormControl(role.isSelected);
+    });
+    return this.formBuilder.array(values);
   }
 }

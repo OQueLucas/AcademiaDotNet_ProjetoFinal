@@ -1,5 +1,16 @@
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChildren,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormControlName,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Genero, GeneroToLabelMapping } from '../../../enum/Genero.enum';
@@ -11,23 +22,17 @@ import { FormUtilsService } from '../../../shared/form/form-utils.service';
 import { MedicoService } from '../../../services/medico.service';
 import { Medico } from '../model/medico';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Observable, fromEvent, merge } from 'rxjs';
 
 @Component({
   selector: 'app-medico-form',
   templateUrl: './medico-form.component.html',
   styleUrl: './medico-form.component.scss',
 })
-export class MedicoFormComponent {
+export class MedicoFormComponent implements OnInit {
   titulo: string;
   mudancasNaoSalvas: boolean;
-
-  setTitle() {
-    if (this.form.value.id === 0) {
-      this.titulo = 'Novo medico';
-    } else {
-      this.titulo = 'Editar medico: ' + this.form.value.id;
-    }
-  }
+  public form: FormGroup;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public generos = Object.values(Genero).filter(
@@ -39,7 +44,8 @@ export class MedicoFormComponent {
     (value) => typeof value === 'number'
   );
 
-  form: FormGroup;
+  @ViewChildren(FormControlName, { read: ElementRef })
+  private formInputElements: ElementRef[];
 
   constructor(
     private _formBuider: FormBuilder,
@@ -112,7 +118,17 @@ export class MedicoFormComponent {
     this.setTitle();
   }
 
-  onSubmit() {
+  ngAfterViewInit(): void {
+    let controlBlurs: Observable<any>[] = this.formInputElements.map(
+      (formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur')
+    );
+
+    merge(...controlBlurs).subscribe(() => {
+      this.mudancasNaoSalvas = true;
+    });
+  }
+
+  public onSubmit() {
     if (this.form.valid) {
       this._medicoService.save(this.form.value).subscribe({
         next: () => {
@@ -126,11 +142,19 @@ export class MedicoFormComponent {
     }
   }
 
-  onCancel(): void {
+  public onCancel(): void {
     this.voltar();
   }
 
-  voltar() {
+  private voltar() {
     this._location.back();
+  }
+
+  private setTitle() {
+    if (this.form.value.id === 0) {
+      this.titulo = 'Novo medico';
+    } else {
+      this.titulo = 'Editar medico: ' + this.form.value.id;
+    }
   }
 }

@@ -16,18 +16,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './medicos.component.scss',
 })
 export class MedicosComponent {
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
+  public alerts: any[] = [];
+  public type: string;
+  public medicos: Medico[] = [];
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
-
-  alerts: any[] = [];
-  type: string;
-
-  medicos: Medico[] | null = null;
 
   constructor(
     private MedicoService: MedicoService,
@@ -39,37 +38,19 @@ export class MedicosComponent {
     this.refresh();
   }
 
-  refresh() {
-    this.MedicoService.get().subscribe({
-      next: (response) => {
-        this.medicos = response;
-      },
-      error: (error) => {
-        this.alerts = error.error.errors;
-        this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar os medicos!', 'Falha!', {
-          progressBar: true,
-        });
-        return scheduled(of([]), asyncScheduler);
-      },
-    });
-  }
-
-  ngOnInit(): void {}
-
-  onAdd() {
+  public onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
-  onEdit(medico: Medico) {
+  public onEdit(medico: Medico) {
     this.router.navigate(['editar', medico.id], { relativeTo: this.route });
   }
 
-  onDetail(medico: Medico) {
+  public onDetail(medico: Medico) {
     this.router.navigate(['detalhes', medico.id], { relativeTo: this.route });
   }
 
-  onRemove(id: number) {
+  public onRemove(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse medico?',
     });
@@ -96,6 +77,22 @@ export class MedicosComponent {
           },
         });
       }
+    });
+  }
+
+  private refresh() {
+    this.MedicoService.get().subscribe({
+      next: (response) => {
+        this.medicos = response;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar os medicos!', 'Falha!', {
+          progressBar: true,
+        });
+        return scheduled(of([]), asyncScheduler);
+      },
     });
   }
 }

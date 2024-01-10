@@ -11,14 +11,14 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
   styleUrl: './usuarios.component.scss',
 })
 export class UsuariosComponent {
-  usuarios: Usuario[] = [];
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public usuarios: Usuario[] = [];
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
 
-  alerts: any[] = [];
-  type: string;
+  public alerts: any[] = [];
+  public type: string;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -28,7 +28,7 @@ export class UsuariosComponent {
     this.refresh();
   }
 
-  refresh() {
+  private refresh() {
     this.spinner.show();
     this.adminService.listarUsuarios().subscribe({
       next: (usuarios: Usuario[]) => {
@@ -40,7 +40,7 @@ export class UsuariosComponent {
     });
   }
 
-  remove(id: string) {
+  public remove(id: string) {
     this.adminService.removerUsuario(id).subscribe({
       next: () => {
         this.toastr.success('Usuário removido com sucesso!', 'Sucesso!', {

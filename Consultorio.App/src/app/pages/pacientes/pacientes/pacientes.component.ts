@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Paciente } from '../models/Paciente';
-import { asyncScheduler, catchError, of, scheduled } from 'rxjs';
 import { PacienteService } from '../../../services/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,18 +17,19 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
   styleUrl: './pacientes.component.scss',
 })
 export class PacientesComponent {
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
 
-  pacientes: Paciente[] = [];
+  public pacientes: Paciente[] = [];
+  public nenhumPaciente: boolean = false;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoSanguineoToLabelMapping = TipoSanguineoToLabelMapping;
 
-  alerts: any[] = [];
-  type: string;
+  public alerts: any[] = [];
+  public type: string;
 
   constructor(
     private PacienteService: PacienteService,
@@ -37,51 +37,35 @@ export class PacientesComponent {
     private route: ActivatedRoute,
     public utils: UtilsService,
     public dialog: MatDialog,
-    private spinner: NgxSpinnerService,
+    public spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) {
     this.refresh();
   }
 
-  refresh() {
-    this.spinner.show();
-    this.PacienteService.get().subscribe({
-      next: (pacientes) => {
-        this.pacientes = pacientes;
-      },
-      error: () => {
-        catchError((error) => {
-          this.onError('Erro ao carregar Pacientes.');
-          this.alerts = error.error.errors;
-          this.type = 'danger';
-          return scheduled(of([]), asyncScheduler);
-        });
-      },
-      complete: () => {
-        this.spinner.hide();
-      },
-    });
-  }
+  iterador = 0;
+  linha = new Array(18);
+  coluna = new Array(7);
 
-  onAdd() {
+  public onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
-  onEdit(paciente: Paciente) {
+  public onEdit(paciente: Paciente) {
     this.router.navigate(['editar', paciente.id], { relativeTo: this.route });
   }
 
-  onDetail(paciente: Paciente) {
+  public onDetail(paciente: Paciente) {
     this.router.navigate(['detalhes', paciente.id], { relativeTo: this.route });
   }
 
-  onError(errorMessage: string) {
+  public onError(errorMessage: string) {
     this.dialog.open(ErrorDialogComponent, {
       data: errorMessage,
     });
   }
 
-  onRemove(pacienteId: number) {
+  public onRemove(pacienteId: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover esse paciente?',
     });
@@ -113,5 +97,23 @@ export class PacientesComponent {
 
   private processarFalha(fail: any) {
     this.alerts = fail.error.errors;
+  }
+
+  private refresh() {
+    this.spinner.show();
+    this.PacienteService.get().subscribe({
+      next: (pacientes) => {
+        this.pacientes = pacientes;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.spinner.hide();
+        this.nenhumPaciente = true;
+      },
+      complete: () => {
+        this.spinner.hide();
+      },
+    });
   }
 }

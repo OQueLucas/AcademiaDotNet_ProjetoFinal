@@ -18,18 +18,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './consultas.component.scss',
 })
 export class ConsultasComponent {
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
+  public alerts: any[] = [];
+  public type: string;
+  public consultas: Consulta[] = null;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoConsultaToLabelMapping = TipoConsulta;
-
-  alerts: any[] = [];
-  type: string;
-
-  consultas: Consulta[] = null;
 
   constructor(
     private ConsultaService: ConsultaService,
@@ -42,43 +41,19 @@ export class ConsultasComponent {
     this.refresh();
   }
 
-  refresh() {
-    this.ConsultaService.get().subscribe({
-      next: (response) => {
-        this.consultas = response;
-      },
-      error: (error) => {
-        this.alerts = error.error.errors;
-        this.type = 'danger';
-        this.toastr.error('Ocorreu algum ao carregar as consulta!', 'Falha!', {
-          progressBar: true,
-        });
-        return scheduled(of([]), asyncScheduler);
-      },
-    });
-  }
-
-  ngOnInit(): void {}
-
-  onAdd() {
+  public onAdd() {
     this.router.navigate(['novo'], { relativeTo: this.route });
   }
 
-  onEdit(id: number) {
+  public onEdit(id: number) {
     this.router.navigate(['editar', id], { relativeTo: this.route });
   }
 
-  onDetail(id: number) {
+  public onDetail(id: number) {
     this.router.navigate(['detalhes', id], { relativeTo: this.route });
   }
 
-  onError(errorMessage: string) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: errorMessage,
-    });
-  }
-
-  onRemove(id: number) {
+  public onRemove(id: number) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: 'Tem certeza que deseja remover essa consulta?',
     });
@@ -108,11 +83,19 @@ export class ConsultasComponent {
     });
   }
 
-  private onSuccess() {
-    this._snackBar.open('Consulta removido com sucesso!', 'X', {
-      duration: 5000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
+  private refresh() {
+    this.ConsultaService.get().subscribe({
+      next: (response) => {
+        this.consultas = response;
+      },
+      error: (error) => {
+        this.alerts = error.error.errors;
+        this.type = 'danger';
+        this.toastr.error('Ocorreu algum ao carregar as consulta!', 'Falha!', {
+          progressBar: true,
+        });
+        return scheduled(of([]), asyncScheduler);
+      },
     });
   }
 }

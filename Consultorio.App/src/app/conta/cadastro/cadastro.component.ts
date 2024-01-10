@@ -34,22 +34,21 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[];
 
-  alerts: any[] = [];
-  type: string;
-  mensagens: any[] = [];
-  cadastroForm: FormGroup;
-  usuario: UsuarioLogin;
+  public alerts: any[] = [];
+  public type: string;
+  public mensagens: any[] = [];
+  public cadastroForm: FormGroup;
+  private usuario: UsuarioLogin;
 
-  validationMessages: ValidationMessages;
-  genericValidator: GenericValidator;
-  displayMessage: DisplayMessage = {};
+  public mudancasNaoSalvas: boolean;
 
-  mudancasNaoSalvas: boolean;
+  private validationMessages: ValidationMessages;
+  private genericValidator: GenericValidator;
+  public displayMessage: DisplayMessage = {};
 
   constructor(
     private formBuilder: FormBuilder,
     private contaService: ContaService,
-    private utils: UtilsService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -103,7 +102,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
     });
   }
 
-  adicionarConta() {
+  public adicionarConta() {
     if (this.cadastroForm.dirty && this.cadastroForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
 

@@ -28,22 +28,21 @@ export class LoginComponent {
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[];
 
-  alerts: any[] = [];
-  type: string;
-  mensagens: any[] = [];
-  loginForm: FormGroup;
-  usuario: UsuarioLogin;
+  public alerts: any[] = [];
+  public type: string;
+  public mensagens: any[] = [];
+  public loginForm: FormGroup;
+  private usuario: UsuarioLogin;
 
-  validationMessages: ValidationMessages;
-  genericValidator: GenericValidator;
-  displayMessage: DisplayMessage = {};
+  private returnUrl: string;
 
-  returnUrl: string;
+  private validationMessages: ValidationMessages;
+  private genericValidator: GenericValidator;
+  public displayMessage: DisplayMessage = {};
 
   constructor(
     private formBuilder: FormBuilder,
     private contaService: ContaService,
-    private utils: UtilsService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
@@ -94,7 +93,7 @@ export class LoginComponent {
     });
   }
 
-  login() {
+  public login() {
     if (this.loginForm.dirty && this.loginForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.loginForm.value);
 
@@ -104,11 +103,9 @@ export class LoginComponent {
           this.alerts = [];
 
           this.contaService.LocalStorage.salvarDadosLocaisUsuario(response);
-          let toastr = this.toastr.success(
-            'Login realizado com sucesso!',
-            'Bem vindo!!!',
-            { progressBar: true }
-          );
+          this.toastr.success('Login realizado com sucesso!', 'Bem vindo!!!', {
+            progressBar: true,
+          });
           this.returnUrl
             ? this.router.navigate([this.returnUrl])
             : this.router.navigate(['/home']);

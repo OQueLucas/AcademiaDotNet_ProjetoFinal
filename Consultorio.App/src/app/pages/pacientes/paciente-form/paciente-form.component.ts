@@ -28,11 +28,6 @@ import { UtilsService } from '../../../services/utils.service';
 import { CepConsulta } from '../models/CepConsulta';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, fromEvent, merge } from 'rxjs';
-import {
-  DisplayMessage,
-  GenericValidator,
-  ValidationMessages,
-} from '../../../utils/generic-form-validation';
 
 @Component({
   selector: 'app-paciente-form',
@@ -40,26 +35,11 @@ import {
   styleUrl: './paciente-form.component.scss',
 })
 export class PacienteFormComponent implements OnInit, AfterViewInit {
-  @ViewChildren(FormControlName, { read: ElementRef })
-  formInputElements: ElementRef[];
-
-  titulo: string;
-  mudancasNaoSalvas: boolean;
-
-  validationMessages: ValidationMessages;
-  genericValidator: GenericValidator;
-  displayMessage: DisplayMessage = {};
-
-  alerts: any[] = [];
-  type: string;
-
-  setTitle() {
-    if (this.form.value.id === 0) {
-      this.titulo = 'Novo paciente';
-    } else {
-      this.titulo = 'Editar paciente: ' + this.form.value.id;
-    }
-  }
+  public titulo: string;
+  public mudancasNaoSalvas: boolean;
+  public alerts: any[] = [];
+  public type: string;
+  public form: FormGroup;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public generos = Object.values(Genero).filter(
@@ -71,13 +51,14 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
     (value) => typeof value === 'number'
   );
 
-  form: FormGroup;
+  @ViewChildren(FormControlName, { read: ElementRef })
+  private formInputElements: ElementRef[];
 
   constructor(
     private _formBuider: FormBuilder,
     private _pacienteService: PacienteService,
     private _location: Location,
-    private _route: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router,
     public formUtils: FormUtilsService,
     public utils: UtilsService,
@@ -90,7 +71,7 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    const paciente: Paciente = this._route.snapshot.data['paciente'];
+    const paciente: Paciente = this.route.snapshot.data['paciente'];
     this.form = this._formBuider.group({
       id: [paciente.id],
       nome: [
@@ -146,7 +127,7 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  buscarCep(cep: string) {
+  public buscarCep(cep: string) {
     if (cep.length < 8) return;
     this._pacienteService.consultarCep(cep).subscribe({
       next: (cepResponse) => this.preencherEnderecoConsulta(cepResponse),
@@ -154,14 +135,14 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  preencherEnderecoConsulta(cepConsulta: CepConsulta) {
+  private preencherEnderecoConsulta(cepConsulta: CepConsulta) {
     this.form.patchValue({
       bairro: cepConsulta.bairro,
       endereco: cepConsulta.logradouro,
     });
   }
 
-  onSubmit() {
+  public onSubmit() {
     if (this.form.valid) {
       this._pacienteService.save(this.form.value).subscribe({
         next: () => {
@@ -185,11 +166,19 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onCancel(): void {
+  public onCancel(): void {
     this.voltar();
   }
 
-  voltar() {
-    this.router.navigate(['pacientes']);
+  private voltar() {
+    this._location.back();
+  }
+
+  private setTitle() {
+    if (this.form.value.id === 0) {
+      this.titulo = 'Novo paciente';
+    } else {
+      this.titulo = 'Editar paciente: ' + this.form.value.id;
+    }
   }
 }
