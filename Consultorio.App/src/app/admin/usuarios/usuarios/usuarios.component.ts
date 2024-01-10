@@ -33,6 +33,18 @@ export class UsuariosComponent {
     this.refresh();
   }
 
+  public remove(id: string) {
+    this.adminService.removerUsuario(id).subscribe({
+      next: () => {
+        this.toastr.success('Usuário removido com sucesso!', 'Sucesso!');
+        this.refresh();
+      },
+      error: () => {
+        this.toastr.error('Erro ao remover usuário!', 'erro!');
+      },
+    });
+  }
+
   private refresh() {
     this.spinner.show();
     this.adminService.listarUsuarios().subscribe({
@@ -51,18 +63,6 @@ export class UsuariosComponent {
       },
       complete: () => {
         this.spinner.hide();
-      },
-    });
-  }
-
-  public remove(id: string) {
-    this.adminService.removerUsuario(id).subscribe({
-      next: () => {
-        this.toastr.success('Usuário removido com sucesso!', 'Sucesso!');
-        this.refresh();
-      },
-      error: () => {
-        this.toastr.error('Erro ao remover usuário!', 'erro!');
       },
     });
   }

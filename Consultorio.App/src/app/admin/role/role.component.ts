@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../services/admin.service';
 import { Role } from '../models/Role';
-import { asyncScheduler, of, scheduled } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 
@@ -15,6 +14,11 @@ export class RoleComponent {
   public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
   public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
   public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+
+  public nenhumaRole: boolean = false;
+  public iterador = 0;
+  public linha = new Array(15);
+  public coluna = new Array(4);
 
   public roles: Role[] = [];
 
@@ -33,6 +37,7 @@ export class RoleComponent {
       next: () => {
         this.toastr.success('Role removido com sucesso!', 'Sucesso!');
         this.refresh();
+        this.nenhumaRole = false;
       },
       error: () => {
         this.toastr.error('Erro ao remover role!', 'erro!');
@@ -44,12 +49,13 @@ export class RoleComponent {
     this.adminService.getRoles().subscribe({
       next: (response) => {
         this.roles = response;
+        this.nenhumaRole = false;
       },
       error: (error) => {
         this.alerts = error.error.errors;
         this.type = 'danger';
         this.toastr.error('Ocorreu algum erro ao carregar as roles!', 'Falha!');
-        return scheduled(of([]), asyncScheduler);
+        this.nenhumaRole = true;
       },
     });
   }

@@ -35,9 +35,26 @@
         </td>
       </tr>
       } @empty {
+      @if (nenhumaRole){
       <tr>
         <td colspan="5" style="text-align: center">Nenhum role encontrado</td>
       </tr>
+      } @else {
+      @for (0 of linha; track iterador) {
+      <tr>
+        @for (0 of coluna; track iterador) {
+        <td class="card-text placeholder-glow" style="text-align: center">
+          <span class="placeholder col-7"></span>
+        </td>
+        }
+        <td class="acoes">
+          <a tabindex="-1" class="btn btn-outline-success btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
+          <a tabindex="-1" class="btn btn-outline-primary btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
+          <a tabindex="-1" class="btn btn-outline-danger btn-sm disabled placeholder col-3" aria-hidden="true"></a>
+        </td>
+      </tr>
+      }
+      }
       }
     </tbody>
   </table>
