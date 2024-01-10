@@ -10,12 +10,12 @@ namespace Consultorio.API.Controllers
     [Authorize(Roles = "Medico, Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ConsultaController : ControllerBase
+    public class ConsultaController : MainController
     {
         private readonly IConsultaService _consultaService;
         private readonly IMapper _mapper;
 
-        public ConsultaController(IConsultaService consultaService, IMapper mapper)
+        public ConsultaController(IConsultaService consultaService, IMapper mapper, INotificador notificador) : base(notificador)
         {
             _consultaService = consultaService;
             _mapper = mapper;
@@ -29,48 +29,46 @@ namespace Consultorio.API.Controllers
 
             if (consulta == null)
             {
-                return NotFound();
+                NotificarErro("Nenhuma consulta foi encontrada!");
             }
 
-            return Ok(consulta);
+            return CustomResponse(consulta);
         }
 
         // GET: api/Consulta/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Consulta>> GetConsulta(int id)
         {
-            if (_consultaService == null)
-            {
-                return NotFound();
-            }
-
             var consulta = _mapper.Map<ConsultaViewModel>(await _consultaService.BuscaId(id));
 
             if (consulta == null)
             {
-                return NotFound();
+                NotificarErro("Consulta não encontrada!");
             }
 
-            return Ok(consulta);
+            return CustomResponse(consulta);
         }
 
         // PUT: api/Consulta/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutConsulta(int id, ConsultaEdicaoViewModel consulta)
         {
-            if (consulta.Id != id) BadRequest("Os Ids informados não são iguais!");
+            if (consulta.Id != id)
+            {
+                NotificarErro("Os Ids informados não são iguais!");
+                return CustomResponse();
+            }
 
             var consultaEncontrada = await _consultaService.BuscaId(id);
-            if (consultaEncontrada == null) return NotFound("Consulta não encontrado");
-            try
+
+            if (consultaEncontrada == null)
             {
-                await _consultaService.Atualizar(_mapper.Map<Consulta>(consulta));
-                return Ok(consulta);
+                NotificarErro("Consulta não encontrada!");
+                return CustomResponse();
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            await _consultaService.Atualizar(_mapper.Map<Consulta>(consulta));
+            return Ok(consulta);
         }
 
         // PUT: api/Consulta/5
@@ -80,34 +78,26 @@ namespace Consultorio.API.Controllers
             if (consulta.Id != id) BadRequest("Os Ids informados não são iguais!");
 
             var consultaEncontrada = await _consultaService.BuscaId(id);
-            if (consultaEncontrada == null) return NotFound("Consulta não encontrado");
-            try
+
+            if (consultaEncontrada == null)
             {
-                await _consultaService.AtualizarSintoma(_mapper.Map<Consulta>(consulta));
-                return Ok(consulta);
+                NotificarErro("Consulta não encontrada!");
+                return CustomResponse();
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            await _consultaService.AtualizarSintoma(_mapper.Map<Consulta>(consulta));
+            return CustomResponse(consulta);
         }
 
         // POST: api/Consulta
         [HttpPost]
         public async Task<IActionResult> PostConsulta(ConsultaCriacaoViewModel consultaViewModel)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            try
-            {
-                await _consultaService.Adicionar(_mapper.Map<Consulta>(consultaViewModel));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+            await _consultaService.Adicionar(_mapper.Map<Consulta>(consultaViewModel));
 
-            return Ok();
+            return CustomResponse();
         }
 
         // DELETE: api/Consulta/5
@@ -117,11 +107,14 @@ namespace Consultorio.API.Controllers
         {
             var consulta = await _consultaService.BuscaId(id);
 
-            if (consulta == null) return NotFound();
+            if (consulta == null)
+            {
+                NotificarErro("Consulta não encontrada!");
+                return CustomResponse();
+            }
 
             await _consultaService.Remover(consulta);
-
-            return NoContent();
+            return CustomResponse();
         }
     }
 }

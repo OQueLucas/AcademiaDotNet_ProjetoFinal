@@ -48,6 +48,7 @@ namespace Consultorio.API.Services
 
             if (await _pacienteRepository.Remove(paciente)) return true;
 
+            Notificar("Não foi possível remover o paciente");
             return false;
         }
 

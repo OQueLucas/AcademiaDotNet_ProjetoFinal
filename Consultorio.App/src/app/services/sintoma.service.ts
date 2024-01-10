@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, first, Observable, retry } from 'rxjs';
+import { catchError, first, map, Observable, retry } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { Sintoma } from '../pages/sintomas/model/sintoma';
@@ -19,13 +19,23 @@ export class SintomaService extends BaseService {
   get(): Observable<Sintoma[]> {
     return this.httpClient
       .get<Sintoma[]>(this.baseUrl, this.obterHeaderJson())
-      .pipe(first(), retry(2), catchError(this.serviceError));
+      .pipe(
+        map(this.extractData),
+        first(),
+        retry(2),
+        catchError(this.serviceError)
+      );
   }
 
   getById(id: number): Observable<Sintoma> {
     return this.httpClient
       .get<Sintoma>(this.baseUrl + '/' + id, this.obterHeaderJson())
-      .pipe(first(), retry(2), catchError(this.serviceError));
+      .pipe(
+        map(this.extractData),
+        first(),
+        retry(2),
+        catchError(this.serviceError)
+      );
   }
 
   save(sintoma: Partial<Sintoma>) {

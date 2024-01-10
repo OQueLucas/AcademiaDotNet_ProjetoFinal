@@ -71,6 +71,7 @@ namespace Consultorio.API.Controllers
                 NotificarErro("Os ids informados não são iguais!");
                 return CustomResponse();
             }
+
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _pacienteService.Atualizar(_mapper.Map<Paciente>(pacienteViewModel));

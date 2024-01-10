@@ -3,11 +3,11 @@ using Consultorio.API.Model;
 
 namespace Consultorio.API.Services
 {
-    public class ConsultaService : IConsultaService
+    public class ConsultaService : BaseService, IConsultaService
     {
         private readonly IConsultaRepository _consultaRepository;
 
-        public ConsultaService(IConsultaRepository consultaRepository)
+        public ConsultaService(IConsultaRepository consultaRepository, INotificador notificador) : base(notificador)
         {
             _consultaRepository = consultaRepository;
         }
@@ -31,6 +31,7 @@ namespace Consultorio.API.Services
         {
             if (await _consultaRepository.Remove(consulta)) return true;
 
+            Notificar("Não foi possível remover a consulta");
             return false;
         }
 

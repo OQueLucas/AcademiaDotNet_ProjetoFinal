@@ -10,12 +10,12 @@ namespace Consultorio.API.Controllers
     [Authorize(Roles = "Medico, Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class SintomasController : ControllerBase
+    public class SintomasController : MainController
     {
         private readonly ISintomaService _sintomaService;
         private readonly IMapper _mapper;
 
-        public SintomasController(ISintomaService sintomaService, IMapper mapper)
+        public SintomasController(ISintomaService sintomaService, IMapper mapper, INotificador notificador) : base(notificador)
         {
             _sintomaService = sintomaService;
             _mapper = mapper;
@@ -24,69 +24,57 @@ namespace Consultorio.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sintoma>>> GetSintomas()
         {
-            try
-            {
-                var sintoma = await _sintomaService.BuscarTodos();
+            var sintoma = await _sintomaService.BuscarTodos();
 
-                if (sintoma == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(sintoma);
-            }
-            catch (Exception ex)
+            if (sintoma == null)
             {
-                return BadRequest($"Erro: {ex.Message}");
+                NotificarErro("Nenhum sintoma foi encontrado!");
             }
+
+            return CustomResponse(sintoma);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Sintoma>> GetSintoma(int id)
         {
-            try
+            var result = await _sintomaService.BuscaId(id);
+
+            if (result == null)
             {
-                var result = await _sintomaService.BuscaId(id);
-                return Ok(result);
+                NotificarErro("Nenhum sintoma foi encontrado!");
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            return CustomResponse(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSintoma(int id, Sintoma sintoma)
         {
-            if (sintoma.Id != id) BadRequest("Os Ids informados não são iguais!");
+            if (sintoma.Id != id)
+            {
+                NotificarErro("Os Ids informados não são iguais!");
+                return CustomResponse();
+            }
 
             var sintomaEncontrado = await _sintomaService.BuscaId(id);
-            if (sintomaEncontrado == null) return NotFound("Sintoma não encontrado");
-            try
+
+            if (sintomaEncontrado == null)
             {
-                await _sintomaService.Atualizar(sintoma);
-                return Ok(sintoma);
+                NotificarErro("Sintoma não encontrado!");
+                return CustomResponse();
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            await _sintomaService.Atualizar(sintoma);
+            return CustomResponse(sintoma);
         }
 
         [HttpPost]
         public async Task<ActionResult<Sintoma>> PostSintoma(SintomaViewModel sintoma)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            try
-            {
-                await _sintomaService.Adicionar(_mapper.Map<Sintoma>(sintoma));
-                return Ok(sintoma);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+            await _sintomaService.Adicionar(_mapper.Map<Sintoma>(sintoma));
+            return CustomResponse(sintoma);
         }
 
         [Authorize(Roles = "Admin")]
@@ -95,11 +83,14 @@ namespace Consultorio.API.Controllers
         {
             var sintomaEncontrado = await _sintomaService.BuscaId(id);
 
-            if (sintomaEncontrado == null) return NotFound();
+            if (sintomaEncontrado == null)
+            {
+                NotificarErro("Sintoma não encontrado!");
+                return CustomResponse();
+            }
 
-           await _sintomaService.Remover(sintomaEncontrado);
-
-            return NoContent();
+            await _sintomaService.Remover(sintomaEncontrado);
+            return CustomResponse();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Consultorio.API.Controllers
 
             if (result == null)
             {
-                NotificarErro("Nenhum medico foi encontrado!");
+                NotificarErro("Medico não encontrado!");
             }
 
             return CustomResponse(result);
@@ -72,13 +72,17 @@ namespace Consultorio.API.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutMedico(int id, MedicoEdicaoViewModel medicoViewModel)
         {
-            if (medicoViewModel.Id != id) BadRequest("Os Ids informados não são iguais!");
+            if (medicoViewModel.Id != id)
+            {
+                NotificarErro("Os Ids informados não são iguais!");
+                return CustomResponse();
+            }
 
             var medico = await _medicoService.BuscaId(id);
 
             if (medico == null)
             {
-                NotificarErro("Nenhum medico foi encontrado!");
+                NotificarErro("Medico não encontrado!");
                 return CustomResponse();
             }
 
@@ -94,7 +98,7 @@ namespace Consultorio.API.Controllers
 
             if (medico == null)
             {
-                NotificarErro("Nenhum medico foi encontrado!");
+                NotificarErro("Medico não encontrado!");
                 return CustomResponse();
             }
 

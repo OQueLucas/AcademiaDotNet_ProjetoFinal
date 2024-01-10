@@ -25,6 +25,12 @@ namespace Consultorio.API.Controllers
         public async Task<ActionResult<UserViewModel>> ListarUsuarios()
         {
             var users = _userManager.Users.ToList();
+
+            if (users == null)
+            {
+                NotificarErro("Nenhum usuário encontrado");
+            }
+
             return CustomResponse(users);
         }
 
@@ -78,7 +84,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpGet("Role/{userId}")]
-        public async Task<ActionResult<RolesViewModel>> ListarRoles(string userId)
+        public async Task<ActionResult<RolesViewModel>> ListarUserRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 

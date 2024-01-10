@@ -3,11 +3,11 @@ using Consultorio.API.Model;
 
 namespace Consultorio.API.Services
 {
-    public class SintomaService : ISintomaService
+    public class SintomaService : BaseService, ISintomaService
     {
         private readonly ISintomaRepository _sintomaRepository;
 
-        public SintomaService(ISintomaRepository sintomaRepository)
+        public SintomaService(ISintomaRepository sintomaRepository, INotificador notificador) : base(notificador)
         {
             _sintomaRepository = sintomaRepository;
         }
@@ -28,6 +28,7 @@ namespace Consultorio.API.Services
         {
             if (await _sintomaRepository.Remove(sintoma)) return true;
 
+            Notificar("Não foi possível remover o sintoma");
             return false;
         }
 

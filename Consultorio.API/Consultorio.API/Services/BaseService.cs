@@ -1,6 +1,5 @@
 ﻿using Consultorio.API.Interfaces;
 using Consultorio.API.Notificacoes;
-using System.ComponentModel.DataAnnotations;
 
 namespace Consultorio.API.Services
 {
