@@ -28,72 +28,62 @@ namespace Consultorio.API.Controllers
 
             if (medico == null)
             {
-                return NotFound();
+                NotificarErro("Nenhum medico foi encontrado!");
             }
 
             return CustomResponse(medico);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostMedico(MedicoCriacaoViewModel medicoViewModel)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetMedicoById([FromRoute] int id)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var result = _mapper.Map<MedicoViewModel>(await _medicoService.BuscaId(id));
 
-            try
+            if (result == null)
             {
-                await _medicoService.Adicionar(_mapper.Map<Medico>(medicoViewModel));
-                return Ok(medicoViewModel);
+                NotificarErro("Medico não encontrado!");
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            return CustomResponse(result);
         }
 
         [HttpGet("{crm}")]
         public async Task<IActionResult> GetMedicoByCRM([FromRoute] string crm)
         {
-            try
+            var result = _mapper.Map<MedicoViewModel>(await _medicoService.BuscaCRM(crm));
+
+            if (result == null)
             {
-                var result = _mapper.Map<MedicoViewModel>(await _medicoService.BuscaCRM(crm));
-                return Ok(result);
+                NotificarErro("Nenhum medico foi encontrado!");
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            return CustomResponse(result);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetMedicoById([FromRoute] int id)
+        [HttpPost]
+        public async Task<IActionResult> PostMedico(MedicoCriacaoViewModel medicoViewModel)
         {
-            try
-            {
-                var result = _mapper.Map<MedicoViewModel>(await _medicoService.BuscaId(id));
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await _medicoService.Adicionar(_mapper.Map<Medico>(medicoViewModel));
+            return CustomResponse(medicoViewModel);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutMedico(int id, MedicoEdicaoViewModel medicoViewModel)
         {
             if (medicoViewModel.Id != id) BadRequest("Os Ids informados não são iguais!");
-             
+
             var medico = await _medicoService.BuscaId(id);
-            if (medico == null) return NotFound("Medico não encontrado");
-            try
+
+            if (medico == null)
             {
-                await _medicoService.Atualizar(_mapper.Map<Medico>(medicoViewModel));
-                return Ok(medicoViewModel);
+                NotificarErro("Nenhum medico foi encontrado!");
+                return CustomResponse();
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Erro: {ex.Message}");
-            }
+
+            await _medicoService.Atualizar(_mapper.Map<Medico>(medicoViewModel));
+            return CustomResponse(medicoViewModel);
         }
 
         [Authorize(Roles = "Admin")]
@@ -102,10 +92,13 @@ namespace Consultorio.API.Controllers
         {
             var medico = await _medicoService.BuscaId(id);
 
-            if (medico == null) return NotFound();
+            if (medico == null)
+            {
+                NotificarErro("Nenhum medico foi encontrado!");
+                return CustomResponse();
+            }
 
             await _medicoService.Remover(medico);
-
             return CustomResponse(medico);
         }
     }

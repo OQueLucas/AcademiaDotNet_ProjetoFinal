@@ -12,24 +12,24 @@ import { Usuario } from '../models/Usuario';
 })
 export class AdminService extends BaseService {
   baseUrl = `${environment.baseUrl}admin/`;
-  constructor(private http: HttpClient) {
-    super();
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
   getRoles() {
-    return this.http
+    return this.httpClient
       .get<Role[]>(this.baseUrl + 'role', this.obterHeaderJson())
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
   obterRolesUsuario(id: string): Observable<UserRole[]> {
-    return this.http
+    return this.httpClient
       .get<UserRole>(this.baseUrl + 'role/' + id, this.obterHeaderJson())
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
   adicionarRolesUsuario(id: string, roles: UserRole[]): Observable<UserRole[]> {
-    return this.http
+    return this.httpClient
       .post<UserRole>(
         this.baseUrl + 'role/' + id,
         JSON.stringify(roles),
@@ -39,25 +39,25 @@ export class AdminService extends BaseService {
   }
 
   removerRole(id: string) {
-    return this.http
+    return this.httpClient
       .delete(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
       .pipe(map(this.extractData), retry(1), catchError(super.serviceError));
   }
 
   obterUsuario(id: string) {
-    return this.http
+    return this.httpClient
       .get<Usuario>(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
   listarUsuarios() {
-    return this.http
+    return this.httpClient
       .get<Usuario[]>(this.baseUrl + 'usuario', this.obterHeaderJson())
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
   removerUsuario(id: string) {
-    return this.http
+    return this.httpClient
       .delete(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())
       .pipe(map(this.extractData), retry(1), catchError(super.serviceError));
   }

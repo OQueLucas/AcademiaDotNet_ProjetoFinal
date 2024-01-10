@@ -12,8 +12,8 @@ import { BaseService } from './base.service';
 export class SintomaService extends BaseService {
   baseUrl = `${environment.baseUrl}sintomas`;
 
-  constructor(private httpClient: HttpClient) {
-    super();
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
   get(): Observable<Sintoma[]> {

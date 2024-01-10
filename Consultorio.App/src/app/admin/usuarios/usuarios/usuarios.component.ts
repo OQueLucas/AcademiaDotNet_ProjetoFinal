@@ -48,12 +48,12 @@ export class UsuariosComponent {
   private refresh() {
     this.spinner.show();
     this.adminService.listarUsuarios().subscribe({
-      next: (usuarios: Usuario[]) => {
-        this.usuarios = usuarios;
+      next: (response: Usuario[]) => {
+        this.usuarios = response;
         this.nenhumUsuario = false;
       },
-      error: (error) => {
-        this.alerts = error.error.errors;
+      error: (response) => {
+        this.alerts = response.error.errors;
         this.type = 'danger';
         this.toastr.error(
           'Ocorreu algum erro ao carregar os usuários!',

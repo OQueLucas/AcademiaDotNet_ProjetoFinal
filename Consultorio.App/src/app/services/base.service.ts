@@ -1,7 +1,12 @@
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { LocalStorageUtils } from '../utils/localstorage';
+import { CepConsulta } from '../pages/pacientes/models/CepConsulta';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +14,7 @@ import { LocalStorageUtils } from '../utils/localstorage';
 export class BaseService {
   public LocalStorage = new LocalStorageUtils();
 
-  constructor() {}
+  constructor(protected httpClient: HttpClient) {}
 
   protected obterHeaderJson() {
     return {
@@ -35,5 +40,11 @@ export class BaseService {
     }
     console.error(response);
     return throwError(() => response);
+  }
+
+  public consultarCep(cep: string): Observable<CepConsulta> {
+    return this.httpClient
+      .get<CepConsulta>(`https://viacep.com.br/ws/${cep}/json`)
+      .pipe(catchError(this.serviceError));
   }
 }

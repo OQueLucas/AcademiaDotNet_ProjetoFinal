@@ -13,8 +13,8 @@ import { CepConsulta } from '../pages/pacientes/models/CepConsulta';
 export class PacienteService extends BaseService {
   baseUrl = `${environment.baseUrl}paciente`;
 
-  constructor(private httpClient: HttpClient) {
-    super();
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
   get(): Observable<Paciente[]> {
@@ -67,11 +67,5 @@ export class PacienteService extends BaseService {
         this.obterHeaderJson()
       )
       .pipe(retry(2), catchError(super.serviceError));
-  }
-
-  consultarCep(cep: string): Observable<CepConsulta> {
-    return this.httpClient
-      .get<CepConsulta>(`https://viacep.com.br/ws/${cep}/json`)
-      .pipe(catchError(super.serviceError));
   }
 }

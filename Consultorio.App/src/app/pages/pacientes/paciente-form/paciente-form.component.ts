@@ -130,7 +130,8 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
   public buscarCep(cep: string) {
     if (cep.length < 8) return;
     this._pacienteService.consultarCep(cep).subscribe({
-      next: (cepResponse) => this.preencherEnderecoConsulta(cepResponse),
+      next: (cepResponse: CepConsulta) =>
+        this.preencherEnderecoConsulta(cepResponse),
       error: (erro) => this.alerts.push(erro),
     });
   }
@@ -151,8 +152,8 @@ export class PacienteFormComponent implements OnInit, AfterViewInit {
           this.toastr.success('Paciente cadastrado com sucesso!', 'Sucesso!');
           this.mudancasNaoSalvas = false;
         },
-        error: (error: HttpErrorResponse) => {
-          this.alerts = error.error.errors;
+        error: (response: HttpErrorResponse) => {
+          this.alerts = response.error.errors;
           this.type = 'danger';
           this.toastr.error(
             'Ocorreu algum erro no cadastro do paciente!',

@@ -12,8 +12,8 @@ import { BaseService } from './base.service';
 export class ConsultaService extends BaseService {
   baseUrl = `${environment.baseUrl}consulta`;
 
-  constructor(private httpClient: HttpClient) {
-    super();
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
   get(): Observable<Consulta[]> {

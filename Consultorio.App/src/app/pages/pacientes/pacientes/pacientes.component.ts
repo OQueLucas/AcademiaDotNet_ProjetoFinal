@@ -76,8 +76,8 @@ export class PacientesComponent {
             this.refresh();
             this.toastr.success('Paciente removido com sucesso!', 'Sucesso!');
           },
-          error: (error) => {
-            this.alerts = error.error.errors;
+          error: (response) => {
+            this.alerts = response.error.errors;
             this.type = 'danger';
             this.toastr.error(
               'Ocorreu algum erro ao remover paciente!',
@@ -95,12 +95,12 @@ export class PacientesComponent {
 
   private refresh() {
     this.PacienteService.get().subscribe({
-      next: (pacientes) => {
-        this.pacientes = pacientes;
+      next: (response) => {
+        this.pacientes = response;
         this.nenhumPaciente = true;
       },
-      error: (error) => {
-        this.alerts = error.error.errors;
+      error: (response) => {
+        this.alerts = response.error.errors;
         this.type = 'danger';
         this.toastr.error(
           'Ocorreu algum erro ao carregar os pacientes!',

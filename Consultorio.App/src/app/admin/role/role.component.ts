@@ -51,8 +51,8 @@ export class RoleComponent {
         this.roles = response;
         this.nenhumaRole = false;
       },
-      error: (error) => {
-        this.alerts = error.error.errors;
+      error: (response) => {
+        this.alerts = response.error.errors;
         this.type = 'danger';
         this.toastr.error('Ocorreu algum erro ao carregar as roles!', 'Falha!');
         this.nenhumaRole = true;

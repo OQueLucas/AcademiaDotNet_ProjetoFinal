@@ -12,8 +12,8 @@ import { BaseService } from './base.service';
 export class MedicoService extends BaseService {
   baseUrl = `${environment.baseUrl}medico`;
 
-  constructor(private httpClient: HttpClient) {
-    super();
+  constructor(override httpClient: HttpClient) {
+    super(httpClient);
   }
 
   get(): Observable<Medico[]> {

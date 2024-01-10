@@ -67,8 +67,8 @@ export class MedicosComponent {
             this.refresh();
             this.toastr.success('Medico removido com sucesso!', 'Sucesso!');
           },
-          error: (error) => {
-            this.alerts = error.error.errors;
+          error: (response) => {
+            this.alerts = response.error.errors;
             this.type = 'danger';
             this.toastr.error(
               'Ocorreu algum erro ao remover medico!',
@@ -85,12 +85,12 @@ export class MedicosComponent {
 
   private refresh() {
     this.MedicoService.get().subscribe({
-      next: (response) => {
+      next: (response: Medico[]) => {
         this.medicos = response;
         this.nenhumMedico = true;
       },
-      error: (error) => {
-        this.alerts = error.error.errors;
+      error: (response) => {
+        this.alerts = response.error.errors;
         this.type = 'danger';
         this.toastr.error(
           'Ocorreu algum erro ao carregar os medicos!',

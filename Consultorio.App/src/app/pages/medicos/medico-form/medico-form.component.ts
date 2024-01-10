@@ -23,6 +23,7 @@ import { MedicoService } from '../../../services/medico.service';
 import { Medico } from '../model/medico';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Observable, fromEvent, merge } from 'rxjs';
+import { CepConsulta } from '../../pacientes/models/CepConsulta';
 
 @Component({
   selector: 'app-medico-form',
@@ -30,8 +31,10 @@ import { Observable, fromEvent, merge } from 'rxjs';
   styleUrl: './medico-form.component.scss',
 })
 export class MedicoFormComponent implements OnInit {
-  titulo: string;
-  mudancasNaoSalvas: boolean;
+  public titulo: string;
+  public mudancasNaoSalvas: boolean;
+  public alerts: any[] = [];
+  public type: string;
   public form: FormGroup;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
@@ -132,8 +135,10 @@ export class MedicoFormComponent implements OnInit {
     if (this.form.valid) {
       this._medicoService.save(this.form.value).subscribe({
         next: () => {
+          this.form.reset();
+          this.alerts = [];
           this.formUtils.message('Medico cadastrado com sucesso!');
-          this.voltar();
+          this.mudancasNaoSalvas = false;
         },
         error: () => this.formUtils.message('Erro ao cadastrar medico!'),
       });
@@ -144,6 +149,22 @@ export class MedicoFormComponent implements OnInit {
 
   public onCancel(): void {
     this.voltar();
+  }
+
+  public buscarCep(cep: string) {
+    if (cep.length < 8) return;
+    this._medicoService.consultarCep(cep).subscribe({
+      next: (cepResponse: CepConsulta) =>
+        this.preencherEnderecoConsulta(cepResponse),
+      error: (erro) => this.alerts.push(erro),
+    });
+  }
+
+  private preencherEnderecoConsulta(cepConsulta: CepConsulta) {
+    this.form.patchValue({
+      bairro: cepConsulta.bairro,
+      endereco: cepConsulta.logradouro,
+    });
   }
 
   private voltar() {

@@ -68,8 +68,8 @@ export class ConsultasComponent {
             this.refresh();
             this.toastr.success('Consulta removida com sucesso!', 'Sucesso!');
           },
-          error: (error) => {
-            this.alerts = error.error.errors;
+          error: (response) => {
+            this.alerts = response.error.errors;
             this.type = 'danger';
             this.toastr.error(
               'Ocorreu algum erro ao remover consulta!',
@@ -90,8 +90,8 @@ export class ConsultasComponent {
         this.consultas = response;
         this.nenhumaConsulta = true;
       },
-      error: (error) => {
-        this.alerts = error.error.errors;
+      error: (response) => {
+        this.alerts = response.error.errors;
         this.type = 'danger';
         this.toastr.error(
           'Ocorreu algum erro ao carregar as consulta!',

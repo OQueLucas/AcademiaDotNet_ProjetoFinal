@@ -31,7 +31,7 @@ namespace Consultorio.API.Controllers
 
             if (pacientes == null)
             {
-                return NotFound();
+                NotificarErro("Nenhum paciente foi encontrado!");
             }
 
             return CustomResponse(pacientes);
@@ -45,7 +45,7 @@ namespace Consultorio.API.Controllers
 
             if (paciente == null)
             {
-                return NotFound();
+                NotificarErro("Paciente não encontrado!");
             }
 
             return CustomResponse(paciente);
@@ -71,13 +71,11 @@ namespace Consultorio.API.Controllers
                 NotificarErro("Os ids informados não são iguais!");
                 return CustomResponse();
             }
-
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _pacienteService.Atualizar(_mapper.Map<Paciente>(pacienteViewModel));
 
             return CustomResponse(pacienteViewModel);
-
         }
 
         // DELETE: api/Paciente/5
@@ -87,12 +85,13 @@ namespace Consultorio.API.Controllers
         {
             var paciente = await _pacienteService.BuscaId(id);
 
-            if (paciente == null) return NotFound();
-
+            if (paciente == null)
+            {
+                NotificarErro("Paciente não encontrado!");
+                return CustomResponse();
+            }
             await _pacienteService.Remover(paciente);
-                
             return CustomResponse(paciente);
-
         }
     }
 }
