@@ -9,9 +9,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { ConsultaGuard } from './guards/consulta.guard';
+import { ConsultaDetalhesComponent } from './consulta-detalhes/consulta-detalhes.component';
+import { ListaSintomasComponent } from './lista-sintomas/lista-sintomas.component';
 
 @NgModule({
-  declarations: [ConsultasComponent, ConsultaFormComponent],
+  declarations: [ConsultasComponent, ConsultaFormComponent, ConsultaDetalhesComponent, ListaSintomasComponent],
   imports: [
     CommonModule,
     ConsultasRoutingModule,

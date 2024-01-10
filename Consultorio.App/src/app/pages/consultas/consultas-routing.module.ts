@@ -4,6 +4,7 @@ import { ConsultasComponent } from './consultas/consultas.component';
 import { ConsultaFormComponent } from './consulta-form/consulta-form.component';
 import { consultaResolver } from './guards/consulta.resolver';
 import { ConsultaGuard } from './guards/consulta.guard';
+import { ConsultaDetalhesComponent } from './consulta-detalhes/consulta-detalhes.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,14 @@ const routes: Routes = [
   {
     path: 'novo',
     component: ConsultaFormComponent,
+    resolve: { consulta: consultaResolver },
+    canDeactivate: [ConsultaGuard],
+    canActivate: [ConsultaGuard],
+    data: [{ claim: { nome: 'role', valor: 'Medico' } }],
+  },
+  {
+    path: 'detalhes/:id',
+    component: ConsultaDetalhesComponent,
     resolve: { consulta: consultaResolver },
     canDeactivate: [ConsultaGuard],
     canActivate: [ConsultaGuard],

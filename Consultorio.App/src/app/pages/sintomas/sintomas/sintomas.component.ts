@@ -17,17 +17,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './sintomas.component.scss',
 })
 export class SintomasComponent {
-  detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
-  editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
-  excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
-  novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
+  public detalheIcon = icon({ prefix: 'fas', iconName: 'list' });
+  public editarIcon = icon({ prefix: 'fas', iconName: 'pen-to-square' });
+  public excluirIcon = icon({ prefix: 'fas', iconName: 'trash-can' });
+  public novoIcon = icon({ prefix: 'fas', iconName: 'plus' });
 
-  alerts: any[] = [];
-  type: string;
+  public alerts: any[] = [];
+  public type: string;
 
-  titulo = 'Sintomas';
+  public titulo = 'Sintomas';
 
-  sintomas: Sintoma[] = [];
+  public sintomas: Sintoma[] = [];
   public nenhumSintoma: boolean = false;
 
   public iterador = 0;

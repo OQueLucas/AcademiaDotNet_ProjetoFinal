@@ -1,0 +1,103 @@
+<div class="container main-container mb-3">
+  <h1>Detalhes de {{ consulta.nome }}</h1>
+
+  <div>
+    <h4>Informação somente leitura</h4>
+    <hr />
+    <dl class="row">
+      <dt class="col-sm-2">
+        <label class="control-label">Tipo de Consulta</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ TipoConsultaToLabelMapping[consulta.tipoConsulta] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Data</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.data | date: "dd/MM/yyyy hh:mm" }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Médico</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.medicoNome }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CRM</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.medicoCRM | mask:'SS 00000' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Especialização</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.especializacao }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Descrição</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.descricao }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Paciente</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.nome }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Nome Social</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.nomeSocial }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">CPF</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{consulta.cpf | mask: '000.000.000-00' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Data de Nascimento</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.dataNascimento | date:'dd/MM/yyyy HH:mm' }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Email</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.email }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Tipo Sanguíneo</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ TipoSanguineoToLabelMapping[consulta.tipoSanguineo] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Gênero</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ GeneroToLabelMapping[consulta.genero] }}
+      </dd>
+      <dt class="col-sm-2">
+        <label class="control-label">Telefone</label>
+      </dt>
+      <dd class="col-sm-10">
+        {{ consulta.telefone | mask: '(00) 0000-0000 || (00) 00000-0000' }}
+      </dd>
+    </dl>
+  </div>
+
+  <div>
+    <a class="btn btn-primary" (click)="onEdit(consulta)">
+      <fa-icon [icon]="editarIcon"></fa-icon> Editar
+    </a>&nbsp;
+    <a class="btn btn-dark" (click)="voltar()"><fa-icon [icon]="voltarIcon"></fa-icon> Voltar</a>
+  </div>
+</div>
+
+<app-lista-sintomas [sintomas]="consulta.sintomas" [vazio]="nenhumSintoma"></app-lista-sintomas>

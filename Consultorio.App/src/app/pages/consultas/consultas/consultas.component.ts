@@ -5,7 +5,6 @@ import { ConsultaService } from '../../../services/consulta.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { ConfirmationDialogComponent } from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { TipoConsulta } from '../../../enum/TipoConsulta.enum';
 import { Consulta } from '../model/consulta';
@@ -26,17 +25,21 @@ export class ConsultasComponent {
   public alerts: any[] = [];
   public type: string;
   public consultas: Consulta[] = null;
+  public nenhumaConsulta: boolean = false;
 
   public GeneroToLabelMapping = GeneroToLabelMapping;
   public TipoConsultaToLabelMapping = TipoConsulta;
+
+  public iterador = 0;
+  public linha = new Array(15);
+  public coluna = new Array(8);
 
   constructor(
     private ConsultaService: ConsultaService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private toastr: ToastrService,
-    private _snackBar: MatSnackBar
+    private toastr: ToastrService
   ) {
     this.refresh();
   }
@@ -87,6 +90,7 @@ export class ConsultasComponent {
     this.ConsultaService.get().subscribe({
       next: (response) => {
         this.consultas = response;
+        this.nenhumaConsulta = false;
       },
       error: (error) => {
         this.alerts = error.error.errors;
@@ -94,7 +98,7 @@ export class ConsultasComponent {
         this.toastr.error('Ocorreu algum ao carregar as consulta!', 'Falha!', {
           progressBar: true,
         });
-        return scheduled(of([]), asyncScheduler);
+        this.nenhumaConsulta = true;
       },
     });
   }
