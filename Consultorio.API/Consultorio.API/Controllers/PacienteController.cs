@@ -81,6 +81,7 @@ namespace Consultorio.API.Controllers
         }
 
         // DELETE: api/Paciente/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaciente(int id)
         {

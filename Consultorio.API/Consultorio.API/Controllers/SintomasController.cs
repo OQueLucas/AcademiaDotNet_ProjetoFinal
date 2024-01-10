@@ -89,6 +89,7 @@ namespace Consultorio.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSintoma(int id)
         {

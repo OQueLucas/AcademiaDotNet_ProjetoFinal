@@ -111,6 +111,7 @@ namespace Consultorio.API.Controllers
         }
 
         // DELETE: api/Consulta/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteConsulta(int id)
         {

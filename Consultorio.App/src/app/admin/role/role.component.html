@@ -23,9 +23,6 @@
         <td>{{ role.normalizedName }}</td>
         <td>{{ role.concurrencyStamp }}</td>
         <td class="acoes">
-          <a class="btn btn-outline-success btn-sm" [routerLink]="['/admin/roles/detalhes/',role.id]">
-            <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe
-          </a>&nbsp;
           <a class="btn btn-outline-primary btn-sm" [routerLink]="['/admin/roles/editar',role.id]">
             <fa-icon [icon]="editarIcon"></fa-icon> Editar
           </a>&nbsp;
@@ -48,7 +45,6 @@
         </td>
         }
         <td class="acoes">
-          <a tabindex="-1" class="btn btn-outline-success btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
           <a tabindex="-1" class="btn btn-outline-primary btn-sm disabled placeholder col-3" aria-hidden="true"></a>&nbsp;
           <a tabindex="-1" class="btn btn-outline-danger btn-sm disabled placeholder col-3" aria-hidden="true"></a>
         </td>

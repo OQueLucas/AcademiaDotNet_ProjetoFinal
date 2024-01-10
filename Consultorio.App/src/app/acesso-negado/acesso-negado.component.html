@@ -1,5 +1,13 @@
-<div class="container main-container">
-  <div class="alert alert-danger">
-    <h2>Acesso negado</h2>
+<div class="d-flex justify-content-center mt-5">
+  <div class="card w-50 shadow-lg">
+    <div class="card-header bg-danger text-white d-flex gap-3 justify-content-center align-items-center">
+      <span class="fs-2 fw-bold"><fa-icon [icon]="acessoNegadoIcon"></fa-icon></span>
+      <h1>403 - Acesso negado</h1>
+    </div>
+    <div class="card-body d-flex flex-column align-items-center">
+      <span class="fs-1 fw-bold my-3"><fa-icon [icon]="bloqueadoIcon"></fa-icon></span>
+      <p class="card-text">Desculpe, você não tem autorização para realizar essa ação.</p>
+      <p class="card-text">Se acha que isso é um engano entre em contato com o administrador!</p>
+    </div>
   </div>
 </div>

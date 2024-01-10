@@ -1,6 +1,6 @@
 # 🩺 Consultório - Academia DotNET Projeto Final
 
-![C#](https://img.shields.io/badge/c%23-%23239120.svg?logo=C-sharp&logoColor=white) ![Dot Net 6.0](https://img.shields.io/badge/6.0-blueviolet?logo=.net&logoColor=white)
+![C#](https://img.shields.io/badge/c%23-%23239120.svg?logo=C-sharp&logoColor=white) ![dotNET 6.0](https://img.shields.io/badge/6.0-blueviolet?logo=.net&logoColor=white)
 ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?logo=microsoft%20sql%20server&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?logo=typescript&logoColor=white)
 
 Projeto final da Academia dotNET #5: Sistema de atendimento e gerenciamento de consulta de medicas.
@@ -99,8 +99,9 @@ Projeto final da Academia dotNET #5: Sistema de atendimento e gerenciamento de c
 
 - Admin:
   - Atribuição de regras e listagem de usuários;
+  - Todas as remoções de dados só podem ser realizadas por usuário com Role Admin;
 
-Para melhor organização e para a possibilidade de crescimento do código, foi utilizado:
+#### Para melhor organização e para a possibilidade de crescimento do código, foi utilizado
 
 - Padrão de services/repositories, com injeção de dependência.
 - ViewModels para visualização, criação e edição.
@@ -144,7 +145,7 @@ Por questão do projeto ser feito com a estratégia de MVP, foi realizado as pri
 
 - Página Home:
   - Medicos: onde poderão visualizar consultas que irão realizar.
-  - Pacientes: onde poderão visualizar suas consultas que foi marcada.
+  - Pacientes: onde poderão visualizar suas consultas que foram marcadas.
 
 - Tabelas e campos para manipulação de exames e alergias dos pacientes.
 
@@ -172,6 +173,8 @@ Por questão do projeto ser feito com a estratégia de MVP, foi realizado as pri
 ### Database
 
 - `SQL Server`
+- `Entity Framework`
+- `Migration`
 
 ### FrontEnd
 
@@ -189,31 +192,39 @@ git clone git@github.com:OQueLucas/AcademiaDotNet_ProjetoFinal.git
 
 - Configuração:
 
-  - Após o download, acesse `Consultorio.API/Consultorio.API/appsettings.json` e ajuste a string de conexão (se necessário).
+  - BackEnd:
 
-  - abra e execute o seguinte comando em Package Manager Console (Console de Gerenciamento de Pacote):
+    - Após o download, acesse `Consultorio.API/Consultorio.API/appsettings.json` e ajuste a string de conexão (se necessário).
 
-    ```bash
-    Update-Database
-    ```
+    - Abra e execute os seguintes comando em Package Manager Console (Console de Gerenciamento de Pacote):
 
-  - Após realizar esse comando, seu banco deve ser criado e poderá inicializar o projeto.
+      ```bash
+      Update-Database -Context "Context"
+      Update-Database -Context "ApplicationDbContext"
+      ```
 
-  - Após o download, acesse `Consultorio.APP/src/environments/environment.ts || environment.prod.ts` e ajuste a porta (se necessário).
+    - Agora poderá rodar a aplicação;
 
-  - Agora só iniciar o front end:
+  - FrontEnd:
 
-    ```bash
-      npm install
-    
-      ng serve
-    ```
+    - Após realizar esse comando, seu banco deve ser criado e poderá inicializar o projeto.
+
+    - Após o download, acesse `Consultorio.APP/src/environments/environment.ts || environment.prod.ts` e ajuste a porta (se necessário).
+
+    - Agora só iniciar o front end:
+
+      ```bash
+        npm install
+      
+        ng serve
+      ```
 
 - Utilização
 
   - Cadastre os Pacientes e os Medicos.
   - Cadastre os sintomas.
-  - Agora poderá selecionar os pacientes e medicos cadastros no formulário de consulta.
+  - Agora poderá selecionar os pacientes e medicos cadastros no formulário de consulta e cadastrar novas consultas para os pacientes.
+  - Na tela de detalhes do paciente, poderá visualizar as consultas marcadas para o paciente selecionado.
 
 ## 👨🏻‍🦱 Author
 
@@ -221,6 +232,6 @@ git clone git@github.com:OQueLucas/AcademiaDotNet_ProjetoFinal.git
 
 ## 🎁 Agradecimento
 
-Agradeço a Atos, UFN e aos professores Fabrício, Ricardo e Alexandre, que são grandes mestres e transmitiram muito conhecimento ao longo desse processo da Academia DotNet.
+Agradeço a Atos, UFN e aos professores Fabrício, Ricardo e Alexandre, que são grandes mestres e transmitiram muito conhecimento ao longo desse processo da Academia DotNET.
 
 E agradeço pela oportunidade de participar dessa Academia!
