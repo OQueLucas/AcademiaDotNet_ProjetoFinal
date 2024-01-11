@@ -1,0 +1,26 @@
+<div class="card shadow-lg">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1>Editar</h1>
+  </div>
+  <div class="card-body">
+    <app-alert [alerts]="alerts" [type]="type"></app-alert>
+
+    <form (ngSubmit)="editar()" [formGroup]="editForm">
+      <h4>Edite a role</h4>
+      <hr>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Role</label>
+        <input type="text" class="form-control" id="name" placeholder="Nome (requerido)" formControlName="name" [ngClass]="{'is-invalid': displayMessage.name }">
+        <span class="text-danger" *ngIf="displayMessage.name">
+          <p [innerHTML]="displayMessage.name"></p>
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary" id="editar"><fa-icon [icon]="editIcon"></fa-icon> Editar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

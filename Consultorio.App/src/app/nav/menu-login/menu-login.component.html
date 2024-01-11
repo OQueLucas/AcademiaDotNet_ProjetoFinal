@@ -10,7 +10,7 @@
     <a class="nav-link text-light" id="saudacaoUsuario" href="javascript:void(0)">{{ email }}</a>
   </li>
   <li *ngSwitchCase="true" class="nav-item">
-    <a class="nav-link" id="minhaConta" [routerLink]="['/admin/role']" [routerLinkActive]="['active']">Roles</a>
+    <a class="nav-link" id="minhaConta" [routerLink]="['/admin/roles']" [routerLinkActive]="['active']">Roles</a>
   </li>
   <li *ngSwitchCase="true" class="nav-item">
     <a class="nav-link" id="usuarios" [routerLink]="['/admin/usuarios']" [routerLinkActive]="['active']">Usuarios</a>

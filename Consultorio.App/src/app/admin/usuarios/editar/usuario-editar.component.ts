@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChildren } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormControlName,
   FormGroup,
   Validators,
@@ -17,13 +16,14 @@ import { AdminService } from '../../services/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, fromEvent, merge } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-editar',
-  templateUrl: './editar.component.html',
-  styleUrl: './editar.component.scss',
+  selector: 'app-usuario-editar',
+  templateUrl: './usuario-editar.component.html',
+  styleUrl: './usuario-editar.component.scss',
 })
-export class EditarComponent {
+export class UsuarioEditarComponent {
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[];
 
@@ -42,6 +42,7 @@ export class EditarComponent {
   constructor(
     private formBuilder: FormBuilder,
     private adminService: AdminService,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
@@ -86,9 +87,9 @@ export class EditarComponent {
 
       this.adminService.put(this.usuario).subscribe({
         next: () => {
-          this.editForm.reset();
           this.alerts = [];
           this.toastr.success('Usuário editado com sucesso!', 'Sucesso!');
+          this.location.back();
         },
         error: (falha) => {
           this.type = 'danger';

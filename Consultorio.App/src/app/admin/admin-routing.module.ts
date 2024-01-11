@@ -6,7 +6,9 @@ import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
 import { usuarioResolver } from './services/usuario.resolver';
 import { RoleComponent } from './role/role.component';
 import { AdminGuard } from './services/admin.guard';
-import { EditarComponent } from './usuarios/editar/editar.component';
+import { UsuarioEditarComponent } from './usuarios/editar/usuario-editar.component';
+import { roleResolver } from './services/role.resolver';
+import { RoleEditarComponent } from './Roles/editar/role-editar.component';
 
 const routes: Routes = [
   {
@@ -16,8 +18,15 @@ const routes: Routes = [
     data: [{ claim: { nome: 'role', valor: 'Admin' } }],
     children: [
       {
-        path: 'role',
+        path: 'roles',
         component: RoleComponent,
+        canActivate: [AdminGuard],
+        data: [{ claim: { nome: 'role', valor: 'Admin' } }],
+      },
+      {
+        path: 'roles/editar/:id',
+        component: RoleEditarComponent,
+        resolve: { role: roleResolver },
         canActivate: [AdminGuard],
         data: [{ claim: { nome: 'role', valor: 'Admin' } }],
       },
@@ -36,7 +45,7 @@ const routes: Routes = [
       },
       {
         path: 'usuarios/editar/:id',
-        component: EditarComponent,
+        component: UsuarioEditarComponent,
         resolve: { usuario: usuarioResolver },
         canActivate: [AdminGuard],
         data: [{ claim: { nome: 'role', valor: 'Admin' } }],

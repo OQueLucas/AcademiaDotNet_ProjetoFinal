@@ -113,7 +113,45 @@ namespace Consultorio.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpGet("Role/{userId}")]
+        [HttpGet("Role")]
+        public async Task<ActionResult<RolesViewModel>> ListarRoles()
+        {
+            var roles = _roleManager.Roles.ToList();
+            return CustomResponse(roles);
+        }
+
+        [HttpGet("Role/{id}")]
+        public async Task<ActionResult<RolesViewModel>> ObterRole( string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                NotificarErro("Role não encontrado");
+                return CustomResponse(role);
+            }
+
+            return CustomResponse(role);
+        }
+
+        [HttpPut("Role/{id}")]
+        public async Task<ActionResult<RolesViewModel>> ListarRoles(RolesViewModel model)
+        {
+            var role = await _roleManager.FindByIdAsync(model.Id);
+
+            if (role == null)
+            {
+                NotificarErro("Role não encontrado");
+                return CustomResponse(role);
+            }
+
+            role.Name = model.Nome;
+            var result = await _roleManager.UpdateAsync(role);
+
+            return CustomResponse(result);
+        }
+
+        [HttpGet("Role/user/{userId}")]
         public async Task<ActionResult<RolesViewModel>> ListarUserRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -148,14 +186,7 @@ namespace Consultorio.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpGet("Role")]
-        public async Task<ActionResult<RolesViewModel>> ListarRoles()
-        {
-            var roles = _roleManager.Roles.ToList();
-            return CustomResponse(roles);
-        }
-
-        [HttpPost("Role/{userId}")]
+        [HttpPost("Role/user/{userId}")]
         public async Task<ActionResult> AdicionarRoleUsuario([FromBody] List<UserRolesViewModel> roles, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);

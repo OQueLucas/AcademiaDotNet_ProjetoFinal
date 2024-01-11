@@ -12,8 +12,9 @@ import { UsuariosComponent } from './usuarios/usuarios/usuarios.component';
 import { RoleComponent } from './role/role.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AdminGuard } from './services/admin.guard';
-import { EditarComponent } from './usuarios/editar/editar.component';
+import { UsuarioEditarComponent } from './usuarios/editar/usuario-editar.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { RoleEditarComponent } from './Roles/editar/role-editar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     DetalhesComponent,
     UsuariosComponent,
     RoleComponent,
-    EditarComponent,
+    UsuarioEditarComponent,
+    RoleEditarComponent,
   ],
   imports: [
     CommonModule,
