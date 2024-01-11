@@ -28,7 +28,7 @@
             <label class="control-label">Phone Number</label>
           </dt>
           <dd class="col-sm-10">
-            {{ usuario.phoneNumber }}
+            {{ usuario.phoneNumber | mask: '(00) 0000-0000||(00) 00000-0000' }}
           </dd>
           <dt class="col-sm-2">
             <label class="control-label">Phone Number Confirmed</label>

@@ -12,6 +12,8 @@ import { UsuariosComponent } from './usuarios/usuarios/usuarios.component';
 import { RoleComponent } from './role/role.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AdminGuard } from './services/admin.guard';
+import { EditarComponent } from './usuarios/editar/editar.component';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { AdminGuard } from './services/admin.guard';
     DetalhesComponent,
     UsuariosComponent,
     RoleComponent,
+    EditarComponent,
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,8 @@ import { AdminGuard } from './services/admin.guard';
     SharedModule,
     HttpClientModule,
     NgxSpinnerModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [AdminGuard],
 })

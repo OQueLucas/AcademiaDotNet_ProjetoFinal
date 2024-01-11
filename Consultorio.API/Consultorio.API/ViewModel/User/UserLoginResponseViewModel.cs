@@ -1,6 +1,6 @@
-﻿namespace Consultorio.API.ViewModel.UserViewModel
+﻿namespace Consultorio.API.ViewModel.User
 {
-    public class LoginResponseViewModel
+    public class UserLoginResponseViewModel
     {
         public string AccessToken { get; set; }
         public double ExpiresIn { get; set; }

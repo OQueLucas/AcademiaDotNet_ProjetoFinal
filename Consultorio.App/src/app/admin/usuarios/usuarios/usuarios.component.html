@@ -23,7 +23,7 @@
         <td>{{ usuario.id }}</td>
         <td>{{ usuario.userName }}</td>
         <td>{{ usuario.email }}</td>
-        <td>{{ usuario.phoneNumber }}</td>
+        <td>{{ usuario.phoneNumber | mask: '(00) 0000-0000||(00) 00000-0000' }}</td>
         <td class="acoes">
           <a class="btn btn-outline-success btn-sm" [routerLink]="['/admin/usuarios/detalhes/',usuario.id]">
             <fa-icon [icon]="detalheIcon"></fa-icon> Detalhe

@@ -1,0 +1,39 @@
+<div class="card shadow-lg">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1>Editar</h1>
+  </div>
+  <div class="card-body">
+    <app-alert [alerts]="alerts" [type]="type"></app-alert>
+
+    <form (ngSubmit)="editar()" [formGroup]="editForm">
+      <h4>Entre na sua conta</h4>
+      <hr>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" placeholder="E-mail (requerido)" formControlName="email" [ngClass]="{'is-invalid': displayMessage.email }">
+        <span class="text-danger" *ngIf="displayMessage.email">
+          <p [innerHTML]="displayMessage.email"></p>
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="userName" class="form-label">User Name</label>
+        <input type="text" class="form-control" id="userName" placeholder="User Name (requerido)" formControlName="userName" [ngClass]="{'is-invalid': displayMessage.userName }">
+        <span class="text-danger" *ngIf="displayMessage.userName">
+          <p [innerHTML]="displayMessage.userName"></p>
+        </span>
+      </div>
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">Telefone</label>
+        <input type="" class="form-control" id="phoneNumber" placeholder="Telefone" mask="(00) 0000-0000||(00) 00000-0000" formControlName="phoneNumber" [ngClass]="{'is-invalid': displayMessage.phoneNumber }">
+        <span class="text-danger" *ngIf="displayMessage.phoneNumber">
+          <p [innerHTML]="displayMessage.phoneNumber"></p>
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary" id="editar"><fa-icon [icon]="editIcon"></fa-icon> Editar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

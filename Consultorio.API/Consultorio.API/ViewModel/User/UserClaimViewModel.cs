@@ -1,6 +1,6 @@
-﻿namespace Consultorio.API.ViewModel.UserViewModel
+﻿namespace Consultorio.API.ViewModel.User
 {
-    public class ClaimViewModel
+    public class UserClaimViewModel
     {
         public string Value { get; set; }
         public string Type { get; set; }

@@ -6,6 +6,7 @@ import { DetalhesComponent } from './usuarios/detalhes/detalhes.component';
 import { usuarioResolver } from './services/usuario.resolver';
 import { RoleComponent } from './role/role.component';
 import { AdminGuard } from './services/admin.guard';
+import { EditarComponent } from './usuarios/editar/editar.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,13 @@ const routes: Routes = [
       {
         path: 'usuarios/detalhes/:id',
         component: DetalhesComponent,
+        resolve: { usuario: usuarioResolver },
+        canActivate: [AdminGuard],
+        data: [{ claim: { nome: 'role', valor: 'Admin' } }],
+      },
+      {
+        path: 'usuarios/editar/:id',
+        component: EditarComponent,
         resolve: { usuario: usuarioResolver },
         canActivate: [AdminGuard],
         data: [{ claim: { nome: 'role', valor: 'Admin' } }],

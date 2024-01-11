@@ -1,4 +1,4 @@
-﻿namespace Consultorio.API.ViewModel.UserViewModel
+﻿namespace Consultorio.API.ViewModel.User
 {
     public class UserViewModel
     {

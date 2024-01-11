@@ -1,7 +1,7 @@
 ﻿using Consultorio.API.Extensions;
 using Consultorio.API.Interfaces;
 using Consultorio.API.ViewModel;
-using Consultorio.API.ViewModel.UserViewModel;
+using Consultorio.API.ViewModel.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -41,7 +41,7 @@ namespace Consultorio.API.Services
             }
         }
 
-        public async Task<LoginResponseViewModel> GerarJwt(string email)
+        public async Task<UserLoginResponseViewModel> GerarJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(user);
@@ -74,7 +74,7 @@ namespace Consultorio.API.Services
 
             var encodedToken = tokenHandler.WriteToken(token);
 
-            var response = new LoginResponseViewModel
+            var response = new UserLoginResponseViewModel
             {
                 AccessToken = encodedToken,
                 ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
@@ -82,7 +82,7 @@ namespace Consultorio.API.Services
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
+                    Claims = claims.Select(c => new UserClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
 

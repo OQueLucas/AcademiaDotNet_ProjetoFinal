@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Consultorio.API.Interfaces;
-using Consultorio.API.ViewModel.UserViewModel;
+﻿using Consultorio.API.Interfaces;
+using Consultorio.API.ViewModel.Role;
+using Consultorio.API.ViewModel.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -58,8 +58,38 @@ namespace Consultorio.API.Controllers
             return CustomResponse(response);
         }
 
+        [HttpPut("Usuario/{id}")]
+        public async Task<IActionResult> EditarUsuario(UserEditarViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                NotificarErro("Usuário não encontrado");
+                return CustomResponse(user);
+            }
+
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+            user.PhoneNumber = model.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return CustomResponse(user);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                NotificarErro(error.Description);
+            }
+
+            return CustomResponse(result);
+        }
+
         [HttpDelete("Usuario/{id}")]
-        public async Task<IActionResult> ListarUsuarios(string id)
+        public async Task<IActionResult> DeletarUsuario(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -96,7 +126,7 @@ namespace Consultorio.API.Controllers
 
             var result = new List<UserRolesViewModel>();
 
-            foreach(var role in _roleManager.Roles)
+            foreach (var role in _roleManager.Roles)
             {
                 var userRole = new UserRolesViewModel
                 {
@@ -139,7 +169,7 @@ namespace Consultorio.API.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.RemoveFromRolesAsync(user, userRoles);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 NotificarErro("Não foi possível remover as regras existentes!");
                 return CustomResponse(result);

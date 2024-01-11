@@ -38,6 +38,16 @@ export class AdminService extends BaseService {
       .pipe(map(this.extractData), retry(2), catchError(super.serviceError));
   }
 
+  put(usuario: Usuario) {
+    return this.httpClient
+      .put<Usuario>(
+        this.baseUrl + 'usuario/' + usuario.id,
+        JSON.stringify(usuario),
+        this.obterHeaderJson()
+      )
+      .pipe(retry(1), catchError(super.serviceError));
+  }
+
   removerRole(id: string) {
     return this.httpClient
       .delete(this.baseUrl + 'usuario/' + id, this.obterHeaderJson())

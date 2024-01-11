@@ -1,5 +1,5 @@
 ﻿using Consultorio.API.Interfaces;
-using Consultorio.API.ViewModel.UserViewModel;
+using Consultorio.API.ViewModel.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpPost("nova-conta")]
-        public async Task<ActionResult> CriarUsuario([FromBody] RegisterUserViewModel registerUser)
+        public async Task<ActionResult> CriarUsuario([FromBody] UserRegisterViewModel registerUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -57,7 +57,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpPost("entrar")]
-        public async Task<ActionResult> Login(LoginUserViewModel loginUser)
+        public async Task<ActionResult> Login(UserLoginViewModel loginUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
