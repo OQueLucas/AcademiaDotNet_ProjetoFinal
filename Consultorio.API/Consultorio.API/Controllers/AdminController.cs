@@ -121,7 +121,7 @@ namespace Consultorio.API.Controllers
         }
 
         [HttpGet("Role/{id}")]
-        public async Task<ActionResult<RolesViewModel>> ObterRole( string id)
+        public async Task<ActionResult<RolesViewModel>> ObterRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
 
@@ -134,8 +134,26 @@ namespace Consultorio.API.Controllers
             return CustomResponse(role);
         }
 
+        [HttpPost("Role")]
+        public async Task<ActionResult<RolesViewModel>> AdicionarRoles([FromBody] string nome)
+        {
+            var role = await _roleManager.FindByNameAsync(nome);
+
+            if (role != null)
+            {
+                NotificarErro("Role já existente");
+                return CustomResponse(role);
+            }
+
+            IdentityRole newRole = new (nome);
+
+            var result = await _roleManager.CreateAsync(newRole);
+
+            return CustomResponse(result);
+        }
+
         [HttpPut("Role/{id}")]
-        public async Task<ActionResult<RolesViewModel>> ListarRoles(RolesViewModel model)
+        public async Task<ActionResult<RolesViewModel>> EditarRoles(RolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
 
@@ -151,7 +169,7 @@ namespace Consultorio.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpGet("Role/user/{userId}")]
+        [HttpGet("Role/usuario/{userId}")]
         public async Task<ActionResult<RolesViewModel>> ListarUserRoles(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -186,7 +204,7 @@ namespace Consultorio.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpPost("Role/user/{userId}")]
+        [HttpPost("Role/usuario/{userId}")]
         public async Task<ActionResult> AdicionarRoleUsuario([FromBody] List<UserRolesViewModel> roles, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);

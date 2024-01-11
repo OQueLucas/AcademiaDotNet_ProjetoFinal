@@ -9,6 +9,7 @@ import { AdminGuard } from './services/admin.guard';
 import { UsuarioEditarComponent } from './usuarios/editar/usuario-editar.component';
 import { roleResolver } from './services/role.resolver';
 import { RoleEditarComponent } from './Roles/editar/role-editar.component';
+import { RoleNovoComponent } from './Roles/novo/role-novo.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,12 @@ const routes: Routes = [
         path: 'roles/editar/:id',
         component: RoleEditarComponent,
         resolve: { role: roleResolver },
+        canActivate: [AdminGuard],
+        data: [{ claim: { nome: 'role', valor: 'Admin' } }],
+      },
+      {
+        path: 'roles/novo',
+        component: RoleNovoComponent,
         canActivate: [AdminGuard],
         data: [{ claim: { nome: 'role', valor: 'Admin' } }],
       },

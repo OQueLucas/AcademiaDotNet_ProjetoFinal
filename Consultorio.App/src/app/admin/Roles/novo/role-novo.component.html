@@ -1,0 +1,33 @@
+<div class="card shadow-lg">
+  <div class="card-header bg-primary text-white d-flex justify-content-between">
+    <h1>Adicionar</h1>
+  </div>
+  <div class="card-body">
+    <app-alert [alerts]="alerts" [type]="type"></app-alert>
+
+    <form (ngSubmit)="adicionar()" [formGroup]="form">
+      <h4>Adicione a nova role</h4>
+      <hr>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="name" placeholder="Nome (requerido)" formControlName="name" [ngClass]="{'is-invalid': displayMessage.name }">
+        <span class="text-danger" *ngIf="displayMessage.name">
+          <p [innerHTML]="displayMessage.name"></p>
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="normalizedName" class="form-label">Nome Normalizado</label>
+        <input type="text" class="form-control" id="normalizedName" placeholder="NOME (requerido)" formControlName="normalizedName" [ngClass]="{'is-invalid': displayMessage.normalizedName }">
+        <span class="text-danger" *ngIf="displayMessage.normalizedName">
+          <p [innerHTML]="displayMessage.normalizedName"></p>
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary" id="editar"><fa-icon [icon]="adicionarIcon"></fa-icon> Adicionar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
